@@ -1,0 +1,34 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="MenuButtonTemplate" TargetType="{x:Type Button}">
+			<ControlTemplate.Resources>
+				<Storyboard x:Key="over_menubtn">
+					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle">
+						<EasingColorKeyFrame KeyTime="0:0:0.1" Value="Black"/>
+					</ColorAnimationUsingKeyFrames>
+					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle1">
+						<EasingColorKeyFrame KeyTime="0:0:0.2" Value="Black"/>
+					</ColorAnimationUsingKeyFrames>
+					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle2">
+						<EasingColorKeyFrame KeyTime="0:0:0.3" Value="Black"/>
+					</ColorAnimationUsingKeyFrames>
+				</Storyboard>
+				<Storyboard x:Key="leave_menubtn">
+					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle">
+						<EasingColorKeyFrame KeyTime="0" Value="Black"/>
+						<EasingColorKeyFrame KeyTime="0:0:0.3" Value="#FFEF9C00"/>
+					</ColorAnimationUsingKeyFrames>
+					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle1">
+						<EasingColorKeyFrame KeyTime="0" Value="Black"/>
+						<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#FFEF9C00"/>
+					</ColorAnimationUsingKeyFrames>
+					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle2">
+						<EasingColorKeyFrame KeyTime="0" Value="Black"/>
+						<EasingColorKeyFrame KeyTime="0:0:0.1" Value="#FFEF9C00"/>
+					</ColorAnimationUsingKeyFrames>
+				</Storyboard>
+        </ControlTemplate.Resources>
+    </ControlTemplate>
+
+</ResourceDictionary>

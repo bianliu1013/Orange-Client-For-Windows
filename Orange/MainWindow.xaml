@@ -1,0 +1,119 @@
+﻿<controls:MetroWindow
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:Orange" mc:Ignorable="d" x:Class="Orange.MainWindow"
+        Title="Orange Player" Height="500" Width="640"
+        ResizeMode="CanResizeWithGrip" GlowBrush="#FFF27405" BorderThickness="0" NonActiveBorderBrush="#FFE06600" NonActiveGlowBrush="#FFE06600" NonActiveWindowTitleBrush="#FFF29F05" MinWidth="640" MinHeight="500">
+	<controls:MetroWindow.Resources>
+		<ControlTemplate x:Key="MenuButtonTemplate1" TargetType="{x:Type Button}">
+			<ControlTemplate.Resources>
+				<Storyboard x:Key="over_menubtn">
+					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle">
+						<EasingColorKeyFrame KeyTime="0:0:0.1" Value="Black"/>
+					</ColorAnimationUsingKeyFrames>
+					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle1">
+						<EasingColorKeyFrame KeyTime="0:0:0.2" Value="Black"/>
+					</ColorAnimationUsingKeyFrames>
+					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle2">
+						<EasingColorKeyFrame KeyTime="0:0:0.3" Value="Black"/>
+					</ColorAnimationUsingKeyFrames>
+				</Storyboard>
+				<Storyboard x:Key="leave_menubtn">
+					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle">
+						<EasingColorKeyFrame KeyTime="0" Value="Black"/>
+						<EasingColorKeyFrame KeyTime="0:0:0.3" Value="#FFEF9C00"/>
+					</ColorAnimationUsingKeyFrames>
+					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle1">
+						<EasingColorKeyFrame KeyTime="0" Value="Black"/>
+						<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#FFEF9C00"/>
+					</ColorAnimationUsingKeyFrames>
+					<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle2">
+						<EasingColorKeyFrame KeyTime="0" Value="Black"/>
+						<EasingColorKeyFrame KeyTime="0:0:0.1" Value="#FFEF9C00"/>
+					</ColorAnimationUsingKeyFrames>
+				</Storyboard>
+			</ControlTemplate.Resources>
+			<Grid>
+				<Rectangle x:Name="rectangle" HorizontalAlignment="Left" Height="6.333" Margin="13,7.749,0,0" Stroke="Black" StrokeThickness="0" VerticalAlignment="Top" Width="19.667" Fill="#FFEF9C00"/>
+				<Rectangle x:Name="rectangle1" HorizontalAlignment="Left" Height="6.333" Margin="13,17.75,0,0" Stroke="Black" StrokeThickness="0" VerticalAlignment="Top" Width="19.667" Fill="#FFEF9C00"/>
+				<Rectangle x:Name="rectangle2" HorizontalAlignment="Left" Height="6.333" Margin="13,28.084,0,0" Stroke="Black" StrokeThickness="0" VerticalAlignment="Top" Width="19.667" Fill="#FFEF9C00"/>
+				<Rectangle Fill="#00EF9C00" HorizontalAlignment="Left" Height="44" Margin="0,0.417,0,0" Stroke="Black" StrokeThickness="0" VerticalAlignment="Top" Width="42.667"/>
+			</Grid>
+			<ControlTemplate.Triggers>
+				<EventTrigger RoutedEvent="Mouse.MouseEnter">
+					<BeginStoryboard Storyboard="{StaticResource over_menubtn}"/>
+				</EventTrigger>
+				<EventTrigger RoutedEvent="Mouse.MouseLeave">
+					<BeginStoryboard x:Name="leave_menubtn_BeginStoryboard" Storyboard="{StaticResource leave_menubtn}"/>
+				</EventTrigger>
+			</ControlTemplate.Triggers>
+		</ControlTemplate>
+		<Storyboard x:Key="left_panel_hide">
+			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="main_menu">
+				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-320,54,0,0">
+					<EasingThicknessKeyFrame.EasingFunction>
+						<CircleEase EasingMode="EaseIn"/>
+					</EasingThicknessKeyFrame.EasingFunction>
+				</EasingThicknessKeyFrame>
+			</ThicknessAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="left_panel_show">
+			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="main_menu">
+				<EasingThicknessKeyFrame KeyTime="0" Value="-320,54,0,0"/>
+				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="0,54,0,0">
+					<EasingThicknessKeyFrame.EasingFunction>
+						<PowerEase EasingMode="EaseOut"/>
+					</EasingThicknessKeyFrame.EasingFunction>
+				</EasingThicknessKeyFrame>
+			</ThicknessAnimationUsingKeyFrames>
+		</Storyboard>
+		
+	</controls:MetroWindow.Resources>
+	<controls:MetroWindow.WindowTitleBrush>
+		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+			<GradientStop Color="#FFFFB224" Offset="1"/>
+			<GradientStop Color="#FFFFB429" Offset="0"/>
+			<GradientStop Color="#FFFFAA0D" Offset="0.489"/>
+			<GradientStop Color="#FFF29F05" Offset="0.504"/>
+		</LinearGradientBrush>
+	</controls:MetroWindow.WindowTitleBrush>
+
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Content="Information" />
+            
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+    
+	<Grid Background="#FFE8E8E8">
+		<Grid x:Name="leftPanel" HorizontalAlignment="Left" Width="310" Background="White">
+			<Grid.Effect>
+				<DropShadowEffect Direction="350" ShadowDepth="2" BlurRadius="7" Opacity="0.32"/>
+			</Grid.Effect>
+			<ScrollViewer x:Name="Search_ScrollViewer" HorizontalAlignment="Left" Margin="5,50,0,10" Width="295">
+				<Image Source="Images/temp_list.png" Stretch="Fill" Height="463" Width="304" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+			</ScrollViewer>
+			<Button Content="Search" HorizontalAlignment="Left" Height="30" Margin="232,10,0,0" VerticalAlignment="Top" Width="66" Cursor="Hand"/>
+			<TextBox HorizontalAlignment="Left" Height="23" Margin="49,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171"/>
+			<Button x:Name="MenuBtn" Content="" HorizontalAlignment="Left" Height="44.417" Margin="0,3.583,0,0" VerticalAlignment="Top" Width="42.667" Template="{DynamicResource MenuButtonTemplate1}" Cursor="Hand" Click="MenuBtn_Click"/>
+			<Path x:Name="line" Data="M10,48 L298,48" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="1" Margin="10,46.5,0,0" Stretch="Fill" Stroke="#FFE8E8E8" VerticalAlignment="Top" Width="289" d:IsLocked="True"/>
+		</Grid>
+		<Grid x:Name="player_grid" Height="470" Margin="310,0,0,0" VerticalAlignment="Top">
+			<Image Margin="5,6,0,0" Source="Images/temp_player.png" Stretch="Fill" Width="311" Height="325" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+		</Grid>
+		<Rectangle x:Name="Shadow" Height="6.25" Stroke="Black" VerticalAlignment="Top" StrokeThickness="0">
+			<Rectangle.Fill>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="#33000000" Offset="0.547"/>
+					<GradientStop Color="#00000000" Offset="0.558"/>
+				</LinearGradientBrush>
+			</Rectangle.Fill>
+		</Rectangle>
+		<local:main_usercontrol x:Name="main_page" Margin="0,52.5,0,0" HorizontalAlignment="Left"/>
+		<local:main_menuControl x:Name="main_menu" Margin="-320,54,0,0" HorizontalAlignment="Left"/>
+        
+	</Grid>
+</controls:MetroWindow>
