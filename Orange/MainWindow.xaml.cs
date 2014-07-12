@@ -46,5 +46,10 @@ namespace Orange
                 IsLeftPanelState = true;
             }
         }
+
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            webBrowser.Visibility= Visibility.Visible;
+        }
     }
 }

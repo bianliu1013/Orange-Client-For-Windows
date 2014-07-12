@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.0.14.0-ALPHA94\lib\net45\MahApps.Metro.dll</HintPath>
@@ -113,12 +116,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Design\projectGuides.guides" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <Resource Include="Images\config.png" />
+    <Resource Include="Images\information.png" />
     <Resource Include="Images\main_bottom.png" />
     <Resource Include="Images\main_top.png" />
     <Resource Include="Images\menu1_new.png" />
@@ -127,10 +133,26 @@
     <Resource Include="Images\menu3_sub1.png" />
     <Resource Include="Images\menu3_sub2.png" />
     <Resource Include="Images\menu3_sub3.png" />
+    <Resource Include="Images\mute.png" />
+    <Resource Include="Images\player_back_btn.png" />
+    <Resource Include="Images\player_logo.png" />
+    <Resource Include="Images\player_next_btn.png" />
+    <Resource Include="Images\player_pause_btn.png" />
+    <Resource Include="Images\player_play_btn.png" />
+    <Resource Include="Images\player_repeat_btn.png" />
+    <Resource Include="Images\player_shuffle_btn.png" />
+    <Resource Include="Images\player_small_playlist_del.png" />
+    <Resource Include="Images\player_small_playlist_down.png" />
+    <Resource Include="Images\player_small_playlist_endofdown.png" />
+    <Resource Include="Images\player_small_playlist_endofup.png" />
+    <Resource Include="Images\player_small_playlist_open.png" />
+    <Resource Include="Images\player_small_playlist_save.png" />
+    <Resource Include="Images\player_small_playlist_up.png" />
     <Resource Include="Images\temp_list.png" />
     <Resource Include="Images\temp_menu.png" />
     <Resource Include="Images\temp_player.png" />
     <Resource Include="Images\temp_search.png" />
+    <Resource Include="Images\volume.png" />
     <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +163,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
