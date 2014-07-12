@@ -163,7 +163,7 @@
         <Grid x:Name="player_grid" Margin="310,0,0,0">
         	<Grid Margin="7,6,3,139">
         		<Image Margin="0,20,0,0" Source="Images/player_logo.png" Stretch="Fill" Width="311" Height="127" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        		<WebBrowser x:Name="webBrowser" Height="155" VerticalAlignment="Top" Source="http://google.com" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
+                <WebBrowser x:Name="webBrowser" Height="155" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Visibility="Hidden" Loaded="webBrowser_Loaded" Navigated="webBrowser_Navigated">
         			<WebBrowser.RenderTransform>
         				<TransformGroup>
         					<ScaleTransform/>
@@ -238,7 +238,7 @@
 			 <Grid x:Name="playerControlsGrid" Margin="24,164,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="282" Height="75">
 			 	<Button Content="repeat" HorizontalAlignment="Left" Height="45" VerticalAlignment="Top" Width="45" Template="{DynamicResource RepeatButtonControlTemplate}"/>
 			 	<Button Content="previous" HorizontalAlignment="Left" Height="45" Margin="60.001,0,0,0" VerticalAlignment="Top" Width="45" Template="{DynamicResource PreviousButtonControlTemplate}"/>
-			 	<Button Content="Play" HorizontalAlignment="Left" Height="45" Margin="118.668,0,0,0" VerticalAlignment="Top" Width="45" Template="{DynamicResource PlayButtonControlTemplate}"/>
+			 	<Button Content="Play" HorizontalAlignment="Left" Height="45" Margin="118.668,0,0,0" VerticalAlignment="Top" Width="45" Template="{DynamicResource PlayButtonControlTemplate}" Click="play"/>
 			 	<Button Content="Next" HorizontalAlignment="Left" Height="45" Margin="176.667,0,0,0" VerticalAlignment="Top" Width="45" Template="{DynamicResource NextButtonControlTemplate}"/>
 			 	<Button Content="Shuffle" HorizontalAlignment="Left" Height="45" Margin="232.667,0,0,0" VerticalAlignment="Top" Width="45" Template="{DynamicResource ShuffleButtonControlTemplate}"/>
 			 	<Slider x:Name="VolumeSlider" HorizontalAlignment="Left" Margin="31.001,54,0,0" VerticalAlignment="Top" Width="135.667" Value="49"/>
@@ -266,8 +266,8 @@
             <ScrollViewer x:Name="Search_ScrollViewer" HorizontalAlignment="Left" Margin="5,50,0,10" Width="295">
                 <Image Source="Images/temp_list.png" Stretch="Fill" Height="463" Width="304" VerticalAlignment="Top" HorizontalAlignment="Left"/>
             </ScrollViewer>
-            <Button Content="Search" HorizontalAlignment="Left" Height="30" Margin="232,10,0,0" VerticalAlignment="Top" Width="66" Cursor="Hand"/>
-            <TextBox HorizontalAlignment="Left" Height="23" Margin="49,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171"/>
+            <Button Content="Search" HorizontalAlignment="Left" Height="30" Margin="232,10,0,0" VerticalAlignment="Top" Width="66" Cursor="Hand" Click="Search_Button_Click"/>
+            <TextBox Name="searchBox" HorizontalAlignment="Left" Height="23" Margin="49,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="171"/>
             <Button x:Name="MenuBtn" Content="" HorizontalAlignment="Left" Height="44.417" Margin="0,3.583,0,0" VerticalAlignment="Top" Width="42.667" Template="{DynamicResource MenuButtonTemplate1}" Cursor="Hand" Click="MenuBtn_Click"/>
             <Path x:Name="line" Data="M10,48 L298,48" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="1" Margin="10,46.5,0,0" Stretch="Fill" Stroke="#FFE8E8E8" VerticalAlignment="Top" Width="289" d:IsLocked="True"/>
         </Grid>
