@@ -67,7 +67,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Main\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -75,18 +75,22 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="JSONHelper.cs" />
-    <Compile Include="KPopList.cs" />
-    <Compile Include="KPopObject.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="DataManager\MusicCollection.cs" />
+    <Compile Include="DataManager\MusicItem.cs" />
+    <Compile Include="MsgBroker\IMessageBroker.cs" />
+    <Compile Include="MsgBroker\MsgBroker.cs" />
+    <Compile Include="Util\JSONHelper.cs" />
+    <Compile Include="Chats\K-pop\KPopList.cs" />
+    <Compile Include="Chats\K-pop\KPopObject.cs" />
+    <Compile Include="Main\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="main_menuControl.xaml">
+    <Page Include="Main\main_menuControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="main_usercontrol.xaml">
+    <Page Include="Main\main_usercontrol.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -100,10 +104,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="main_menuControl.xaml.cs">
+    <Compile Include="Main\main_menuControl.xaml.cs">
       <DependentUpon>main_menuControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="main_usercontrol.xaml.cs">
+    <Compile Include="Main\main_usercontrol.xaml.cs">
       <DependentUpon>main_usercontrol.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -174,6 +178,7 @@
   <ItemGroup>
     <Resource Include="icon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
