@@ -119,7 +119,7 @@ namespace Orange
             try
             {
                 string url = "http://115.71.236.224:8081/searchMusicVideoInformation?query=";
-
+                int count = 2; // Number of Objects in item
 
                 string query = url + queryString;
                 JsonObjectCollection col = JSONHelper.getJson(query);
@@ -133,7 +133,7 @@ namespace Orange
                     Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
                     {
                         musicCollection.Clear();
-                        for (int i = 0; i < col.Count; i++)
+                        for (int i = 0; i < col.Count/count; i++)
                         {
                             string resultURL = (string)col["url"].GetValue();
                             string resultTitle = (string)col["title"].GetValue();
