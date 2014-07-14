@@ -13,6 +13,10 @@ using System.Windows.Shapes;
 using System.Net;
 using System.Net.Json;
 using System.IO;
+using Orange.MsgBroker;
+using System.Windows.Threading;
+using Orange.DataManager;
+using System.Threading;
 
 namespace Orange
 {
@@ -21,12 +25,17 @@ namespace Orange
 	/// </summary>
 	public partial class main_menuControl : UserControl
 	{
-        KPopList kpopListObject = MainWindow.kpopList;
-
+        private string url;
+        private MusicCollection musicCollection;
 		public main_menuControl()
 		{
 			this.InitializeComponent();
 		}
+
+        public void SetMusicCollection(MusicCollection collection)
+        {
+            musicCollection = collection;
+        }
 
 		private void mn_new_btn_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
@@ -45,28 +54,65 @@ namespace Orange
 
 		private void mn_kpop_btn_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            string url = "http://115.71.236.224:8081/getMelonChart";
+            url = "http://115.71.236.224:8081/getMelonChart";
 
-            JsonArrayCollection items = JSONHelper.getJSONArray(url);
+            musicCollection.Clear();
+            MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+            arg.MsgOPCode = UI_CONTROL.PROGRESS_SHOW;
+            (Application.Current as App).msgBroker.SendMessage(arg);
+            Thread thread = new Thread(new ThreadStart(ParsingThread));
+            thread.Start();
 
-            kpopListObject.getKPopList().Clear();
-            foreach (JsonObjectCollection item in items)
-            {
-                string title = item["title"].GetValue().ToString();
-                string singer = item["singer"].GetValue().ToString();
-
-                KPopObject kpopObject = new KPopObject(title, singer);
-                kpopListObject.getKPopList().Add(kpopObject);
-            }
-
-            string s = null;
-            for (int i = 0; i < MainWindow.kpopList.getKPopList().Count; i++)
-            {
-                s += kpopListObject.getKPop(i).getTitle() + " " + kpopListObject.getKPop(i).getSinger() + "\n";
-            }
-
-            MessageBox.Show(s);
 		}
+
+        private void ParsingThread()
+        {
+             
+            try
+            {
+                JsonArrayCollection items = JSONHelper.getJSONArray(url);
+
+                Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
+                {
+                foreach (JsonObjectCollection item in items)
+                {
+                    string title = item["title"].GetValue().ToString();
+                    ////수정해야                
+                    // string mUrl = item["singer"].GetValue().ToString();
+                    // string playTime = item["singer"].GetValue().ToString();
+                    string mUrl = "test";
+                    string playTime = "00:00";
+
+
+                    MusicItem mitem = new MusicItem();
+                    mitem.title = title;
+                    mitem.url = mUrl;
+                    mitem.playTime = playTime;
+                    musicCollection.Add(mitem);
+                }
+
+           
+
+
+               MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+               arg.MsgOPCode = UI_CONTROL.PROGRESS_HIDE;
+               (Application.Current as App).msgBroker.SendMessage(arg);
+
+               }));
+            }
+            catch (Exception e) { MessageBox.Show(e.Message);
+
+                        Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
+               {
+                     MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+                     arg.MsgOPCode = UI_CONTROL.PROGRESS_HIDE;
+                     (Application.Current as App).msgBroker.SendMessage(arg);
+               }));
+            
+               }
+        
+           
+        }
 
 		private void mn_jpop_btn_Click(object sender, System.Windows.RoutedEventArgs e)
 		{

@@ -38,7 +38,6 @@ namespace Orange
         private bool IsLeftPanelState = false;
  
 
-        public static KPopList kpopList = new KPopList();
         private MusicCollection musicCollection;
         private Storyboard HideLeftPanelStoryboard;
         private Storyboard ShowLeftPanelStoryboard;
@@ -48,6 +47,7 @@ namespace Orange
             InitializeComponent();
             initStoryboard();
             musicCollection = new MusicCollection();
+            main_menu.SetMusicCollection(musicCollection);
            
             result_musiclist.DataContext = musicCollection;
 
@@ -60,7 +60,20 @@ namespace Orange
         {
             switch(e.Message.MsgOPCode)
             {
-                case MESSAGE.TEST:
+                case MESSAGE_MAP.KPOP_CART:
+                    break;
+                case UI_CONTROL.PROGRESS_SHOW:
+                      if (IsLeftPanelState)
+                      {
+                          HideLeftPanelStoryboard.Begin();
+                          IsLeftPanelState = false;
+                      }
+                      main_page.Visibility = Visibility.Visible;
+                      main_page.SetProgressRing(true);
+                    break;
+                case UI_CONTROL.PROGRESS_HIDE:
+                     main_page.SetProgressRing(false);
+                     main_page.Visibility = Visibility.Collapsed;
                     break;
             }
         }
@@ -130,13 +143,12 @@ namespace Orange
             try
             {
                 string url = "http://115.71.236.224:8081/searchMusicVideoInformation?query=";
-                int count = 2; // Number of Objects in item
-
+         
                 string query = url + queryString;
-                JsonObjectCollection col = JSONHelper.getJson(query);
+                JsonArrayCollection items = JSONHelper.getJSONArray(query);
 
 
-                if (col.Count > 0)
+                if (items.Count > 0)
                 {
                     //MessageBox.Show(col.Count.ToString());
 
@@ -144,20 +156,17 @@ namespace Orange
                     Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
                     {
                         musicCollection.Clear();
-                        for (int i = 0; i < col.Count/count; i++)
+                        foreach(JsonObjectCollection item in items)
                         {
-                            string resultURL = (string)col["url"].GetValue();
-                            string resultTitle = (string)col["title"].GetValue();
+                            string resultURL = item["url"].GetValue().ToString();
+                            string resultTitle = item["title"].GetValue().ToString();
+                            MusicItem mitem = new MusicItem();
+                            mitem.title = resultTitle;
+                            mitem.playTime = "00:00";
+                            mitem.url = resultURL;
+                            musicCollection.Add(mitem);
 
-
-                            MusicItem item = new MusicItem();
-                            item.title = resultTitle;
-                            item.playTime = "00:00";
-                            item.url = resultURL;
-                            musicCollection.Add(item);
-                        }
-
-                       
+                        }                      
 
                         main_page.SetProgressRing(false);
                         main_page.Visibility = Visibility.Collapsed;
@@ -177,7 +186,14 @@ namespace Orange
 
                 }
             }catch(Exception e)
-            { MessageBox.Show(e.Message); }          
+            { MessageBox.Show(e.Message);
+                  Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
+                    {
+            main_page.SetProgressRing(false);
+            main_page.Visibility = Visibility.Visible;
+                    }));
+
+            }          
        
         }
 
@@ -213,6 +229,34 @@ namespace Orange
         	if(e.Key == Key.Enter)
             {
                 SearchOperation();
+
+            }
+        }
+
+        private void Load_Music_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (result_musiclist.SelectedIndex != -1)
+            {
+
+                MusicItem item = (MusicItem)result_musiclist.SelectedItem;
+
+                MessageBox.Show(item.title);
+
+            }
+        }
+
+        private void ADD_PlayList_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            //ListViewItem selected = sender as ListViewItem;
+            
+
+            return;
+            if (result_musiclist.SelectedIndex != -1)
+            {
+
+                MusicItem item = (MusicItem)result_musiclist.SelectedItem;
+
+                MessageBox.Show(item.title);
 
             }
         }

@@ -243,7 +243,7 @@
     											Content="▷"
     											Margin="0,1,0,1"
     											VerticalAlignment="Center"
-    											Click="Button_Click" />
+    											Click="Load_Music_Click" />
     									</DataTemplate>
     								</GridViewColumn.CellTemplate>
     							</GridViewColumn>
@@ -256,7 +256,7 @@
     											Content="+"
     											Margin="0,1,0,1"
     											VerticalAlignment="Center"
-    											Click="Button_Click" />
+    											Click="ADD_PlayList_Click" />
     									</DataTemplate>
     								</GridViewColumn.CellTemplate>
     							</GridViewColumn>
