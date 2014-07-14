@@ -36,9 +36,8 @@ namespace Orange
     public partial class MainWindow : MetroWindow
     {
         private bool IsLeftPanelState = false;
- 
-
         private MusicCollection musicCollection;
+        private MusicCollection myPlayListCollection;
         private Storyboard HideLeftPanelStoryboard;
         private Storyboard ShowLeftPanelStoryboard;
         private string queryString;
@@ -47,12 +46,16 @@ namespace Orange
             InitializeComponent();
             initStoryboard();
             musicCollection = new MusicCollection();
+            myPlayListCollection = new MusicCollection();
+
             main_menu.SetMusicCollection(musicCollection);
            
             result_musiclist.DataContext = musicCollection;
+            myPlayList.DataContext = myPlayListCollection;
+            
+            webBrowser.Navigated += webBrowser_Navigated;          
+            webBrowser.Navigate("http://115.71.236.224:8081/static/YouTubePlayer.html");
 
-          //  webBrowser.Navigated += webBrowser_Navigated;
-          //  webBrowser.Navigate("http://115.71.236.224:8081/static/YouTubePlayer.html");
             (Application.Current as App).msgBroker.MessageReceived += msgBroker_MessageReceived;
         }
 
@@ -158,7 +161,8 @@ namespace Orange
                         musicCollection.Clear();
                         foreach(JsonObjectCollection item in items)
                         {
-                            string resultURL = item["url"].GetValue().ToString();
+                            
+                            string resultURL = item["url"].GetValue().ToString().Replace("http://www.youtube.com/watch?v=", ""); 
                             string resultTitle = item["title"].GetValue().ToString();
                             MusicItem mitem = new MusicItem();
                             mitem.title = resultTitle;
@@ -198,12 +202,7 @@ namespace Orange
         }
 
 
-        private void play(object sender, RoutedEventArgs e)
-        {
-            //var document = webBrowser.Document;
-            //webBrowser.Document.GetType().InvokeMember("pauseVideo", BindingFlags.InvokeMethod, null, document, null);
-            webBrowser.InvokeScript("pauseVideo");
-        }
+
 
         private void webBrowser_Loaded(object sender, RoutedEventArgs e)
         {
@@ -233,8 +232,11 @@ namespace Orange
             }
         }
 
+        #region The result of searching
+
         private void Load_Music_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            result_musiclist.SelectedItem = (e.OriginalSource as FrameworkElement).DataContext;
             if (result_musiclist.SelectedIndex != -1)
             {
 
@@ -246,19 +248,166 @@ namespace Orange
         }
 
         private void ADD_PlayList_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            //ListViewItem selected = sender as ListViewItem;
+        {            
+            result_musiclist.SelectedItem = (e.OriginalSource as FrameworkElement).DataContext;          
             
-
-            return;
             if (result_musiclist.SelectedIndex != -1)
             {
-
                 MusicItem item = (MusicItem)result_musiclist.SelectedItem;
 
-                MessageBox.Show(item.title);
+                //MessageBox.Show(item.title);
+                myPlayListCollection.Add(item);
+            }
+        }
+
+        private void result_musiclist_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var item = ((FrameworkElement)e.OriginalSource).DataContext as MusicItem;
+            if (item != null)
+            {
+                MessageBox.Show("Item's Double Click handled!");
+            }
+        }
+        #endregion
+
+
+        #region play list event
+        private void Show_Video_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            result_musiclist.SelectedItem = (e.OriginalSource as FrameworkElement).DataContext;
+
+            if (result_musiclist.SelectedIndex != -1)
+            {
+                MusicItem item = (MusicItem)result_musiclist.SelectedItem;
+
+                //MessageBox.Show(item.title);
+
+
+
+                if (webBrowser.Visibility == Visibility.Collapsed )
+                {
+                    webBrowser.Visibility = Visibility.Visible;
+                    
+                    
+                }
+                //string target = item.url;
+                
+                //string delimiter = "http://www.youtube.com/watch?v=";
+               // string s = item.url.Replace("http://www.youtube.com/watch?v=","");
+                //MessageBox.Show(target);
+
 
             }
+        }
+
+        private void myPlayList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var item = ((FrameworkElement)e.OriginalSource).DataContext as MusicItem;
+            if (item != null)
+            {
+                MessageBox.Show("Item's Double Click handled!");
+            }
+
+        }
+
+        private void Lyric_PlayList_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            result_musiclist.SelectedItem = (e.OriginalSource as FrameworkElement).DataContext;
+
+            if (result_musiclist.SelectedIndex != -1)
+            {
+                MusicItem item = (MusicItem)result_musiclist.SelectedItem;
+
+                //MessageBox.Show(item.title);
+                //myPlayListCollection.Add(item);
+            }
+
+        }
+
+        #endregion
+
+
+        #region player controller
+
+        private void play(object sender, RoutedEventArgs e)
+        {
+            //var document = webBrowser.Document;
+            //webBrowser.Document.GetType().InvokeMember("pauseVideo", BindingFlags.InvokeMethod, null, document, null);
+            webBrowser.InvokeScript("pauseVideo");
+        }
+
+
+        private void Next_Music(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Previous_music(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void set_shuffle(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void set_repeat(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Show_video_in_control(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        #region playlist event controller
+        private void top_list(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void up_list(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void down_list(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void bottom_list(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void save_list(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void open_list(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void delete_list(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        private void MetroWindow_Unloaded(object sender, RoutedEventArgs e)
+        {
+            musicCollection.Clear();
+            myPlayListCollection.Clear();
+            webBrowser.Dispose();
+            (Application.Current as App).msgBroker.MessageReceived -= msgBroker_MessageReceived;
+
         }
     }
 }

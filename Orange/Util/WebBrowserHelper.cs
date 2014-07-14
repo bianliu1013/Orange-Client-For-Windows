@@ -34,10 +34,10 @@ namespace Orange.Util
                 public UInt32 dwHitRate;
                 public UInt32 dwSizeLow;
                 public UInt32 dwSizeHigh;
-                public FILETIME LastModifiedTime;
-                public FILETIME ExpireTime;
-                public FILETIME LastAccessTime;
-                public FILETIME LastSyncTime;
+//                 public FILETIME LastModifiedTime;
+//                 public FILETIME ExpireTime;
+//                 public FILETIME LastAccessTime;
+//                 public FILETIME LastSyncTime;
                 public IntPtr lpHeaderInfo;
                 public UInt32 dwHeaderInfoSize;
                 public IntPtr lpszFileExtension;
