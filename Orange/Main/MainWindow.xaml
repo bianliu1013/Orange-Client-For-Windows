@@ -90,71 +90,7 @@
             	<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
-        <ControlTemplate x:Key="RepeatButtonControlTemplate" TargetType="{x:Type Button}">
-        	<Grid>
-        		<Image Margin="0" Source="../Images/player_repeat_btn.png" Stretch="Fill"/>
-        	</Grid>
-        </ControlTemplate>
-        <ControlTemplate x:Key="PreviousButtonControlTemplate" TargetType="{x:Type Button}">
-        	<Grid>
-        		<Image Margin="0" Source="../Images/player_back_btn.png" Stretch="Fill"/>
-        	</Grid>
-        </ControlTemplate>
-        <ControlTemplate x:Key="PlayButtonControlTemplate" TargetType="{x:Type Button}">
-        	<Grid>
-        		<Image Margin="0" Source="../Images/player_play_btn.png" Stretch="Fill"/>
-        	</Grid>
-        </ControlTemplate>
-        <ControlTemplate x:Key="NextButtonControlTemplate" TargetType="{x:Type Button}">
-        	<Grid>
-        		<Image Margin="0" Source="../Images/player_next_btn.png" Stretch="Fill"/>
-        	</Grid>
-        </ControlTemplate>
-        <ControlTemplate x:Key="ShuffleButtonControlTemplate" TargetType="{x:Type Button}">
-        	<Grid>
-        		<Image Margin="0" Source="../Images/player_shuffle_btn.png" Stretch="Fill"/>
-        	</Grid>
-        </ControlTemplate>
-        <ControlTemplate x:Key="VolButtonControlTemplate" TargetType="{x:Type Button}">
-        	<Grid>
-        		<Image Margin="-7,0,0,-5" Source="../Images/volume.png" Stretch="Fill"/>
-        	</Grid>
-        </ControlTemplate>
-        <ControlTemplate x:Key="TopButtonControlTemplate" TargetType="{x:Type Button}">
-        	<Grid>
-        		<Image Source="../Images/player_small_playlist_endofup.png" Stretch="Fill"/>
-        	</Grid>
-        </ControlTemplate>
-        <ControlTemplate x:Key="UpButtonControlTemplate" TargetType="{x:Type Button}">
-        	<Grid>
-        		<Image Source="../Images/player_small_playlist_up.png" Stretch="Fill"/>
-        	</Grid>
-        </ControlTemplate>
-        <ControlTemplate x:Key="DownButtonControlTemplate" TargetType="{x:Type Button}">
-        	<Grid>
-        		<Image Source="../Images/player_small_playlist_down.png" Stretch="Fill"/>
-        	</Grid>
-        </ControlTemplate>
-        <ControlTemplate x:Key="BottomButtonControlTemplate" TargetType="{x:Type Button}">
-        	<Grid>
-        		<Image Source="../Images/player_small_playlist_endofdown.png" Stretch="Fill"/>
-        	</Grid>
-        </ControlTemplate>
-        <ControlTemplate x:Key="SaveButtonControlTemplate" TargetType="{x:Type Button}">
-        	<Grid>
-        		<Image Source="../Images/player_small_playlist_save.png" Stretch="Fill"/>
-        	</Grid>
-        </ControlTemplate>
-        <ControlTemplate x:Key="LoadButtonControlTemplate" TargetType="{x:Type Button}">
-        	<Grid>
-        		<Image Source="../Images/player_small_playlist_open.png" Stretch="Fill"/>
-        	</Grid>
-        </ControlTemplate>
-        <ControlTemplate x:Key="DelButtonControlTemplate" TargetType="{x:Type Button}">
-        	<Grid>
-        		<Image Source="../Images/player_small_playlist_del.png" Stretch="Fill"/>
-        	</Grid>
-        </ControlTemplate>
+
         <ControlTemplate x:Key="ColGridSplitterControlTemplate" TargetType="{x:Type GridSplitter}">
         	<Grid>
         		<Grid.Background>
@@ -189,7 +125,7 @@
             <GradientStop Color="#FFF29F05" Offset="0.504"/>
         </LinearGradientBrush>
     </controls:MetroWindow.WindowTitleBrush>
-
+    
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
             <Button Content="Information" />
@@ -298,7 +234,7 @@
 
             <Grid Margin="7,6,3,0" Grid.Row="0">
                     <Image Margin="0,20,0,0" Source="../Images/player_logo.png" Stretch="Fill" Width="311" Height="127" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <WebBrowser x:Name="webBrowser" Height="155" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Loaded="webBrowser_Loaded" Navigated="webBrowser_Navigated" Visibility="Hidden">
+                    <WebBrowser x:Name="webBrowser" RenderTransformOrigin="0.5,0.5" Loaded="webBrowser_Loaded" Navigated="webBrowser_Navigated" Visibility="Hidden">
                         <WebBrowser.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -308,12 +244,11 @@
                             </TransformGroup>
                         </WebBrowser.RenderTransform>
                     </WebBrowser>
-                    <Slider Margin="10,0" VerticalAlignment="Bottom"/>
                 </Grid>
             <Grid Margin="10,0,0,9" Grid.Row="1">
-                	<Rectangle Fill="#FFE8E8E8" Margin="0,2,0,27"/>
                 	<Rectangle x:Name="titleWidthSizeREc" Margin="0,2,201,0" VerticalAlignment="Top"/>
                 	<Path Data="M0,51.5 L300,51.5" Fill="#FF8B8B8B" HorizontalAlignment="Left" Height="1" Margin="2,85,0,0" Stretch="Fill" Stroke="#FFCBCBCB" VerticalAlignment="Top" Width="{Binding ActualWidth, ElementName=myPlayList}"/>
+                <Slider x:Name="PlayerSlider" Margin="10,7,10,0" VerticalAlignment="Top" Thumb.DragCompleted="PlayerSlider_DragCompleted" Thumb.DragStarted="PlayerSlider_DragStarted"  ValueChanged="PlayerSlider_ValueChanged"/>
                 	<ListView     x:Name="myPlayList" Margin="0,91,10,35" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" Background="{x:Null}" MouseDoubleClick="myPlayList_MouseDoubleClick" ItemsSource="{Binding}" >
                 		<ListView.View>
                 			<GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}" >
@@ -368,30 +303,35 @@
               </GridViewColumn.CellTemplate>
            </GridViewColumn> -->
                 			</GridView>
-                		</ListView.View>
+                		</ListView.View> 
  
                 	</ListView> 
-                	<Grid x:Name="playerControlsGrid" Margin="14,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="282" Height="80">
-                		<Button Content="repeat" HorizontalAlignment="Left" Height="45" VerticalAlignment="Top" Width="45" Template="{DynamicResource RepeatButtonControlTemplate}" Click="set_repeat" Margin="0,4,0,0"/>
-                		<Button Content="previous" HorizontalAlignment="Left" Height="45" Margin="60.001,4,0,0" VerticalAlignment="Top" Width="45" Template="{DynamicResource PreviousButtonControlTemplate}" Click="Previous_music"/>
-                		<Button Content="Play" HorizontalAlignment="Left" Height="45" Margin="118.668,4,0,0" VerticalAlignment="Top" Width="45" Template="{DynamicResource PlayButtonControlTemplate}" Click="play"/>
-                		<Button Content="Next" HorizontalAlignment="Left" Height="45" Margin="176.667,4,0,0" VerticalAlignment="Top" Width="45" Template="{DynamicResource NextButtonControlTemplate}" Click="Next_Music"/>
-                		<Button Content="Shuffle" HorizontalAlignment="Left" Height="45" Margin="232.667,4,0,0" VerticalAlignment="Top" Width="45" Template="{DynamicResource ShuffleButtonControlTemplate}" Click="set_shuffle"/>
-                		<Slider x:Name="VolumeSlider" HorizontalAlignment="Left" Margin="31.001,58,0,0" VerticalAlignment="Top" Width="135.667" Value="49"/>
-                		<Button Content="vol" HorizontalAlignment="Left" Height="24" Margin="0.001,54,0,0" VerticalAlignment="Top" Width="23" Template="{DynamicResource VolButtonControlTemplate}"/>
-                		<Button Content="Show Video" HorizontalAlignment="Left" Height="14" Margin="176.667,54,0,0" VerticalAlignment="Top" Width="104" Click="Show_video_in_control"/>
+                	<Grid x:Name="playerControlsGrid" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="282" Height="80">
+                		<Grid.ColumnDefinitions>
+                			<ColumnDefinition Width="25*"/>
+                			<ColumnDefinition Width="257*"/>
+                		</Grid.ColumnDefinitions>
+                		<Button Content="repeat" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Template="{DynamicResource RepeatButtonControlTemplate}" Click="set_repeat" Margin="0,23.669,0,0" Grid.ColumnSpan="2" Cursor="Hand"/>
+                		<Button Content="previous" HorizontalAlignment="Left" Height="30" Margin="19.168,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PreviousButtonControlTemplate}" Click="Previous_music" Grid.Column="1" Cursor="Hand"/>
+                		<Button x:Name="PlayBtn" Content="Play" HorizontalAlignment="Left" Height="30" Margin="69.168,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PlayButtonControlTemplate}" Click="play" Grid.Column="1" Cursor="Hand"/>
+                		<Button x:Name="pauseBtn" Content="Play" HorizontalAlignment="Left" Height="30" Margin="118.335,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PauseButtonControlTemplate}" Click="pause" Grid.Column="1" Cursor="Hand"/>
+                		<Button Content="Next" HorizontalAlignment="Left" Height="30" Margin="169.835,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource NextButtonControlTemplate}" Click="Next_Music" Grid.Column="1" Cursor="Hand"/>
+                		<Button Content="Shuffle" HorizontalAlignment="Left" Height="30" Margin="217,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource ShuffleButtonControlTemplate}" Click="set_shuffle" Grid.Column="1" Cursor="Hand"/>
+                		<Slider x:Name="VolumeSlider" HorizontalAlignment="Left" Margin="0.001,59.332,0,0" VerticalAlignment="Top" Width="141.334" Value="49" Grid.Column="1" ValueChanged="VolumeSlider_ValueChanged"/>
+                		<Button Content="vol" HorizontalAlignment="Left" Height="20" Margin="0.001,55.332,0,-0.333" VerticalAlignment="Top" Width="20" Template="{DynamicResource VolButtonControlTemplate}"/>
+                		<Button x:Name="ShowVideoBtn" Content="Show Video" HorizontalAlignment="Left" Height="14" Margin="151.334,55.332,0,-0.333" VerticalAlignment="Top" Width="104" Click="Show_video_in_control" Grid.Column="1"/>
                 	</Grid>
                 	<Grid x:Name="ListControlsGrid" Margin="0,0,15,0" VerticalAlignment="Bottom" Height="30">
                 		<Grid x:Name="listControl" Margin="10,0,133,0" HorizontalAlignment="Left">
-                			<Button x:Name="ms_list_top" Content="top" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Template="{DynamicResource TopButtonControlTemplate}" Click="top_list"/>
-                			<Button x:Name="ms_list_up" Content="Up" HorizontalAlignment="Left" Height="30" Margin="40,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource UpButtonControlTemplate}" Click="up_list"/>
-                			<Button x:Name="ms_list_down" Content="Down" HorizontalAlignment="Left" Height="30" Margin="81.667,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource DownButtonControlTemplate}" Click="down_list"/>
-                			<Button x:Name="ms_list_bottom" Content="bottom" HorizontalAlignment="Left" Height="30" Margin="122.667,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource BottomButtonControlTemplate}" Click="bottom_list"/>
+                			<Button x:Name="ms_list_top" Content="top" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Template="{DynamicResource TopButtonControlTemplate}" Click="top_list" Cursor="Hand"/>
+                			<Button x:Name="ms_list_up" Content="Up" HorizontalAlignment="Left" Height="30" Margin="40,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource UpButtonControlTemplate}" Click="up_list" Cursor="Hand"/>
+                			<Button x:Name="ms_list_down" Content="Down" HorizontalAlignment="Left" Height="30" Margin="81.667,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource DownButtonControlTemplate}" Click="down_list" Cursor="Hand"/>
+                			<Button x:Name="ms_list_bottom" Content="bottom" HorizontalAlignment="Left" Height="30" Margin="122.667,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource BottomButtonControlTemplate}" Click="bottom_list" Cursor="Hand"/>
                 		</Grid>
                 		<Grid x:Name="listMgr" Margin="0" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                			<Button Content="save" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Template="{DynamicResource SaveButtonControlTemplate}" Click="save_list"/>
-                			<Button Content="Load" HorizontalAlignment="Left" Height="30" Margin="35,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource LoadButtonControlTemplate}" Click="open_list"/>
-                			<Button Content="Del" HorizontalAlignment="Left" Height="30" Margin="70,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource DelButtonControlTemplate}" Click="delete_list"/>
+                			<Button Content="save" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Template="{DynamicResource SaveButtonControlTemplate}" Click="save_list" Cursor="Hand"/>
+                			<Button Content="Load" HorizontalAlignment="Left" Height="30" Margin="35,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource LoadButtonControlTemplate}" Click="open_list" Cursor="Hand"/>
+                			<Button Content="Del" HorizontalAlignment="Left" Height="30" Margin="70,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource DelButtonControlTemplate}" Click="delete_list" Cursor="Hand"/>
                 		</Grid>
                 	</Grid>
                 </Grid>

@@ -24,6 +24,7 @@ using System.Reflection;
 using Orange.DataManager;
 using System.Threading;
 using System.Windows.Threading;
+using Orange.Util;
 
 namespace Orange
 {
@@ -35,12 +36,14 @@ namespace Orange
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        private bool dragStarted = false;
         private bool IsLeftPanelState = false;
         private MusicCollection musicCollection;
         private MusicCollection myPlayListCollection;
         private Storyboard HideLeftPanelStoryboard;
         private Storyboard ShowLeftPanelStoryboard;
         private string queryString;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -52,12 +55,21 @@ namespace Orange
            
             result_musiclist.DataContext = musicCollection;
             myPlayList.DataContext = myPlayListCollection;
-            
-            webBrowser.Navigated += webBrowser_Navigated;          
-            webBrowser.Navigate("http://115.71.236.224:8081/static/YouTubePlayer.html");
+
+            webBrowser.Navigated += webBrowser_Navigated;
+            WebBrowserHelper.ClearCache();
+                
+            String url = "http://115.71.236.224:8081/static/YouTubePlayer.html";
+            webBrowser.Navigate(url);
 
             (Application.Current as App).msgBroker.MessageReceived += msgBroker_MessageReceived;
+
+            String volume = webBrowser.InvokeScript("getVolume").ToString();
+            
         }
+
+
+      
 
         void msgBroker_MessageReceived(object sender, MsgBroker.MsgBrokerEventArgs e)
         {
@@ -266,6 +278,13 @@ namespace Orange
             if (item != null)
             {
                 MessageBox.Show("Item's Double Click handled!");
+                
+
+                //MessageBox.Show(item.title);
+                myPlayListCollection.Add(item);
+                WebBrowserHelper.ClearCache();
+
+                webBrowser.InvokeScript("loadVideoById", new String[] { item.url });
             }
         }
         #endregion
@@ -284,12 +303,13 @@ namespace Orange
 
 
 
-                if (webBrowser.Visibility == Visibility.Collapsed )
-                {
+   
                     webBrowser.Visibility = Visibility.Visible;
+                    WebBrowserHelper.ClearCache();
+                
+                    webBrowser.InvokeScript("loadVideoById", new String[] { item.url });
                     
-                    
-                }
+   
                 //string target = item.url;
                 
                 //string delimiter = "http://www.youtube.com/watch?v=";
@@ -333,9 +353,16 @@ namespace Orange
         {
             //var document = webBrowser.Document;
             //webBrowser.Document.GetType().InvokeMember("pauseVideo", BindingFlags.InvokeMethod, null, document, null);
-            webBrowser.InvokeScript("pauseVideo");
+            webBrowser.InvokeScript("playVideo");
+
+
+            //PlayBtn.Template = (ControlTemplate)FindResource("PauseButtonControlTemplate");
         }
 
+        private void pause(object sender, System.Windows.RoutedEventArgs e)
+        {
+            webBrowser.InvokeScript("pauseVideo");
+        }
 
         private void Next_Music(object sender, RoutedEventArgs e)
         {
@@ -359,30 +386,83 @@ namespace Orange
 
         private void Show_video_in_control(object sender, RoutedEventArgs e)
         {
-
+            if(webBrowser.Visibility == Visibility.Visible)
+            {
+                webBrowser.Visibility = Visibility.Hidden;
+                ShowVideoBtn.Content = "ShowVideo";
+            }else{
+                webBrowser.Visibility = Visibility.Visible;
+                ShowVideoBtn.Content = "HideVideo";
+            }            
         }
+
+
 
         #endregion
 
         #region playlist event controller
         private void top_list(object sender, RoutedEventArgs e)
         {
+            if (myPlayList.SelectedIndex != -1)
+            {
+                MusicItem item = (MusicItem)myPlayList.SelectedItem;
 
+
+               // MessageBox.Show(item.title);
+                myPlayListCollection.Remove(item);
+                myPlayListCollection.Insert(0, item);
+            }
         }
 
         private void up_list(object sender, RoutedEventArgs e)
         {
+            int idx = myPlayList.SelectedIndex;
+            if (myPlayList.SelectedIndex != -1)
+            {
+                if (myPlayList.SelectedIndex == 0)
+                    return;
 
+                MusicItem item = (MusicItem)myPlayList.SelectedItem;
+
+
+                // MessageBox.Show(item.title);
+                myPlayListCollection.Remove(item);
+                myPlayListCollection.Insert(idx-1, item);
+            }
         }
 
         private void down_list(object sender, RoutedEventArgs e)
         {
+            int idx = myPlayList.SelectedIndex;
+            if (myPlayList.SelectedIndex != -1)
+            {
+                if (myPlayList.SelectedIndex == myPlayListCollection.Count-1)
+                    return;
 
+                MusicItem item = (MusicItem)myPlayList.SelectedItem;
+
+
+                // MessageBox.Show(item.title);
+                myPlayListCollection.Remove(item);
+                myPlayListCollection.Insert(idx + 1, item);
+            }
         }
 
         private void bottom_list(object sender, RoutedEventArgs e)
         {
+            int idx = myPlayList.SelectedIndex;
+            if (myPlayList.SelectedIndex != -1)
+            {
+                if (myPlayList.SelectedIndex == myPlayListCollection.Count-1)
+                    return;
 
+                MusicItem item = (MusicItem)myPlayList.SelectedItem;
+
+
+                // MessageBox.Show(item.title);
+                myPlayListCollection.Remove(item);
+                myPlayListCollection.Insert(myPlayListCollection.Count, item);
+            }
         }
 
         private void save_list(object sender, RoutedEventArgs e)
@@ -397,7 +477,11 @@ namespace Orange
 
         private void delete_list(object sender, RoutedEventArgs e)
         {
-
+            if (myPlayList.SelectedIndex != -1)
+            {
+                MusicItem item = (MusicItem)myPlayList.SelectedItem;
+                myPlayListCollection.Remove(item);
+            }
         }
         #endregion
 
@@ -405,9 +489,37 @@ namespace Orange
         {
             musicCollection.Clear();
             myPlayListCollection.Clear();
+            WebBrowserHelper.ClearCache();
             webBrowser.Dispose();
             (Application.Current as App).msgBroker.MessageReceived -= msgBroker_MessageReceived;
 
         }
+
+        private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void PlayerSlider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {            
+            this.dragStarted = false;
+            MessageBox.Show("DragCompleted");
+        }
+
+        private void PlayerSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!dragStarted)
+            {
+                MessageBox.Show("Dragging");
+            }
+        }
+
+        private void PlayerSlider_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            this.dragStarted = true;
+        }
+
+
+
     }
 }

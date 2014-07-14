@@ -29,6 +29,143 @@
 					</ColorAnimationUsingKeyFrames>
 				</Storyboard>
         </ControlTemplate.Resources>
+        
+        
     </ControlTemplate>
-
+    <ControlTemplate x:Key="RepeatButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Margin="0" Source="../Images/player_repeat_btn.png" Stretch="Fill"/>
+        </Grid>
+    	<ControlTemplate.Triggers>
+    		<Trigger Property="IsMouseOver" Value="False">
+    			<Setter Property="Opacity" TargetName="image" Value="0.5"/>
+    		</Trigger>
+    	</ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="PreviousButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Margin="0" Source="../Images/player_back_btn.png" Stretch="Fill"/>
+        </Grid>
+    	<ControlTemplate.Triggers>
+    		<Trigger Property="IsMouseOver" Value="False">
+    			<Setter Property="Opacity" TargetName="image" Value="0.5"/>
+    		</Trigger>
+    	</ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="PauseButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Margin="0" Source="../Images/player_pause_btn.png" Stretch="Fill"/>
+        </Grid>
+    	<ControlTemplate.Triggers>
+    		<Trigger Property="IsMouseOver" Value="False">
+    			<Setter Property="Opacity" TargetName="image" Value="0.5"/>
+    		</Trigger>
+    	</ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="PlayButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Margin="0" Source="../Images/player_play_btn.png" Stretch="Fill"/>
+        </Grid>
+    	<ControlTemplate.Triggers>
+    		<Trigger Property="IsMouseOver" Value="False">
+    			<Setter Property="Opacity" TargetName="image" Value="0.5"/>
+    		</Trigger>
+    	</ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="NextButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Margin="0" Source="../Images/player_next_btn.png" Stretch="Fill"/>
+        </Grid>
+    	<ControlTemplate.Triggers>
+    		<Trigger Property="IsMouseOver" Value="False">
+    			<Setter Property="Opacity" TargetName="image" Value="0.5"/>
+    		</Trigger>
+    	</ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="ShuffleButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Margin="0" Source="../Images/player_shuffle_btn.png" Stretch="Fill"/>
+        </Grid>
+    	<ControlTemplate.Triggers>
+    		<Trigger Property="IsMouseOver" Value="False">
+    			<Setter Property="Opacity" TargetName="image" Value="0.5"/>
+    		</Trigger>
+    	</ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="VolButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image Margin="0" Source="../Images/volume.png" Stretch="Fill"/>
+        </Grid>
+    </ControlTemplate>
+    <ControlTemplate x:Key="TopButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Source="../Images/player_small_playlist_endofup.png" Stretch="Fill"/>
+        </Grid>
+    	<ControlTemplate.Triggers>
+    		<Trigger Property="IsMouseOver" Value="False">
+    			<Setter Property="Opacity" TargetName="image" Value="0.5"/>
+    		</Trigger>
+    	</ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="UpButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Source="../Images/player_small_playlist_up.png" Stretch="Fill"/>
+        </Grid>
+    	<ControlTemplate.Triggers>
+    		<Trigger Property="IsMouseOver" Value="False">
+    			<Setter Property="Opacity" TargetName="image" Value="0.5"/>
+    		</Trigger>
+    	</ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="DownButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Source="../Images/player_small_playlist_down.png" Stretch="Fill"/>
+        </Grid>
+    	<ControlTemplate.Triggers>
+    		<Trigger Property="IsMouseOver" Value="False">
+    			<Setter Property="Opacity" TargetName="image" Value="0.5"/>
+    		</Trigger>
+    	</ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="BottomButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Source="../Images/player_small_playlist_endofdown.png" Stretch="Fill"/>
+        </Grid>
+    	<ControlTemplate.Triggers>
+    		<Trigger Property="IsMouseOver" Value="False">
+    			<Setter Property="Opacity" TargetName="image" Value="0.5"/>
+    		</Trigger>
+    	</ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="SaveButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Source="../Images/player_small_playlist_save.png" Stretch="Fill"/>
+        </Grid>
+    	<ControlTemplate.Triggers>
+    		<Trigger Property="IsMouseOver" Value="False">
+    			<Setter Property="Opacity" TargetName="image" Value="0.5"/>
+    		</Trigger>
+    	</ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="LoadButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Source="../Images/player_small_playlist_open.png" Stretch="Fill"/>
+        </Grid>
+    	<ControlTemplate.Triggers>
+    		<Trigger Property="IsMouseOver" Value="False">
+    			<Setter Property="Opacity" TargetName="image" Value="0.5"/>
+    		</Trigger>
+    	</ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="DelButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Source="../Images/player_small_playlist_del.png" Stretch="Fill"/>
+        </Grid>
+    	<ControlTemplate.Triggers>
+    		<Trigger Property="IsMouseOver" Value="False">
+    			<Setter Property="Opacity" TargetName="image" Value="0.5"/>
+    		</Trigger>
+    	</ControlTemplate.Triggers>
+    </ControlTemplate>
+    
 </ResourceDictionary>
