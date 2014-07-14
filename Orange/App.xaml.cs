@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Orange.MsgBroker;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,12 @@ namespace Orange
     /// </summary>
     public partial class App : Application
     {
+        public MessageBroker msgBroker { get; set; }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            msgBroker = new MessageBroker();
+        }
     }
 }

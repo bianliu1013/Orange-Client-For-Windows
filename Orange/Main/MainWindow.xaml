@@ -201,12 +201,7 @@
 
     			<ScrollViewer x:Name="Search_ScrollViewer" Margin="5,50,6,10">
     				<ListView     x:Name="result_musiclist" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" Background="{x:Null}" ToolTip="{Binding title}">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}">
-                            <Setter Property="ToolTip" Value="{Binding title}" />
-                           
-                        </Style>
-                    </ListView.ItemContainerStyle>
+                    
                     <ListView.View>
     						<GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
 
@@ -240,7 +235,7 @@
     								<GridViewColumn.CellTemplate>
     									<DataTemplate>
     										<Button
-    											Content="▶"
+    											Content="▷"
     											Margin="0,1,0,1"
     											VerticalAlignment="Center"
     											Click="Button_Click" />
@@ -278,7 +273,7 @@
             <Grid x:Name="player_grid" Grid.Column="1" Margin="0,0,0,0">
                 <Grid Margin="7,6,3,139">
                     <Image Margin="0,20,0,0" Source="../Images/player_logo.png" Stretch="Fill" Width="311" Height="127" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <WebBrowser x:Name="webBrowser" Height="155" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Loaded="webBrowser_Loaded" Navigated="webBrowser_Navigated">
+                    <WebBrowser x:Name="webBrowser" Height="155" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Loaded="webBrowser_Loaded" Navigated="webBrowser_Navigated" Visibility="Hidden">
                         <WebBrowser.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -316,7 +311,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button
-    										Content="MP3"
+    										Content="가사"
     										Margin="1"
     										VerticalAlignment="Center"
     										Click="Button_Click" />

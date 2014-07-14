@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using Orange.MsgBroker;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +53,16 @@ namespace Orange
 
           //  webBrowser.Navigated += webBrowser_Navigated;
           //  webBrowser.Navigate("http://115.71.236.224:8081/static/YouTubePlayer.html");
+            (Application.Current as App).msgBroker.MessageReceived += msgBroker_MessageReceived;
+        }
+
+        void msgBroker_MessageReceived(object sender, MsgBroker.MsgBrokerEventArgs e)
+        {
+            switch(e.Message.MsgOPCode)
+            {
+                case MESSAGE.TEST:
+                    break;
+            }
         }
 
         private void initStoryboard()
