@@ -77,8 +77,11 @@
     </Compile>
     <Compile Include="DataManager\MusicCollection.cs" />
     <Compile Include="DataManager\MusicItem.cs" />
-    <Compile Include="MsgBroker\IMessageBroker.cs" />
+    <Compile Include="MsgBroker\IMsgBroker.cs" />
     <Compile Include="MsgBroker\MsgBroker.cs" />
+    <Compile Include="MsgBroker\MsgBrokerEventArgs.cs" />
+    <Compile Include="MsgBroker\MsgBrokerMsg.cs" />
+    <Compile Include="MsgBroker\MsgMap.cs" />
     <Compile Include="Util\JSONHelper.cs" />
     <Compile Include="Chats\K-pop\KPopList.cs" />
     <Compile Include="Chats\K-pop\KPopObject.cs" />
