@@ -278,7 +278,8 @@ namespace Orange
                         foreach(JsonObjectCollection item in items)
                         {
                             
-                            string resultURL = item["url"].GetValue().ToString().Replace("http://www.youtube.com/watch?v=", ""); 
+                            string resultURL = item["url"].GetValue().ToString().Replace("http://www.youtube.com/watch?v=", "");
+                            //string resultPlayTime = item["playTime"].GetValue().ToString();
                             string resultTitle = item["title"].GetValue().ToString();
                             MusicItem mitem = new MusicItem();
                             mitem.title = resultTitle;
@@ -648,10 +649,6 @@ namespace Orange
             if (sfDialog.ShowDialog() == true)
             {
 
-
-                string s = Security.Encrypt(collection.ToString());
-                //File.WriteAllText(sfDialog.FileName, s);
-
                 File.WriteAllText(sfDialog.FileName, Security.Encrypt(Newtonsoft.Json.JsonConvert.SerializeObject(myPlayListCollection)));
             }
         }
@@ -666,18 +663,21 @@ namespace Orange
 
             if (result == true)
             {
-                myPlayListCollection.Clear();
+                
                 string fileName = ofDialog.FileName;
-
-
-                string json = Security.Decrypt(File.ReadAllText(fileName));
-                var playerList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MusicItem>>(json);
-
-                    
-                foreach(var it in playerList)
+                try
                 {
-                    myPlayListCollection.Add(it);
-                }
+                    string json = Security.Decrypt(File.ReadAllText(fileName));
+                    var playerList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MusicItem>>(json);
+                    myPlayListCollection.Clear();
+                    foreach (var it in playerList)
+                    {
+                        myPlayListCollection.Add(it);
+                    }
+                }catch(Exception)
+                {
+                    MessageBox.Show("파일 형식이 맞지 않습니다");
+                }           
                                 
             }
         }

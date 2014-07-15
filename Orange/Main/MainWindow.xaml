@@ -128,9 +128,10 @@
     
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-            <Button Content="Information" />
-            <Button Content="Setting" />
 
+            <Button  Width="25" Height="25" Template="{DynamicResource InformationBtnTemplate}" />
+
+            <Button  Width="25" Height="25" Template="{DynamicResource ConfigButtonControlTemplate}" />
         </controls:WindowCommands>
 
 
@@ -146,14 +147,14 @@
       
            
             <Grid x:Name="leftPanel"   Grid.Column="0" Background="White" MinWidth="310">
-    			<Rectangle x:Name="musiclist_title_rec_for_width" Fill="Blue" Height="63.2" Margin="5,102,178,0" Stroke="#FFE8E8E8" VerticalAlignment="Top" Visibility="Hidden" d:IsLocked="True"/>
+    			<Rectangle x:Name="musiclist_title_rec_for_width" Fill="Blue" Height="63.2" Margin="5,102,163,0" Stroke="#FFE8E8E8" VerticalAlignment="Top" Visibility="Hidden"/>
 
     			<ScrollViewer x:Name="Search_ScrollViewer" Margin="5,50,6,10">
     				<ListView     x:Name="result_musiclist" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" Background="{x:Null}" MouseDoubleClick="result_musiclist_MouseDoubleClick" >
                     <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}">
-                            <Setter Property="ToolTip" Value="{Binding title}" />    
-                            
+                        <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                            <Setter Property="ToolTip" Value="{Binding title}" />
+                            <Setter Property="IsSelected" Value="{Binding Mode=TwoWay, Path=IsSelected}"/>
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.View>
@@ -177,7 +178,7 @@
     								</GridViewColumn.CellTemplate>
     							</GridViewColumn>
 
-                            <GridViewColumn Header="Play time" Width="75"     DisplayMemberBinding="{Binding playTime}" >
+                            <GridViewColumn Header="Play time" Width="60"     DisplayMemberBinding="{Binding playTime}" >
     								<GridViewColumn.CellTemplate>
     									<DataTemplate>
     										<TextBlock Text="재생 시간"/>
@@ -246,11 +247,16 @@
                     </WebBrowser>
                 </Grid>
             <Grid Margin="10,0,0,9" Grid.Row="1">
-                	<Rectangle x:Name="titleWidthSizeREc" Margin="0,2,201,0" VerticalAlignment="Top"/>
+                	<Rectangle x:Name="titleWidthSizeREc" Margin="0,2,175,0" VerticalAlignment="Top"/>
                 	<Path Data="M0,51.5 L300,51.5" Fill="#FF8B8B8B" HorizontalAlignment="Left" Height="1" Margin="2,85,0,0" Stretch="Fill" Stroke="#FFCBCBCB" VerticalAlignment="Top" Width="{Binding ActualWidth, ElementName=myPlayList}"/>
                 <Slider x:Name="PlayerSlider" Margin="50,7,50,0" VerticalAlignment="Top" Thumb.DragCompleted="PlayerSlider_DragCompleted" Thumb.DragStarted="PlayerSlider_DragStarted"  ValueChanged="PlayerSlider_ValueChanged"/>
                 	<ListView     x:Name="myPlayList" Margin="0,91,10,35" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" Background="{x:Null}" MouseDoubleClick="myPlayList_MouseDoubleClick" ItemsSource="{Binding}" >
-                		<ListView.View>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                            <Setter Property="ToolTip" Value="{Binding title}" />                            
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
                 			<GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}" >
 
                 				<GridViewColumn  Header="Title" DisplayMemberBinding="{Binding title}"   Width="{Binding ActualWidth, ElementName=titleWidthSizeREc}">
@@ -261,7 +267,7 @@
                 					</GridViewColumn.CellTemplate>
                 				</GridViewColumn>
 
-                				<GridViewColumn Header="Play time" Width="75" DisplayMemberBinding="{Binding playTime}" >
+                				<GridViewColumn Header="Play time" Width="50" DisplayMemberBinding="{Binding playTime}" >
                 					<GridViewColumn.CellTemplate>
                 						<DataTemplate>
                 							<TextBlock Text="재생 시간"/>

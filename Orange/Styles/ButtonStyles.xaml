@@ -32,6 +32,29 @@
         
         
     </ControlTemplate>
+
+    <ControlTemplate x:Key="InformationBtnTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Margin="1" Source="../Images/information.png" Stretch="Fill"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="Opacity" TargetName="image" Value="0.5"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="ConfigButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Margin="1" Source="../Images/config.png" Stretch="Fill"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="Opacity" TargetName="image" Value="0.5"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
     <ControlTemplate x:Key="DefaultRepeatButtonControlTemplate" TargetType="{x:Type Button}">
         <Grid>
             <Image x:Name="image" Margin="0" Source="../Images/player_repeat_btn.png" Stretch="Fill"/>
