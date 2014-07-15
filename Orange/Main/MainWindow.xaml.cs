@@ -751,6 +751,12 @@ namespace Orange
             (Application.Current as App).msgBroker.MessageReceived -= msgBroker_MessageReceived;
 
         }
+
+
+        private void Information_Click(object sender, RoutedEventArgs e)
+        {
+            information_uc.Visibility = Visibility.Visible;
+        }
        
     }
 }

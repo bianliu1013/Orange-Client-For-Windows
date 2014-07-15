@@ -71,6 +71,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Main\information_usercontrol.xaml.cs">
+      <DependentUpon>information_usercontrol.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -80,6 +83,10 @@
     <Compile Include="Util\Security.cs" />
     <Compile Include="Util\Shuffle.cs" />
     <Compile Include="Util\WebBrowserHelper.cs" />
+    <Page Include="Main\information_usercontrol.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Main\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -144,6 +151,7 @@
     </None>
     <AppDesigner Include="Properties\" />
     <Resource Include="Images\config.png" />
+    <Resource Include="Images\gift.png" />
     <Resource Include="Images\information.png" />
     <Resource Include="Images\main_bottom.png" />
     <Resource Include="Images\main_top.png" />

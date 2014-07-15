@@ -6,7 +6,7 @@
         xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:Orange" mc:Ignorable="d" x:Class="Orange.MainWindow"
         Title="Orange Player" Height="500" Width="640"
-        ResizeMode="CanResizeWithGrip" GlowBrush="#FFF27405" BorderThickness="0" NonActiveBorderBrush="#FFE06600" NonActiveGlowBrush="#FFE06600" NonActiveWindowTitleBrush="#FFF29F05" MinWidth="640" MinHeight="500" Unloaded="MetroWindow_Unloaded">
+        ResizeMode="CanResizeWithGrip" GlowBrush="#FFF27405" BorderThickness="0" NonActiveBorderBrush="#FFE06600" NonActiveGlowBrush="#FFE06600" NonActiveWindowTitleBrush="#FFF29F05" MinWidth="640" MinHeight="500" Unloaded="MetroWindow_Unloaded" ShowWindowCommandsOnTop="True">
     <controls:MetroWindow.Resources>
 	<Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
         <Setter Property="Visibility" Value="Collapsed" />
@@ -129,9 +129,9 @@
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
 
-            <Button  Width="25" Height="25" Template="{DynamicResource InformationBtnTemplate}" />
+            <Button  Width="25" Height="25" Template="{DynamicResource InformationBtnTemplate}" Click="Information_Click" />
 
-            <Button  Width="25" Height="25" Template="{DynamicResource ConfigButtonControlTemplate}" />
+            <Button  Width="25" Height="25" Template="{DynamicResource ConfigButtonControlTemplate}"  />
         </controls:WindowCommands>
 
 
@@ -154,7 +154,7 @@
                     <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
                             <Setter Property="ToolTip" Value="{Binding title}" />
-                            <Setter Property="IsSelected" Value="{Binding Mode=TwoWay, Path=IsSelected}"/>
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.View>
@@ -317,12 +317,12 @@
                 			<ColumnDefinition Width="25*"/>
                 			<ColumnDefinition Width="257*"/>
                 		</Grid.ColumnDefinitions>
-                		<Button x:Name="repeatBtn" Content="repeat" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Template="{DynamicResource DefaultRepeatButtonControlTemplate}" Click="set_repeat" Margin="0,23.669,0,0" Grid.ColumnSpan="2" Cursor="Hand"/>
-                		<Button Content="previous" HorizontalAlignment="Left" Height="30" Margin="19.168,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PreviousButtonControlTemplate}" Click="Previous_music" Grid.Column="1" Cursor="Hand"/>
-                		<Button x:Name="PlayBtn" Content="Play" HorizontalAlignment="Left" Height="30" Margin="69.168,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PlayButtonControlTemplate}" Click="play" Grid.Column="1" Cursor="Hand"/>
-                		<Button x:Name="pauseBtn" Content="Play" HorizontalAlignment="Left" Height="30" Margin="118.335,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PauseButtonControlTemplate}" Click="pause" Grid.Column="1" Cursor="Hand"/>
-                		<Button Content="Next" HorizontalAlignment="Left" Height="30" Margin="169.835,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource NextButtonControlTemplate}" Click="Next_Music" Grid.Column="1" Cursor="Hand"/>
-                		<Button x:Name="ShuffleBtn" Content="Shuffle" HorizontalAlignment="Left" Height="30" Margin="217,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource NonShuffleButtonControlTemplate}" Click="set_shuffle" Grid.Column="1" Cursor="Hand"/>
+                		<Button x:Name="repeatBtn" Content="repeat" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Template="{DynamicResource DefaultRepeatButtonControlTemplate}" Click="set_repeat" Margin="0,23.669,0,0" Grid.ColumnSpan="2" Cursor="Hand" ToolTip="반복없음"/>
+                		<Button Content="previous" HorizontalAlignment="Left" Height="30" Margin="19.168,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PreviousButtonControlTemplate}" Click="Previous_music" Grid.Column="1" Cursor="Hand" ToolTip="이전"/>
+                		<Button x:Name="PlayBtn" Content="Play" HorizontalAlignment="Left" Height="30" Margin="69.168,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PlayButtonControlTemplate}" Click="play" Grid.Column="1" Cursor="Hand" ToolTip="재생"/>
+                		<Button x:Name="pauseBtn" Content="Play" HorizontalAlignment="Left" Height="30" Margin="118.335,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PauseButtonControlTemplate}" Click="pause" Grid.Column="1" Cursor="Hand" ToolTip="일시정지"/>
+                		<Button Content="Next" HorizontalAlignment="Left" Height="30" Margin="169.835,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource NextButtonControlTemplate}" Click="Next_Music" Grid.Column="1" Cursor="Hand" ToolTip="다음"/>
+                		<Button x:Name="ShuffleBtn" Content="Shuffle" HorizontalAlignment="Left" Height="30" Margin="217,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource NonShuffleButtonControlTemplate}" Click="set_shuffle" Grid.Column="1" Cursor="Hand" ToolTip="순차듣기"/>
                 		<Slider x:Name="VolumeSlider" HorizontalAlignment="Left" Margin="0.001,59.332,0,0" VerticalAlignment="Top" Width="141.334" Value="80" Grid.Column="1" ValueChanged="VolumeSlider_ValueChanged"/>
                 		<Button x:Name="VolumeBtn" Content="vol" HorizontalAlignment="Left" Height="20" Margin="0.001,55.332,0,-0.333" VerticalAlignment="Top" Width="20" Template="{DynamicResource VolButtonControlTemplate}" Click="Mute"/>
                 		<Button x:Name="ShowVideoBtn" Content="Show Video" HorizontalAlignment="Left" Height="14" Margin="151.334,55.332,0,-0.333" VerticalAlignment="Top" Width="104" Click="Show_video_in_control" Grid.Column="1"/>
@@ -335,9 +335,9 @@
                 			<Button x:Name="ms_list_bottom" Content="bottom" HorizontalAlignment="Left" Height="30" Margin="122.667,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource BottomButtonControlTemplate}" Click="bottom_list" Cursor="Hand"/>
                 		</Grid>
                 		<Grid x:Name="listMgr" Margin="0" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                			<Button Content="save" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Template="{DynamicResource SaveButtonControlTemplate}" Click="save_list" Cursor="Hand"/>
-                			<Button Content="Load" HorizontalAlignment="Left" Height="30" Margin="35,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource LoadButtonControlTemplate}" Click="open_list" Cursor="Hand"/>
-                			<Button Content="Del" HorizontalAlignment="Left" Height="30" Margin="70,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource DelButtonControlTemplate}" Click="delete_list" Cursor="Hand"/>
+                			<Button Content="save" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Template="{DynamicResource SaveButtonControlTemplate}" Click="save_list" Cursor="Hand" ToolTip="저장"/>
+                			<Button Content="Load" HorizontalAlignment="Left" Height="30" Margin="35,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource LoadButtonControlTemplate}" Click="open_list" Cursor="Hand" ToolTip="열기"/>
+                			<Button Content="Del" HorizontalAlignment="Left" Height="30" Margin="70,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource DelButtonControlTemplate}" Click="delete_list" Cursor="Hand" ToolTip="목록 지우기"/>
                 		</Grid>
                 	</Grid>
                 	<TextBlock x:Name="currentTimeTxb" HorizontalAlignment="Left" Margin="15,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF959595"><Run Language="ko-kr" Text="00:00"/></TextBlock>
@@ -363,6 +363,7 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
+            <local:information_usercontrol x:Name="information_uc" Grid.ColumnSpan="2" Visibility="Collapsed"/>
 
     </Grid>
 </controls:MetroWindow>
