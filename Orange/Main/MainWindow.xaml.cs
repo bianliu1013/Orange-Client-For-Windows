@@ -48,6 +48,8 @@ namespace Orange
 
         private Storyboard HideLeftPanelStoryboard;
         private Storyboard ShowLeftPanelStoryboard;
+        private Storyboard HideTopGridStoryboard;
+        private Storyboard ShowTopGridStoryboard;
         private string queryString;
         private DispatcherTimer dt;
 
@@ -94,8 +96,7 @@ namespace Orange
             {
                 totalTime = Double.Parse(webBrowser.InvokeScript("getDuration").ToString());
                 currentTime = Double.Parse(webBrowser.InvokeScript("getCurrentTime").ToString());
-
-
+                
                 if(totalTime!=0.0)
                 {
                     PlayerSlider.Maximum = totalTime;
@@ -103,7 +104,6 @@ namespace Orange
 
                     TimeSpan ctime = TimeSpan.FromSeconds(currentTime);
                     TimeSpan endtime = TimeSpan.FromSeconds(totalTime);
-
 
                     currentTimeTxb.Text = ctime.ToString(@"mm\:ss"); 
                     endTimeTxb.Text = endtime.ToString(@"mm\:ss");
@@ -140,6 +140,7 @@ namespace Orange
                         }
 
                         PlayMusic(CurrentItem);
+
                         return;
                     }
                 }
@@ -172,6 +173,12 @@ namespace Orange
             }
         }
 
+        private void SelectCurrentMusicItemInPlayList(MusicItem item)
+        {            
+            int idx = myPlayListCollection.IndexOf(item);
+            myPlayList.SelectedIndex = idx;
+        }
+
         private void CopyPlayList()
         {            
             playlist = myPlayListCollection.ToList();
@@ -197,9 +204,31 @@ namespace Orange
                       main_page.Visibility = Visibility.Visible;
                       main_page.SetProgressRing(true);
                     break;
+
                 case UI_CONTROL.PROGRESS_HIDE:
                      main_page.SetProgressRing(false);
                      main_page.Visibility = Visibility.Collapsed;
+                    break;
+
+                case UI_CONTROL.SHOW_TOP_GRID:
+                    if (!UI_Flag.IsShowingTopGrid)
+                    {
+                        webBrowser.Visibility = Visibility.Hidden;
+                        top_content.Children.Clear();
+                        top_content.Children.Add((UserControl)e.Message.MsgBody);
+                        ShowTopGridStoryboard.Begin();
+
+
+                        UI_Flag.IsShowingTopGrid = true;
+                    }                   
+                    
+                    break;
+                case UI_CONTROL.HIDE_TOP_GRID:
+                    if (UI_Flag.IsShowingTopGrid)
+                    {
+                        HideTopGridStoryboard.Begin();
+                        UI_Flag.IsShowingTopGrid = false;
+                    }
                     break;
             }
         }
@@ -208,6 +237,14 @@ namespace Orange
         {
             HideLeftPanelStoryboard = this.Resources["left_panel_hide"] as Storyboard;
             ShowLeftPanelStoryboard = this.Resources["left_panel_show"] as Storyboard;
+            HideTopGridStoryboard = this.Resources["Hide_top_content"] as Storyboard;
+            HideTopGridStoryboard.Completed += HideTopGridStoryboard_Completed;
+            ShowTopGridStoryboard = this.Resources["show_top_content"] as Storyboard;
+        }
+
+        void HideTopGridStoryboard_Completed(object sender, EventArgs e)
+        {
+            top_content.Children.Clear();
         }
 
         private void MenuBtn_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -463,8 +500,26 @@ namespace Orange
             {
                   var dialog = new System.Windows.Forms.FolderBrowserDialog();
                   System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-                
+                if(result == System.Windows.Forms.DialogResult.OK)
+                {
 
+                    MusicItem item = (MusicItem)result_musiclist.SelectedItem;
+                    ConvertMP3.PATH = dialog.SelectedPath;
+                    //MessageBox.Show(path);
+
+                    ConvertMP3.URL = "http://www.youtube.com/watch?v=" + item.url;
+
+                    MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+                    arg.MsgOPCode = UI_CONTROL.SHOW_TOP_GRID;
+                    arg.MsgBody = new ConvertingProgress();
+                    (Application.Current as App).msgBroker.SendMessage(arg);
+
+
+                    ConvertMP3.worker(this, ConvertMP3.URL, ConvertMP3.PATH, WKIND.CONVERT);
+                 
+                  
+                }
+                  
                 // string mUrl = "http://www.youtube.com/watch?v="+ item.url;
 
                // ConvertMP3.worker(mUrl, )
@@ -477,6 +532,8 @@ namespace Orange
         }
 
 
+
+
         #endregion
 
 
@@ -487,7 +544,7 @@ namespace Orange
             //var document = webBrowser.Document;
             //webBrowser.Document.GetType().InvokeMember("pauseVideo", BindingFlags.InvokeMethod, null, document, null);
             webBrowser.InvokeScript("playVideo");
-
+            dt.Start();
            
             //PlayBtn.Template = (ControlTemplate)FindResource("PauseButtonControlTemplate");
         }
@@ -495,6 +552,7 @@ namespace Orange
         private void pause(object sender, System.Windows.RoutedEventArgs e)
         {
             webBrowser.InvokeScript("pauseVideo");
+            dt.Stop();
         }
 
         private void Next_Music(object sender, RoutedEventArgs e)
@@ -548,6 +606,7 @@ namespace Orange
                 ShuffleBtn.Template = (ControlTemplate)FindResource("ShuffleButtonControlTemplate");
                 ShuffleBtn.ToolTip = "섞어듣기";
             }
+            CopyPlayList();
         }
 
         private void set_repeat(object sender, RoutedEventArgs e)
@@ -777,7 +836,7 @@ namespace Orange
 
             CurrentItem = item;
             Music_title.Text = item.title;
-            
+            SelectCurrentMusicItemInPlayList(item);
         }
 
         private void MetroWindow_Unloaded(object sender, RoutedEventArgs e)
@@ -793,8 +852,12 @@ namespace Orange
 
         private void Information_Click(object sender, RoutedEventArgs e)
         {
-            information_uc.Visibility = Visibility.Visible;
-            webBrowser.Visibility = Visibility.Hidden;
+            //information_uc.Visibility = Visibility.Visible;
+           
+            MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+            arg.MsgOPCode = UI_CONTROL.SHOW_TOP_GRID;
+            arg.MsgBody = new information_usercontrol();
+            (Application.Current as App).msgBroker.SendMessage(arg);
         }
        
     }

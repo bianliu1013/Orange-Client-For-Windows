@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <ApplicationIcon>icon_orange.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MahApps.Metro">
@@ -72,6 +72,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Main\ConvertingProgress.xaml.cs">
+      <DependentUpon>ConvertingProgress.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Main\information_usercontrol.xaml.cs">
       <DependentUpon>information_usercontrol.xaml</DependentUpon>
     </Compile>
@@ -85,6 +88,10 @@
     <Compile Include="Util\Security.cs" />
     <Compile Include="Util\Shuffle.cs" />
     <Compile Include="Util\WebBrowserHelper.cs" />
+    <Page Include="Main\ConvertingProgress.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Main\information_usercontrol.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -154,6 +161,7 @@
     <AppDesigner Include="Properties\" />
     <Resource Include="Images\config.png" />
     <Resource Include="Images\gift.png" />
+    <Resource Include="Images\icon.png" />
     <Resource Include="Images\information.png" />
     <Resource Include="Images\main_bottom.png" />
     <Resource Include="Images\main_top.png" />
@@ -202,6 +210,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Chats\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon_orange.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

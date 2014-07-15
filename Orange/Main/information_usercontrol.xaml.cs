@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Orange.MsgBroker;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -40,7 +41,10 @@ namespace Orange
 		private void LayoutRoot_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
             e.Handled = true;
-            this.Visibility = Visibility.Collapsed;
+            MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+            arg.MsgOPCode = UI_CONTROL.HIDE_TOP_GRID;
+          
+            (Application.Current as App).msgBroker.SendMessage(arg);
 		}
 	}
 }

@@ -10,7 +10,17 @@ namespace Orange.Util
     {
         public static bool IsShffle = false;
         public static int REPEAT = 0; // DEFAULT 0, ALL REPEAT 1, SINGLE REPEAT 2
-        public static bool IsMute = false;
-        
+        public static bool IsMute = false;        
+    }
+
+    class UI_Flag
+    {
+        public static bool IsShowingTopGrid = false;
+    }
+
+    class Player_State
+    {
+        public static bool IsPlaying = false;
+        public static bool IsEndOfPoint = false;
     }
 }

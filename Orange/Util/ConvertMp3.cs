@@ -7,13 +7,18 @@ using System.Diagnostics;
 using System.Threading;
 using System.IO;
 using System.Windows;
+using Orange.MsgBroker;
+using System.Windows.Threading;
 
 namespace Orange.Util
 {
     enum WKIND { DOWN, CONVERT }
      class ConvertMP3
     {
-        public static void worker(string url, string path, WKIND kind)
+         public static string URL;
+         public static string PATH;
+
+        public static void worker(MainWindow win, string url, string path, WKIND kind)
         {
 
            // string sCurrArg = null;
@@ -34,7 +39,7 @@ namespace Orange.Util
             //}
 
             YoutubeController uTube = new YoutubeController(url, kind);
-
+            uTube.SetPreConvert(win, path);
             /////////////////////////
             //
             //  옵션사항 여기에 추가
@@ -42,7 +47,9 @@ namespace Orange.Util
             /////////////////////////
 
             //youtube-dl 사용
-            uTube.YoutubDownload(path);
+
+
+            uTube.Usingthread();
 
         }
 
@@ -67,7 +74,8 @@ namespace Orange.Util
    //     private string srcPath = "D:/abc/";     // 소스 주소
   //      private string dstPath = "D:/def/";     // 목적지 주소
         private string currPath = "";           // 현재 주소
-
+        private string dstPath;
+        private MainWindow win;
         //생성자
         public YoutubeController()
         {
@@ -87,8 +95,19 @@ namespace Orange.Util
             kind = k;
         }
 
+        public void SetPreConvert(MainWindow win, string path)
+        {
+            this.win = win;
+            this.dstPath = path;
+        }
+
+        public void Usingthread()
+        {
+            Thread thread = new Thread(new ThreadStart(YoutubDownload));
+            thread.Start();
+        }
         // Youtube-dl 사용 함수
-        public void YoutubDownload(string dstPath)
+        public void YoutubDownload()
         {
             if(urlPath == null)
             {
@@ -119,7 +138,7 @@ namespace Orange.Util
 
             try
             {
-                psiProcInfo.FileName = "youtube-dl.exe";
+                psiProcInfo.FileName = "Util/youtube-dl.exe";
                 psiProcInfo.Arguments = strYOUTUBEDLCmd;
                 psiProcInfo.UseShellExecute = false;
                 psiProcInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -162,9 +181,16 @@ namespace Orange.Util
                             int pos = text.IndexOf("%");
                             string currProgress = text.Substring(0, pos);
 
-                            // 작업상태 체크
+                            win.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(delegate
+                            {
+                                // 작업상태 체크
+                                MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+                                arg.MsgOPCode = UI_CONTROL.SET_CONVERT_PROGRESS_VALUE;
+                                arg.MsgBody = Double.Parse(currProgress);
 
-                            // 프로그래스바 작업
+                                (Application.Current as App).msgBroker.SendMessage(arg);
+                                // 프로그래스바 작업
+                            }));
 
                         }
                         catch(Exception e)
@@ -178,11 +204,53 @@ namespace Orange.Util
             {
                 MessageBox.Show(e.Message);
             }
-            finally
+             finally
             {
-                MoveFile(dstPath);
-                MessageBox.Show("Complete");
+                if (kind == WKIND.CONVERT)
+                {
+                    win.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                    {
+                    if (MoveFile())
+                    {
+                      
+                            // 작업상태 체크
+                            MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+                            arg.MsgOPCode = UI_CONTROL.FINISH_CONVERT_PROGRESS;
+                            (Application.Current as App).msgBroker.SendMessage(arg);
+                            // 프로그래스바 작업
+                    
+                    }
+                    }));
+                }
+                else if (kind == WKIND.DOWN)
+                {
+                    if (System.IO.File.Exists(@dstPath + extraName))
+                    {
+                        win.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                        {
+                            // 작업상태 체크
+                            MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+                            arg.MsgOPCode = UI_CONTROL.FINISH_CONVERT_PROGRESS;
+                            (Application.Current as App).msgBroker.SendMessage(arg);
+                            // 프로그래스바 작업
+                        }));
+                    }                       
+                    else
+                    {
+                        MessageBox.Show("Not exists video file");
+                        win.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                        {
+                            // 작업상태 체크
+                            MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+                            arg.MsgOPCode = UI_CONTROL.FINISH_CONVERT_PROGRESS;
+                            (Application.Current as App).msgBroker.SendMessage(arg);
+                            // 프로그래스바 작업
+                        }));
+                    }
+                        
+                }
             }
+                
         }
         
 
@@ -199,9 +267,10 @@ namespace Orange.Util
                return newPath;
         }
 
-        public void MoveFile(string dstPath)
+        //파일이동 메소드
+        public bool MoveFile()
         {
-            if (System.IO.File.Exists(@currPath + fileName+".mp3"))
+            if (System.IO.File.Exists(@currPath + fileName + ".mp3"))
             {
                 string sourceFile = @currPath + fileName + ".mp3";
                 string destinationFile = @dstPath + fileName + ".mp3";
@@ -210,12 +279,27 @@ namespace Orange.Util
                     // To move a file or folder to a new location:
                     System.IO.File.Move(sourceFile, destinationFile);
                 }
-                catch(System.IO.IOException e)
+                catch (System.IO.IOException e)
                 {
                     MessageBox.Show(e.Message);
-                    return;
+                    MessageBox.Show("mp3 파일 이동 실패");
+                    // 작업상태 체크
+                    MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+                    arg.MsgOPCode = UI_CONTROL.FINISH_CONVERT_PROGRESS;
+                    (Application.Current as App).msgBroker.SendMessage(arg);
+                    return false;
                 }
             }
+            else
+            {
+                MessageBox.Show("Not exists audio file");
+                // 작업상태 체크
+                MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+                arg.MsgOPCode = UI_CONTROL.FINISH_CONVERT_PROGRESS;
+                (Application.Current as App).msgBroker.SendMessage(arg);
+                return false;
+            }
+            return true;
         }
 
         //파일삭제 메소드
