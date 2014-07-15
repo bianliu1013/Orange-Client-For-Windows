@@ -51,6 +51,9 @@ namespace Orange
         private string queryString;
         private DispatcherTimer dt;
 
+        private double totalTime;
+        private double currentTime;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -89,8 +92,8 @@ namespace Orange
         {
             if (!dragStarted)
             {
-                double totalTime = Double.Parse(webBrowser.InvokeScript("getDuration").ToString());
-                double currentTime = Double.Parse(webBrowser.InvokeScript("getCurrentTime").ToString());
+                totalTime = Double.Parse(webBrowser.InvokeScript("getDuration").ToString());
+                currentTime = Double.Parse(webBrowser.InvokeScript("getCurrentTime").ToString());
 
 
                 if(totalTime!=0.0)
@@ -151,6 +154,10 @@ namespace Orange
                         if (i != playlist.Count - 1)
                         {
                             CurrentItem = playlist[i + 1];
+                        }
+                        else
+                        {
+                            return;
                         }
 
                         PlayMusic(CurrentItem);
@@ -448,6 +455,28 @@ namespace Orange
 
         }
 
+        private void MP3_Convert_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            result_musiclist.SelectedItem = (e.OriginalSource as FrameworkElement).DataContext;
+
+            if (result_musiclist.SelectedIndex != -1)
+            {
+                  var dialog = new System.Windows.Forms.FolderBrowserDialog();
+                  System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                
+
+                // string mUrl = "http://www.youtube.com/watch?v="+ item.url;
+
+               // ConvertMP3.worker(mUrl, )
+
+                //MessageBox.Show(item.title);
+                //myPlayListCollection.Add(item);
+
+            }
+
+        }
+
+
         #endregion
 
 
@@ -459,7 +488,7 @@ namespace Orange
             //webBrowser.Document.GetType().InvokeMember("pauseVideo", BindingFlags.InvokeMethod, null, document, null);
             webBrowser.InvokeScript("playVideo");
 
-
+           
             //PlayBtn.Template = (ControlTemplate)FindResource("PauseButtonControlTemplate");
         }
 
@@ -511,29 +540,37 @@ namespace Orange
             {
                 Config.IsShffle = false;
                 ShuffleBtn.Template = (ControlTemplate)FindResource("NonShuffleButtonControlTemplate");
+                ShuffleBtn.ToolTip = "순차듣기";
             }
             else
             {
                 Config.IsShffle = true;                
                 ShuffleBtn.Template = (ControlTemplate)FindResource("ShuffleButtonControlTemplate");
+                ShuffleBtn.ToolTip = "섞어듣기";
             }
         }
 
         private void set_repeat(object sender, RoutedEventArgs e)
         {
+            
             // DEFAULT 0, ALL REPEAT 1, SINGLE REPEAT 2
-            switch (++Config.REPEAT)
+            switch ((++Config.REPEAT)%3)
             {
                 case 0:
                     repeatBtn.Template = (ControlTemplate)FindResource("DefaultRepeatButtonControlTemplate");
+                    repeatBtn.ToolTip = "반복없음";
                     break;
                 case 1:
                     repeatBtn.Template = (ControlTemplate)FindResource("RepeatButtonControlTemplate");
+                    repeatBtn.ToolTip = "전체반복";
                     break;
                 case 2:
                     repeatBtn.Template = (ControlTemplate)FindResource("SingleRepeatButtonControlTemplate");
+                    repeatBtn.ToolTip = "한곡만 반복";
                     break;
             }
+             
+
         }
 
         private void Show_video_in_control(object sender, RoutedEventArgs e)
@@ -739,6 +776,7 @@ namespace Orange
             dt.Start();
 
             CurrentItem = item;
+            Music_title.Text = item.title;
             
         }
 
@@ -756,6 +794,7 @@ namespace Orange
         private void Information_Click(object sender, RoutedEventArgs e)
         {
             information_uc.Visibility = Visibility.Visible;
+            webBrowser.Visibility = Visibility.Hidden;
         }
        
     }

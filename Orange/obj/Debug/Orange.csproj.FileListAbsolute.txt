@@ -51,3 +51,7 @@ C:\Users\양승원\Documents\GitHub\Orange-Client-For-Windows\Orange\obj\Debug\M
 C:\Users\양승원\Documents\GitHub\Orange-Client-For-Windows\Orange\obj\Debug\Orange.g.resources
 C:\Users\양승원\Documents\GitHub\Orange-Client-For-Windows\Orange\obj\Debug\Orange.Properties.Resources.resources
 C:\Users\양승원\Documents\GitHub\Orange-Client-For-Windows\Orange\obj\Debug\Orange.csproj.GenerateResource.Cache
+C:\Users\양승원\Documents\GitHub\Orange-Client-For-Windows\Orange\bin\Debug\Newtonsoft.Json.dll
+C:\Users\양승원\Documents\GitHub\Orange-Client-For-Windows\Orange\bin\Debug\Newtonsoft.Json.xml
+C:\Users\양승원\Documents\GitHub\Orange-Client-For-Windows\Orange\obj\Debug\Main\information_usercontrol.baml
+C:\Users\양승원\Documents\GitHub\Orange-Client-For-Windows\Orange\obj\Debug\Main\information_usercontrol.g.cs

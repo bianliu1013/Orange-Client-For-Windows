@@ -51,6 +51,7 @@
       <HintPath>..\..\System.Net.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.0.14.0-ALPHA94\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -80,6 +81,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Util\Config.cs" />
+    <Compile Include="Util\ConvertMp3.cs" />
     <Compile Include="Util\Security.cs" />
     <Compile Include="Util\Shuffle.cs" />
     <Compile Include="Util\WebBrowserHelper.cs" />

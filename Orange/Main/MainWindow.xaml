@@ -234,7 +234,7 @@
                 </Grid.RowDefinitions>
 
             <Grid Margin="7,6,3,0" Grid.Row="0">
-                    <Image Margin="0,20,0,0" Source="../Images/player_logo.png" Stretch="Fill" Width="311" Height="127" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    <Image Margin="0,10,0,0" Source="../Images/player_logo.png" Stretch="Fill" Width="311" Height="127" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <WebBrowser x:Name="webBrowser" RenderTransformOrigin="0.5,0.5" Loaded="webBrowser_Loaded" Navigated="webBrowser_Navigated" Visibility="Hidden">
                         <WebBrowser.RenderTransform>
                             <TransformGroup>
@@ -245,6 +245,7 @@
                             </TransformGroup>
                         </WebBrowser.RenderTransform>
                     </WebBrowser>
+                    <TextBlock x:Name="Music_title" HorizontalAlignment="Right" Margin="15,0,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF565656"/>
                 </Grid>
             <Grid Margin="10,0,0,9" Grid.Row="1">
                 	<Rectangle x:Name="titleWidthSizeREc" Margin="0,2,175,0" VerticalAlignment="Top"/>
@@ -267,7 +268,7 @@
                 					</GridViewColumn.CellTemplate>
                 				</GridViewColumn>
 
-                				<GridViewColumn Header="Play time" Width="50" DisplayMemberBinding="{Binding playTime}" >
+                				<GridViewColumn Header="Play time" Width="35" DisplayMemberBinding="{Binding playTime}" >
                 					<GridViewColumn.CellTemplate>
                 						<DataTemplate>
                 							<TextBlock Text="재생 시간"/>
@@ -275,11 +276,11 @@
                 					</GridViewColumn.CellTemplate>
                 				</GridViewColumn>
 
-                				<GridViewColumn Width="60">
+                				<GridViewColumn Width="75">
                 					<GridViewColumn.CellTemplate>
                 						<DataTemplate>
                 							<Button
-                								Content="가사"
+                								Content="MP3 변환"
                 								Margin="1"
                 								VerticalAlignment="Center"
                 								Click="Lyric_PlayList_Click" />

@@ -81,8 +81,8 @@ namespace Orange
                     ////수정해야                
                     // string mUrl = item["singer"].GetValue().ToString();
                     // string playTime = item["singer"].GetValue().ToString();
-                    string mUrl = item["url"].GetValue().ToString();
-                    string playTime = item["ptime"].GetValue().ToString();
+                    string mUrl = item["url"].GetValue().ToString().Replace("http://www.youtube.com/watch?v=", ""); ;
+                    string playTime = item["time"].GetValue().ToString();
 
 
                     MusicItem mitem = new MusicItem();
