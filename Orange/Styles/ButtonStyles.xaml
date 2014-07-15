@@ -32,7 +32,7 @@
         
         
     </ControlTemplate>
-    <ControlTemplate x:Key="RepeatButtonControlTemplate" TargetType="{x:Type Button}">
+    <ControlTemplate x:Key="DefaultRepeatButtonControlTemplate" TargetType="{x:Type Button}">
         <Grid>
             <Image x:Name="image" Margin="0" Source="../Images/player_repeat_btn.png" Stretch="Fill"/>
         </Grid>
@@ -41,6 +41,27 @@
     			<Setter Property="Opacity" TargetName="image" Value="0.5"/>
     		</Trigger>
     	</ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="SingleRepeatButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Margin="0" Source="../Images/player_single_repeat_btn.png" Stretch="Fill"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="Opacity" TargetName="image" Value="0.5"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="RepeatButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Margin="0" Source="../Images/player_active_repeat_btn.png" Stretch="Fill"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="Opacity" TargetName="image" Value="0.5"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
     <ControlTemplate x:Key="PreviousButtonControlTemplate" TargetType="{x:Type Button}">
         <Grid>
@@ -92,10 +113,35 @@
     		</Trigger>
     	</ControlTemplate.Triggers>
     </ControlTemplate>
+    <ControlTemplate x:Key="NonShuffleButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Margin="0" Source="../Images/player_nonshuffle_btn.png" Stretch="Fill"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="Opacity" TargetName="image" Value="0.5"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
     <ControlTemplate x:Key="VolButtonControlTemplate" TargetType="{x:Type Button}">
         <Grid>
-            <Image Margin="0" Source="../Images/volume.png" Stretch="Fill"/>
+            <Image x:Name="image" Margin="0" Source="../Images/volume.png" Stretch="Fill"/>
         </Grid>
+    	<ControlTemplate.Triggers>
+    		<Trigger Property="IsMouseOver" Value="False">
+    			<Setter Property="Opacity" TargetName="image" Value="0.5"/>
+    		</Trigger>
+    	</ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="MuteButtonControlTemplate" TargetType="{x:Type Button}">
+        <Grid>
+            <Image x:Name="image" Margin="0" Source="../Images/mute.png" Stretch="Fill"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="Opacity" TargetName="image" Value="0.5"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
     <ControlTemplate x:Key="TopButtonControlTemplate" TargetType="{x:Type Button}">
         <Grid>
