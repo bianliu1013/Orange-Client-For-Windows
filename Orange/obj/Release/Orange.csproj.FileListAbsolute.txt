@@ -1,0 +1,2 @@
+C:\Users\양승원\Documents\GitHub\Orange-Client-For-Windows\Orange\bin\Release\Orange.exe.config
+C:\Users\양승원\Documents\GitHub\Orange-Client-For-Windows\Orange\obj\Release\Orange.pdb

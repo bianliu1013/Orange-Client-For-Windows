@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-E:\GitHub\Orange-Client-For-Windows\Orange\obj\Debug\
+C:\Users\양승원\Documents\GitHub\Orange-Client-For-Windows\Orange\obj\Debug\
 Orange
 none
 false
 DEBUG;TRACE
-E:\GitHub\Orange-Client-For-Windows\Orange\App.xaml
+C:\Users\양승원\Documents\GitHub\Orange-Client-For-Windows\Orange\App.xaml
 5-1789832004
 
-14-380348484
-16-1403145712
+16-1358067243
+16-903544139
 Main\MainWindow.xaml;Main\main_menuControl.xaml;Main\main_usercontrol.xaml;Resources\Icons.xaml;Styles\ButtonStyles.xaml;
 
 False

@@ -279,11 +279,11 @@ namespace Orange
                         {
                             
                             string resultURL = item["url"].GetValue().ToString().Replace("http://www.youtube.com/watch?v=", "");
-                            //string resultPlayTime = item["playTime"].GetValue().ToString();
+                            string resultPlayTime = item["time"].GetValue().ToString();
                             string resultTitle = item["title"].GetValue().ToString();
                             MusicItem mitem = new MusicItem();
                             mitem.title = resultTitle;
-                            mitem.playTime = "00:00";
+                            mitem.playTime = resultPlayTime;
                             mitem.url = resultURL;
                             musicCollection.Add(mitem);
 

@@ -77,16 +77,16 @@ namespace Orange
                 foreach (JsonObjectCollection item in items)
                 {
                     string title = item["title"].GetValue().ToString();
-                   // string singer = item["singer"].GetValue().ToString();
+                    string singer = item["singer"].GetValue().ToString();
                     ////수정해야                
                     // string mUrl = item["singer"].GetValue().ToString();
                     // string playTime = item["singer"].GetValue().ToString();
                     string mUrl = item["url"].GetValue().ToString();
-                    string playTime = item["playTime"].GetValue().ToString();
+                    string playTime = item["ptime"].GetValue().ToString();
 
 
                     MusicItem mitem = new MusicItem();
-                    mitem.title = title;
+                    mitem.title = title + " - " + singer;
                     mitem.url = mUrl;
                     mitem.playTime = playTime;
                     musicCollection.Add(mitem);
