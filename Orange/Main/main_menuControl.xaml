@@ -79,9 +79,9 @@
 			<Button x:Name="mn_new_btn" Content="What's new?" HorizontalAlignment="Left" Height="55" Template="{DynamicResource Menu1btnControlTemplate}" Cursor="Hand" Click="mn_new_btn_Click"/>
 			<Button x:Name="mn_myplaylist_btn" Content="My play list" HorizontalAlignment="Left" Height="55" Width="310" Template="{DynamicResource Menu2btnControlTemplate}" Cursor="Hand" Click="mn_myplaylist_btn_Click" Visibility="Collapsed"/>
 			<Button x:Name="mn_music_chart_btn" Content="Music Charts" HorizontalAlignment="Left" Height="55" Width="310" Template="{DynamicResource Menu3BtnControlTemplate}"/>
-			<Button x:Name="mn_pop_btn" Content="Billboard Chart" HorizontalAlignment="Left" Height="41" Width="310" Template="{DynamicResource MN_SUB1_ButtonControlTemplate}" Cursor="Hand" Click="mn_pop_btn_Click" Visibility="Collapsed"/>
+			<Button x:Name="mn_pop_btn" Content="Billboard Chart" HorizontalAlignment="Left" Height="41" Width="310" Template="{DynamicResource MN_SUB1_ButtonControlTemplate}" Cursor="Hand" Click="mn_pop_btn_Click"/>
 			<Button x:Name="mn_kpop_btn" Content="K-POP (Melon Chart)" HorizontalAlignment="Left" Height="41" Width="310" Template="{DynamicResource MN_SUB2_ButtonControlTemplate}" Cursor="Hand" Click="mn_kpop_btn_Click"/>
-			<Button x:Name="mn_jpop_btn" Content="J-POP (Oricon Chart)" HorizontalAlignment="Left" Height="41" Width="310" Template="{DynamicResource MN_SUB3_ButtonControlTemplate}" Cursor="Hand" Click="mn_jpop_btn_Click" Visibility="Collapsed"/>
+			<Button x:Name="mn_jpop_btn" Content="J-POP (Oricon Chart)" HorizontalAlignment="Left" Height="41" Width="310" Template="{DynamicResource MN_SUB3_ButtonControlTemplate}" Cursor="Hand" Click="mn_jpop_btn_Click"/>
 			<Path Data="M0,51.5 L300,51.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="1" Stretch="Fill" Stroke="#FFE8E8E8" VerticalAlignment="Top" Width="289" Margin="10,0,0,0" d:IsLocked="True" Cursor="Hand"/>
 		</StackPanel>
 	</Grid>

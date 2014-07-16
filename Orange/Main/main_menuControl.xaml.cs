@@ -49,7 +49,14 @@ namespace Orange
 
 		private void mn_pop_btn_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-			// TODO: 여기에 구현된 이벤트 처리기를 추가하십시오.
+            url = "http://115.71.236.224:8081/getBillboardChart";
+
+            musicCollection.Clear();
+            MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+            arg.MsgOPCode = UI_CONTROL.PROGRESS_SHOW;
+            (Application.Current as App).msgBroker.SendMessage(arg);
+            Thread thread = new Thread(new ThreadStart(ParsingThread));
+            thread.Start();
 		}
 
 		private void mn_kpop_btn_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -117,7 +124,14 @@ namespace Orange
 
 		private void mn_jpop_btn_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-			// TODO: 여기에 구현된 이벤트 처리기를 추가하십시오.
+            url = "http://115.71.236.224:8081/getOriconChart";
+
+            musicCollection.Clear();
+            MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+            arg.MsgOPCode = UI_CONTROL.PROGRESS_SHOW;
+            (Application.Current as App).msgBroker.SendMessage(arg);
+            Thread thread = new Thread(new ThreadStart(ParsingThread));
+            thread.Start();
 		}
 	}
 }

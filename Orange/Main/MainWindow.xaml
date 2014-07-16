@@ -274,7 +274,7 @@
                     <TextBlock x:Name="Music_title" HorizontalAlignment="Right" Margin="15,0,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF565656"/>
                 </Grid>
             <Grid Margin="10,0,0,9" Grid.Row="1">
-                	<Rectangle x:Name="titleWidthSizeREc" Margin="0,2,175,0" VerticalAlignment="Top"/>
+                	<Rectangle x:Name="titleWidthSizeREc" Margin="0,2,180,0" VerticalAlignment="Top"/>
                 	<Path Data="M0,51.5 L300,51.5" Fill="#FF8B8B8B" HorizontalAlignment="Left" Height="1" Margin="2,85,0,0" Stretch="Fill" Stroke="#FFCBCBCB" VerticalAlignment="Top" Width="{Binding ActualWidth, ElementName=myPlayList}"/>
                 <Slider x:Name="PlayerSlider" Margin="50,7,50,0" VerticalAlignment="Top" Thumb.DragCompleted="PlayerSlider_DragCompleted" Thumb.DragStarted="PlayerSlider_DragStarted"  ValueChanged="PlayerSlider_ValueChanged"/>
                 	<ListView     x:Name="myPlayList" Margin="0,91,10,35" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" Background="{x:Null}" MouseDoubleClick="myPlayList_MouseDoubleClick" ItemsSource="{Binding}" >
@@ -302,7 +302,7 @@
                 					</GridViewColumn.CellTemplate>
                 				</GridViewColumn>
 
-                				<GridViewColumn Width="75">
+                				<GridViewColumn Width="70">
                 					<GridViewColumn.CellTemplate>
                 						<DataTemplate>
                 							<Button
@@ -315,7 +315,7 @@
                 				</GridViewColumn>
 
 
-                				<GridViewColumn Width="60">
+                				<GridViewColumn Width="55">
                 					<GridViewColumn.CellTemplate>
                 						<DataTemplate>
                 							<Button
