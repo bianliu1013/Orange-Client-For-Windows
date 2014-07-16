@@ -60,6 +60,8 @@ namespace Orange
         {
             InitializeComponent();
             initStoryboard();
+            initUserConfig();
+
             musicCollection = new MusicCollection();
             myPlayListCollection = new MusicCollection();
 
@@ -82,6 +84,14 @@ namespace Orange
             dt.Tick += dt_Tick;
 
             myPlayListCollection.CollectionChanged += myPlayListCollection_CollectionChanged;
+        }
+
+        private void initUserConfig()
+        {
+            if(UI_Flag.IsShowingVideo){
+                ShowVideoBtn.Content = "HideVideo";
+            }
+            else { ShowVideoBtn.Content = "ShowVideo"; }
         }
 
         void myPlayListCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -158,6 +168,7 @@ namespace Orange
                         }
                         else
                         {
+                            Player_State.IsPlaying = false;
                             return;
                         }
 
@@ -228,6 +239,11 @@ namespace Orange
                     {
                         HideTopGridStoryboard.Begin();
                         UI_Flag.IsShowingTopGrid = false;
+
+                        if(UI_Flag.IsShowingVideo)
+                        {
+                            webBrowser.Visibility = Visibility.Visible;   
+                        }
                     }
                     break;
             }
@@ -543,8 +559,24 @@ namespace Orange
         {
             //var document = webBrowser.Document;
             //webBrowser.Document.GetType().InvokeMember("pauseVideo", BindingFlags.InvokeMethod, null, document, null);
-            webBrowser.InvokeScript("playVideo");
-            dt.Start();
+            if(Player_State.IsPlaying)
+            {
+                webBrowser.InvokeScript("playVideo");
+                dt.Start();
+            }
+            else
+            {
+                if (myPlayList.SelectedIndex != -1)
+                {
+
+                    MusicItem item = (MusicItem)myPlayList.SelectedItem;
+                    PlayMusic(item);
+                    //MessageBox.Show(item.title);
+                    webBrowser.InvokeScript("playVideo");
+                    dt.Start();
+                }                
+            }
+            
            
             //PlayBtn.Template = (ControlTemplate)FindResource("PauseButtonControlTemplate");
         }
@@ -638,9 +670,12 @@ namespace Orange
             {
                 webBrowser.Visibility = Visibility.Hidden;
                 ShowVideoBtn.Content = "ShowVideo";
+                UI_Flag.IsShowingVideo = false;
+
             }else{
                 webBrowser.Visibility = Visibility.Visible;
                 ShowVideoBtn.Content = "HideVideo";
+                UI_Flag.IsShowingVideo = true;
             }            
         }
 
@@ -829,6 +864,11 @@ namespace Orange
 
         private void PlayMusic(MusicItem item)
         {
+            if (UI_Flag.IsShowingVideo){
+                webBrowser.Visibility = Visibility.Visible;
+            }
+            else { webBrowser.Visibility = Visibility.Hidden; }
+
             WebBrowserHelper.ClearCache();
 
             webBrowser.InvokeScript("loadVideoById", new String[] { item.url });
@@ -853,11 +893,39 @@ namespace Orange
         private void Information_Click(object sender, RoutedEventArgs e)
         {
             //information_uc.Visibility = Visibility.Visible;
-           
+            
+
             MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
             arg.MsgOPCode = UI_CONTROL.SHOW_TOP_GRID;
             arg.MsgBody = new information_usercontrol();
             (Application.Current as App).msgBroker.SendMessage(arg);
+        }
+
+        private void myPlayList_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch(e.Key)
+            {
+                case Key.Delete:
+                    if (myPlayList.SelectedIndex != -1)
+                    {
+                        MusicItem item = (MusicItem)myPlayList.SelectedItem;
+                        myPlayListCollection.Remove(item);
+                    }
+                    break;
+                case Key.Up:
+                    if (myPlayList.SelectedIndex > 0 )
+                    {                        
+                        myPlayList.SelectedIndex = myPlayList.SelectedIndex - 1;                        
+                    }
+                    break;
+                case Key.Down:
+                    if (myPlayList.SelectedIndex != -1 || myPlayList.SelectedIndex != (myPlayListCollection.Count-1) )
+                    {
+                        myPlayList.SelectedIndex = myPlayList.SelectedIndex +1;
+                    }
+                    break;
+            }
+
         }
        
     }

@@ -2673,7 +2673,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1042</td><td>Gift</td><td>0</td><td/><td>-2086495869</td></row>
+		<row><td>COMPANY_NAME</td><td>1042</td><td>Gift</td><td>0</td><td/><td>-2086521820</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1042</td><td>항상 설치</td><td>0</td><td/><td>-2086502013</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1042</td><td>시스템의 색상 설정이 [ProductName] 실행에 적합하지 않습니다.</td><td>0</td><td/><td>-2086502013</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION35</td><td>1042</td><td>Microsoft .NET Framework 3.5 needs to be installed for this installation to continue.</td><td>0</td><td/><td>-2086504061</td></row>
@@ -3788,8 +3788,8 @@
 		<row><td>IDS__TargetReq_DESC_PROCESSOR</td><td>1042</td><td>프로세서는 [ProductName] 을(를) 가동하기 위하여 적합하지 않습니다.</td><td>0</td><td/><td>-2086502013</td></row>
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1042</td><td>RAM 양은 [ProductName] 을(를) 가동하기 위하여 적합하지 않습니다.</td><td>0</td><td/><td>-2086502013</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1042</td><td>화면 해상도는 [ProductName] 을(를) 가동하기 위하여 적합하지 않습니다.</td><td>0</td><td/><td>-2086502013</td></row>
-		<row><td>ID_STRING1</td><td>1042</td><td>http://www.Gift.com</td><td>0</td><td/><td>-2086504061</td></row>
-		<row><td>ID_STRING2</td><td>1042</td><td>Gift</td><td>0</td><td/><td>-2086504061</td></row>
+		<row><td>ID_STRING1</td><td>1042</td><td>http://www.Gift.com</td><td>0</td><td/><td>-2086521820</td></row>
+		<row><td>ID_STRING2</td><td>1042</td><td>Gift</td><td>0</td><td/><td>-2086521820</td></row>
 		<row><td>ID_STRING3</td><td>1042</td><td>Launch |Built</td><td>0</td><td/><td>-2086504061</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1042</td><td> 이 구성요소는 설치 안된 상태로 유지됩니다.</td><td>0</td><td/><td>-2086502013</td></row>
 	</table>

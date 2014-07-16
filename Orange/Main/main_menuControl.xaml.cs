@@ -27,6 +27,7 @@ namespace Orange
 	{
         private string url;
         private MusicCollection musicCollection;
+
 		public main_menuControl()
 		{
 			this.InitializeComponent();
