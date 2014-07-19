@@ -23,5 +23,6 @@ namespace Orange.Util
     {        
         public static bool IsPlaying = false;       // 플레이어 재생중
         public static bool IsEndOfPoint = false;
+        public static string VolumeValue = "80";
     }
 }

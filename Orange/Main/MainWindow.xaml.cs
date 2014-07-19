@@ -321,9 +321,10 @@ namespace Orange
         {
             try
             {
+
                 string url = "http://115.71.236.224:8081/searchMusicVideoInformation?query=";
          
-                string query = url + queryString;
+                string query = string.Format("{0}\"{1}\"", url, queryString);
                 JsonArrayCollection items = JSONHelper.getJSONArray(query);
 
 
@@ -425,15 +426,40 @@ namespace Orange
 
         private void ADD_PlayList_Click(object sender, System.Windows.RoutedEventArgs e)
         {            
-            result_musiclist.SelectedItem = (e.OriginalSource as FrameworkElement).DataContext;          
-            
+            result_musiclist.SelectedItem = (e.OriginalSource as FrameworkElement).DataContext;
+
             if (result_musiclist.SelectedIndex != -1)
             {
                 MusicItem item = (MusicItem)result_musiclist.SelectedItem;
+                myPlayListCollection.Add(item);
+                //                 foreach (MusicItem item in result_musiclist.SelectedItems)
+                //                 {
+                //                     myPlayListCollection.Add(item);
+                //                 }
 
                 //MessageBox.Show(item.title);
-                myPlayListCollection.Add(item);
+
             }
+        }
+
+
+        private void result_selected_add(object sender, RoutedEventArgs e)
+        {
+            if (result_musiclist.SelectedIndex != -1)
+            {
+               foreach (MusicItem item in result_musiclist.SelectedItems)
+               {
+                   myPlayListCollection.Add(item);
+
+                   
+               }
+               result_musiclist.SelectedIndex = -1;
+            }
+        }
+
+        private void result_all_select(object sender, System.Windows.RoutedEventArgs e)
+        {
+            result_musiclist.SelectAll();
         }
 
         private void result_musiclist_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -713,6 +739,8 @@ namespace Orange
                // MessageBox.Show(item.title);
                 myPlayListCollection.Remove(item);
                 myPlayListCollection.Insert(0, item);
+
+                myPlayList.SelectedItem = item;
             }
         }
 
@@ -730,6 +758,8 @@ namespace Orange
                 // MessageBox.Show(item.title);
                 myPlayListCollection.Remove(item);
                 myPlayListCollection.Insert(idx-1, item);
+
+                myPlayList.SelectedItem = item;
             }
         }
 
@@ -747,6 +777,8 @@ namespace Orange
                 // MessageBox.Show(item.title);
                 myPlayListCollection.Remove(item);
                 myPlayListCollection.Insert(idx + 1, item);
+
+                myPlayList.SelectedItem = item;
             }
         }
 
@@ -764,6 +796,8 @@ namespace Orange
                 // MessageBox.Show(item.title);
                 myPlayListCollection.Remove(item);
                 myPlayListCollection.Insert(myPlayListCollection.Count, item);
+
+                myPlayList.SelectedItem = item;
             }
         }
 
@@ -829,12 +863,28 @@ namespace Orange
         #region Slider Controller
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (webBrowser.IsLoaded)
+            if (!dragStarted)
             {
-                webBrowser.InvokeScript("setVolume", new String[] { VolumeSlider.Value.ToString() }); 
+                //MessageBox.Show("Dragging");
             }
+
             
         }
+        private void VolumeSlider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            this.dragStarted = false;
+            if (webBrowser.IsLoaded)
+            {
+                webBrowser.InvokeScript("setVolume", new String[] { VolumeSlider.Value.ToString() });
+                Player_State.VolumeValue = VolumeSlider.Value.ToString();
+            }
+        }
+
+        private void VolumeSlider_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            this.dragStarted = true;
+        }
+       
 
         private void PlayerSlider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {            
@@ -842,6 +892,7 @@ namespace Orange
             //MessageBox.Show("DragCompleted");
             //webBrowser.InvokeScript("loadVideoById", new String[] { PlayerSlider.Value.ToString() });
             webBrowser.InvokeScript("seekTo", new String[] { PlayerSlider.Value.ToString() });
+           
             dt.Start();
         }
 
@@ -873,6 +924,8 @@ namespace Orange
 
             webBrowser.InvokeScript("loadVideoById", new String[] { item.url });
             dt.Start();
+
+            webBrowser.InvokeScript("setVolume", new String[] { Player_State.VolumeValue });
 
             CurrentItem = item;
             Music_title.Text = item.title;
@@ -927,6 +980,15 @@ namespace Orange
             }
 
         }
-       
+
+
+        private void Search_ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ScrollViewer scv = (ScrollViewer)sender;
+            scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
+            e.Handled = true;
+        }
+
+
     }
 }

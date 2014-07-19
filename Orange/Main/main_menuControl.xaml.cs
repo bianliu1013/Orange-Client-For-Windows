@@ -68,14 +68,18 @@ namespace Orange
             MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
             arg.MsgOPCode = UI_CONTROL.PROGRESS_SHOW;
             (Application.Current as App).msgBroker.SendMessage(arg);
+            
             Thread thread = new Thread(new ThreadStart(ParsingThread));
+            
             thread.Start();
+
+
 
 		}
 
         private void ParsingThread()
         {
-             
+            Thread.Sleep(1000);
             try
             {
                 JsonArrayCollection items = JSONHelper.getJSONArray(url);
@@ -100,12 +104,13 @@ namespace Orange
                     musicCollection.Add(mitem);
                 }
 
-           
+              }));
 
-
-               MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
-               arg.MsgOPCode = UI_CONTROL.PROGRESS_HIDE;
-               (Application.Current as App).msgBroker.SendMessage(arg);
+                Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
+                {
+                    MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+                    arg.MsgOPCode = UI_CONTROL.PROGRESS_HIDE;
+                    (Application.Current as App).msgBroker.SendMessage(arg);
 
                }));
             }

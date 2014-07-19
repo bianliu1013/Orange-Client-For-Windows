@@ -225,6 +225,7 @@
 	<table name="AppSearch">
 		<col key="yes" def="s72">Property</col>
 		<col key="yes" def="s72">Signature_</col>
+		<row><td>DOTNETVERSION45FULL</td><td>DotNet45Full</td></row>
 	</table>
 
 	<table name="BBControl">
@@ -341,6 +342,7 @@
 		<col def="S0">ISDotNetInstallerArgsUninstall</col>
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
 		<row><td>Component</td><td>{FD14771B-DD80-4D45-9B8A-2A769086B84B}</td><td>INSTALLDIR</td><td>2</td><td/><td>File</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Component1</td><td>{4046B732-B108-4C8F-8419-BC3DEC2F82C8}</td><td>INSTALLDIR</td><td>2</td><td/><td>File</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT</td><td>{7F3914FD-A149-45B8-A1E0-AD9C721E6E11}</td><td>ProgramFiles64Folder</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{092115C1-B765-4254-B570-A575721821F5}</td><td>UTIL</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>NewComponent1</td><td>{C803062A-3782-465F-B5BC-E24C38268253}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1877,6 +1879,7 @@
 		<col key="yes" def="s38">Feature_</col>
 		<col key="yes" def="s72">Component_</col>
 		<row><td>AlwaysInstall</td><td>Component</td></row>
+		<row><td>AlwaysInstall</td><td>Component1</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT1</td></row>
 		<row><td>AlwaysInstall</td><td>NewComponent1</td></row>
@@ -1899,7 +1902,7 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
-		<row><td>File</td><td>Component</td><td>Orange.기본 출력</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;Orange&gt;|Built</td><td>3</td><td/></row>
+		<row><td>File</td><td>Component1</td><td>Orange.기본 출력</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;Orange&gt;|Built</td><td>3</td><td/></row>
 		<row><td>ffmpeg.exe</td><td>ffmpeg.exe</td><td>ffmpeg.exe</td><td>0</td><td/><td/><td/><td>1</td><td>E:\GitHub\Orange-Client-For-Windows\Orange\bin\Release\Util\ffmpeg.exe</td><td>1</td><td/></row>
 		<row><td>ffprobe.exe</td><td>ffprobe.exe</td><td>ffprobe.exe</td><td>0</td><td/><td/><td/><td>1</td><td>E:\GitHub\Orange-Client-For-Windows\Orange\bin\Release\Util\ffprobe.exe</td><td>1</td><td/></row>
 		<row><td>youtube_dl.exe</td><td>youtube_dl.exe</td><td>YOUTUB~1.EXE|youtube-dl.exe</td><td>0</td><td/><td/><td/><td>1</td><td>E:\GitHub\Orange-Client-For-Windows\Orange\bin\Release\Util\youtube-dl.exe</td><td>1</td><td/></row>
@@ -1920,6 +1923,7 @@
 		<col def="S255">Data</col>
 		<row><td>PROJECT_ASSISTANT_DEFAULT_FEATURE</td><td>AlwaysInstall</td></row>
 		<row><td>PROJECT_ASSISTANT_FEATURES</td><td>NonSelectable</td></row>
+		<row><td>_Built</td><td/></row>
 	</table>
 
 	<table name="ISBillBoard">
@@ -2047,6 +2051,7 @@
 		<col def="S0">HTTPLocation</col>
 		<col def="S0">Miscellaneous</col>
 		<row><td>Component</td><td/><td/><td>_6AEFCF4A_9981_43F2_8A44_5FE56089A6BF_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Component1</td><td/><td/><td>_C349FE08_D485_4E8F_85B0_941CAD6AA796_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_C7D76A4D_AF83_46DE_B192_0712C705DEF8_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_A74EF72A_75A7_4AB5_B535_95A220C41EE0_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>NewComponent1</td><td/><td/><td>_E04AE2CB_B83A_4DAB_80F7_B33924A6B787_FILTER</td><td/><td/><td/><td/></row>
@@ -2673,12 +2678,14 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1042</td><td>Gift</td><td>0</td><td/><td>-2086521820</td></row>
+		<row><td>COMPANY_NAME</td><td>1042</td><td>Gift</td><td>0</td><td/><td>-1952294719</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1042</td><td>항상 설치</td><td>0</td><td/><td>-2086502013</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1042</td><td>시스템의 색상 설정이 [ProductName] 실행에 적합하지 않습니다.</td><td>0</td><td/><td>-2086502013</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION35</td><td>1042</td><td>Microsoft .NET Framework 3.5 needs to be installed for this installation to continue.</td><td>0</td><td/><td>-2086504061</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION35SP1</td><td>1042</td><td>Microsoft .NET Framework 3.5 SP1 needs to be installed for this installation to continue.</td><td>0</td><td/><td>-2086504061</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION40CLIENT</td><td>1042</td><td>Microsoft .NET Framework 4.0 Client Package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>-2086504061</td></row>
+		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION45FULL</td><td>1033</td><td>Microsoft .NET Framework 4.5 Full package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>-2086479180</td></row>
+		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION45FULL</td><td>1042</td><td>Microsoft .NET Framework 4.5 Full package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>-2086479180</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_OS</td><td>1042</td><td>운영 체제가 [ProductName] 실행에 적합하지 않습니다.</td><td>0</td><td/><td>-2086502013</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_PROCESSOR</td><td>1042</td><td>프로세서가 [ProductName] 실행에 적합하지 않습니다.</td><td>0</td><td/><td>-2086502013</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_RAM</td><td>1042</td><td>RAM이 [ProductName] 실행에 적합하지 않습니다.</td><td>0</td><td/><td>-2086502013</td></row>
@@ -3500,6 +3507,8 @@
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME7</td><td>1042</td><td>LAUNCH~1.EXE|Launch ffprobe.exe</td><td>0</td><td/><td>-2086505085</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME8</td><td>1033</td><td/><td>0</td><td/><td>-2086505085</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME8</td><td>1042</td><td>LAUNCH~1.EXE|Launch youtube-dl.exe</td><td>0</td><td/><td>-2086505085</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME9</td><td>1033</td><td/><td>0</td><td/><td>-1952296607</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME9</td><td>1042</td><td>OrangePlayer</td><td>0</td><td/><td>-1952284319</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO</td><td>1042</td><td>아래 서버 목록에서 대상 데이터베이스 서버를 선택하십시오.</td><td>0</td><td/><td>-2086502013</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_DB</td><td>1042</td><td>아래 카탈로그 이름 목록에서 지정하려는 데이터베이스 카탈로그를 선택하십시오.</td><td>0</td><td/><td>-2086502013</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_TEMPLATE</td><td>1042</td><td>[IS_SQLBROWSE_INTRO]</td><td>0</td><td/><td>-2086504061</td></row>
@@ -3788,9 +3797,11 @@
 		<row><td>IDS__TargetReq_DESC_PROCESSOR</td><td>1042</td><td>프로세서는 [ProductName] 을(를) 가동하기 위하여 적합하지 않습니다.</td><td>0</td><td/><td>-2086502013</td></row>
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1042</td><td>RAM 양은 [ProductName] 을(를) 가동하기 위하여 적합하지 않습니다.</td><td>0</td><td/><td>-2086502013</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1042</td><td>화면 해상도는 [ProductName] 을(를) 가동하기 위하여 적합하지 않습니다.</td><td>0</td><td/><td>-2086502013</td></row>
-		<row><td>ID_STRING1</td><td>1042</td><td>http://www.Gift.com</td><td>0</td><td/><td>-2086521820</td></row>
-		<row><td>ID_STRING2</td><td>1042</td><td>Gift</td><td>0</td><td/><td>-2086521820</td></row>
+		<row><td>ID_STRING1</td><td>1042</td><td>http://www.Gift.com</td><td>0</td><td/><td>-1952294719</td></row>
+		<row><td>ID_STRING2</td><td>1042</td><td>Gift</td><td>0</td><td/><td>-1952294719</td></row>
 		<row><td>ID_STRING3</td><td>1042</td><td>Launch |Built</td><td>0</td><td/><td>-2086504061</td></row>
+		<row><td>ID_STRING4</td><td>1033</td><td>OrangePlayer</td><td>0</td><td/><td>-1952284319</td></row>
+		<row><td>ID_STRING4</td><td>1042</td><td>OrangePlayer</td><td>0</td><td/><td>-1952284319</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1042</td><td> 이 구성요소는 설치 안된 상태로 유지됩니다.</td><td>0</td><td/><td>-2086502013</td></row>
 	</table>
 
@@ -3900,6 +3911,7 @@
 		<col def="I2">ISIconIndex</col>
 		<row><td>ARPPRODUCTICON.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\setupicon.ico</td><td>0</td></row>
 		<row><td>UNINST_Uninstall_O_9920674E8836406892855595F9061965.exe</td><td/><td>C:\Program Files (x86)\InstallShield\2013LE\Redist\Language Independent\OS Independent\uninstall.ico</td><td>0</td></row>
+		<row><td>_Built_2A5B705B7EFF484480D9BE0BCB22A9A4.exe</td><td/><td>&lt;VSSolutionFolder&gt;\Orange\icon.ico</td><td>0</td></row>
 	</table>
 
 	<table name="IniFile">
@@ -4090,6 +4102,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 	<table name="LaunchCondition">
 		<col key="yes" def="s255">Condition</col>
 		<col def="l255">Description</col>
+		<row><td>DOTNETVERSION45FULL&gt;="#1"</td><td>##IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION45FULL##</td></row>
 	</table>
 
 	<table name="ListBox">
@@ -4422,7 +4435,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>SERIALNUMBER</td><td/><td/></row>
 		<row><td>SERIALNUMVALSUCCESSRETVAL</td><td>1</td><td/></row>
 		<row><td>SHOWLAUNCHPROGRAM</td><td>-1</td><td/></row>
-		<row><td>SecureCustomProperties</td><td>ISFOUNDNEWERPRODUCTVERSION;USERNAME;COMPANYNAME;ISX_SERIALNUM;SUPPORTDIR</td><td/></row>
+		<row><td>SecureCustomProperties</td><td>ISFOUNDNEWERPRODUCTVERSION;USERNAME;COMPANYNAME;ISX_SERIALNUM;SUPPORTDIR;DOTNETVERSION45FULL</td><td/></row>
 		<row><td>SelectedSetupType</td><td>##IDS__DisplayName_Typical##</td><td/></row>
 		<row><td>SetupType</td><td>Typical</td><td/></row>
 		<row><td>UpgradeCode</td><td>{D0B07721-56CE-42B8-9213-D5B765F1122F}</td><td/></row>
@@ -4467,6 +4480,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="s255">Key</col>
 		<col def="S255">Name</col>
 		<col def="I2">Type</col>
+		<row><td>DotNet45Full</td><td>2</td><td>SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full</td><td>Version</td><td>2</td></row>
 	</table>
 
 	<table name="Registry">
@@ -4488,8 +4502,9 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>FileKey1</td><td>Component</td><td/><td>gift</td><td>2</td></row>
 		<row><td>FileKey2</td><td>Component</td><td/><td>setupo_1_setuporangeplayer</td><td>2</td></row>
 		<row><td>FileKey3</td><td>ffmpeg.exe</td><td/><td>orange_1_orangeyoutubeplayer</td><td>2</td></row>
+		<row><td>FileKey4</td><td>Component1</td><td/><td>orange_1_orangeyoutubeplayer</td><td>2</td></row>
 		<row><td>UNINST_Uninstall_OrangeYoutubePlayer</td><td>NewComponent3</td><td/><td>setupo_1_setuporangeplayer</td><td>2</td></row>
-		<row><td>_Built</td><td>Component</td><td/><td>setupo_1_setuporangeplayer</td><td>2</td></row>
+		<row><td>_Built</td><td>Component1</td><td/><td>setupo_1_setuporangeplayer</td><td>2</td></row>
 	</table>
 
 	<table name="RemoveIniFile">
@@ -4576,8 +4591,8 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
 		<row><td>UNINST_Uninstall_OrangeYoutubePlayer</td><td>setupo_1_setuporangeplayer</td><td>UNINST|Uninstall OrangeYoutubePlayer</td><td>NewComponent3</td><td>[SystemFolder]msiexec.exe</td><td>/x {1F2DE902-7896-40CC-A3D1-AF73390B22FB}</td><td/><td/><td>UNINST_Uninstall_O_9920674E8836406892855595F9061965.exe</td><td>0</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>_Built</td><td>setupo_1_setuporangeplayer</td><td>##IDS_SHORTCUT_DISPLAY_NAME1##</td><td>Component</td><td>AlwaysInstall</td><td/><td/><td/><td/><td/><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>_Built1</td><td>DesktopFolder</td><td>##IDS_SHORTCUT_DISPLAY_NAME1##</td><td>Component</td><td>AlwaysInstall</td><td/><td/><td/><td/><td/><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>_Built</td><td>setupo_1_setuporangeplayer</td><td>##IDS_SHORTCUT_DISPLAY_NAME9##</td><td>Component1</td><td>AlwaysInstall</td><td/><td/><td/><td>_Built_2A5B705B7EFF484480D9BE0BCB22A9A4.exe</td><td>0</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>_Built1</td><td>DesktopFolder</td><td>##IDS_SHORTCUT_DISPLAY_NAME9##</td><td>Component1</td><td>AlwaysInstall</td><td/><td/><td/><td/><td/><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">
