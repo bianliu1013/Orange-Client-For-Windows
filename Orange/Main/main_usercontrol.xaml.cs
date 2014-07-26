@@ -28,9 +28,18 @@ namespace Orange
 			
 		}
 
-        public void SetProgressRing(bool state)
+        public void SetProgressRing(bool state, int type)
         {
-            ProgressRing.IsActive = state;
+            if(type == 0)
+            {
+                whiteGrid.Visibility = Visibility.Visible;
+                ProgressRing.IsActive = state;
+            }else if(type == 1)
+            {
+                ProgressRing.IsActive = state;
+                whiteGrid.Visibility = Visibility.Hidden;
+            }
+            
         }
 	}
 }

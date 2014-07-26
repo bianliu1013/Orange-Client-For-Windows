@@ -1,0 +1,23 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
+	xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:Config="clr-namespace:Orange.Util;assembly=Orange"
+	mc:Ignorable="d"
+	x:Class="Orange.Preferences"
+	x:Name="UserControl"
+	d:DesignWidth="640" d:DesignHeight="480" Unloaded="UserControl_Unloaded">
+
+	<Grid x:Name="LayoutRoot" Background="#4C000000" MouseDown="LayoutRoot_MouseDown" >
+		<Grid Margin="0" Height="200">
+			<Rectangle Fill="White" Margin="0" Height="200" VerticalAlignment="Center"/>
+			<Controls:ToggleSwitch x:Name="TopmostToggleSwitch" Header="항상 위" Margin="-100,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+			<Controls:ToggleSwitch Header="트레이 기능" Margin="112,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="False" />
+			<TextBlock HorizontalAlignment="Left" Margin="10,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="32" Foreground="#FF919191"><Run Language="ko-kr" Text="Preferences"/></TextBlock>
+			<Button x:Name="confirmBtn" Content="확 인" HorizontalAlignment="Center" Height="25" Margin="0,140,0,0" VerticalAlignment="Center" Width="117" Click="confirmBtn_Click"/>
+		</Grid>
+	</Grid>
+</UserControl>

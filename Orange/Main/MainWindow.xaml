@@ -6,7 +6,7 @@
         xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:Orange" mc:Ignorable="d" x:Class="Orange.MainWindow"
         Title="Orange Player" Height="500" Width="640"
-        ResizeMode="CanResizeWithGrip" GlowBrush="#FFF27405" BorderThickness="0" NonActiveBorderBrush="#FFE06600" NonActiveGlowBrush="#FFE06600" NonActiveWindowTitleBrush="#FFF29F05" MinWidth="640" MinHeight="500" Unloaded="MetroWindow_Unloaded" ShowWindowCommandsOnTop="True">
+        ResizeMode="CanResizeWithGrip" GlowBrush="#FFF27405" BorderThickness="0" NonActiveBorderBrush="#FFE06600" NonActiveGlowBrush="#FFE06600" NonActiveWindowTitleBrush="#FFF29F05" MinWidth="640" MinHeight="500" ShowWindowCommandsOnTop="True" Closing="MetroWindow_Closing" >
     <controls:MetroWindow.Resources>
         <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Visibility" Value="Collapsed" />
@@ -154,10 +154,8 @@
 
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-
+            <Button  Width="25" Height="25" Template="{DynamicResource ConfigButtonControlTemplate}"  Click="Config_Click" />
             <Button  Width="25" Height="25" Template="{DynamicResource InformationBtnTemplate}" Click="Information_Click" />
-
-            <Button  Width="25" Height="25" Template="{DynamicResource ConfigButtonControlTemplate}"  />
         </controls:WindowCommands>
 
 
@@ -174,17 +172,17 @@
 
         <Grid x:Name="leftPanel"   Grid.Column="0" Background="White" MinWidth="310">
             <Rectangle x:Name="musiclist_title_rec_for_width" Fill="Blue" Height="63.2" Margin="5,102,163,0" Stroke="#FFE8E8E8" VerticalAlignment="Top" Visibility="Hidden"/>
-
-            <ScrollViewer x:Name="Search_ScrollViewer" Margin="5,50,6,40"  PreviewMouseWheel="Search_ScrollViewer_PreviewMouseWheel">
-                <ListView     x:Name="result_musiclist" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" Background="{x:Null}" MouseDoubleClick="result_musiclist_MouseDoubleClick" >
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
-                            <Setter Property="ToolTip" Value="{Binding title}" />
-                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.View>
-                        <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+            <ScrollViewer x:Name="Search_ScrollViewer" Margin="5,50,6,80"  PreviewMouseWheel="Search_ScrollViewer_PreviewMouseWheel" ScrollBar.Scroll="currentTagNotContactsList_Scroll">
+            	<Grid>
+            		<ListView     x:Name="result_musiclist" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" Background="{x:Null}" MouseDoubleClick="result_musiclist_MouseDoubleClick" Margin="0,0,0,25" >
+            			<ListView.ItemContainerStyle>
+            				<Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
+            					<Setter Property="ToolTip" Value="{Binding title}" />
+            					<Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+            				</Style>
+            			</ListView.ItemContainerStyle>
+            			<ListView.View>
+            				<GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
 
                             <!--  <GridViewColumn>
               <GridViewColumn.CellTemplate>
@@ -195,62 +193,65 @@
               </GridViewColumn.CellTemplate>
            </GridViewColumn> -->
 
-                            <GridViewColumn  Header="Title"  Width="{Binding ActualWidth, ElementName=musiclist_title_rec_for_width}"
-                                                DisplayMemberBinding="{Binding title}"  >
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="노래제목"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
+            					<GridViewColumn  Header="Title"  Width="{Binding ActualWidth, ElementName=musiclist_title_rec_for_width}"
+            						DisplayMemberBinding="{Binding title}"  >
+            						<GridViewColumn.CellTemplate>
+            							<DataTemplate>
+            								<TextBlock Text="노래제목"/>
+            							</DataTemplate>
+            						</GridViewColumn.CellTemplate>
+            					</GridViewColumn>
 
-                            <GridViewColumn Header="Play time" Width="60"     DisplayMemberBinding="{Binding playTime}" >
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="재생 시간"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
+            					<GridViewColumn Header="Play time" Width="35"     DisplayMemberBinding="{Binding playTime}" >
+            						<GridViewColumn.CellTemplate>
+            							<DataTemplate>
+            								<TextBlock Text="재생 시간"/>
+            							</DataTemplate>
+            						</GridViewColumn.CellTemplate>
+            					</GridViewColumn>
 
-                            <GridViewColumn Width="35">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button
-    											Content="▷"
-    											Margin="0,1,0,1"
-    											VerticalAlignment="Center"
+            					<GridViewColumn Width="60">
+            						<GridViewColumn.CellTemplate>
+            							<DataTemplate>
+            								<Button
+            									Content="PLAY"
+            									Margin="0,1,0,1"
+            									VerticalAlignment="Center"
 
-    											Click="Load_Music_Click" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
+            									Click="Load_Music_Click" />
+            							</DataTemplate>
+            						</GridViewColumn.CellTemplate>
+            					</GridViewColumn>
 
 
-                            <GridViewColumn Width="35">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button
-    											Content="+"
-    											Margin="0,1,0,1"
-    											VerticalAlignment="Center"
-    											Click="ADD_PlayList_Click" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
+            					<GridViewColumn Width="35">
+            						<GridViewColumn.CellTemplate>
+            							<DataTemplate>
+            								<Button
+            									Content="+"
+            									Margin="0,1,0,1"
+            									VerticalAlignment="Center"
+            									Click="ADD_PlayList_Click" />
+            							</DataTemplate>
+            						</GridViewColumn.CellTemplate>
+            					</GridViewColumn>
 
-                        </GridView>
-                    </ListView.View>
+            				</GridView>
+            			</ListView.View>
 
-                </ListView>
+            		</ListView>
+            		<Button x:Name="morebtn" Content="더 찾아보기" Height="25" Margin="0" VerticalAlignment="Bottom" Click="morebtn_Click" Visibility="Hidden"/>
+            	</Grid>
             </ScrollViewer>
 
             <Button Content="Search" HorizontalAlignment="Right" Height="30" Margin="0,10,12,0" VerticalAlignment="Top" Width="66" Cursor="Hand" Click="Search_Button_Click"/>
-            <Button Content="선택 추가" HorizontalAlignment="Center" Height="30" Margin="160,0,40,5" VerticalAlignment="Bottom" Width="110" Click="result_selected_add" FontSize="12" FontWeight="Normal"/>
-            <Button Content="전체 선택" Height="30" Margin="40,0,160,5" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="110" Click="result_all_select" FontSize="12" FontWeight="Normal"/>
+            <Button Content="선택 추가" HorizontalAlignment="Center" Height="30" Margin="160,0,40,48" VerticalAlignment="Bottom" Width="110" Click="result_selected_add" FontSize="12" FontWeight="Normal"/>
+            <Button Content="전체 선택" Height="30" Margin="40,0,160,48" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="110" Click="result_all_select" FontSize="12" FontWeight="Normal"/>
             <TextBox x:Name="searchBox" Height="23" Margin="49,13,87,0" TextWrapping="Wrap" VerticalAlignment="Top" KeyDown="searchBox_KeyDown"/>
             <Button x:Name="MenuBtn" Content="" HorizontalAlignment="Left" Height="44.417" Margin="0,3.583,0,0" VerticalAlignment="Top" Width="42.667" Template="{DynamicResource MenuButtonTemplate1}" Cursor="Hand" Click="MenuBtn_Click"/>
             <Path x:Name="line" Data="M10,48 L298,48" Fill="#FFF4F4F5" Height="1" Margin="10,46,10,0" Stretch="Fill" Stroke="#FFE8E8E8" VerticalAlignment="Top"/>
             <Grid x:Name="LeftContent" Margin="0,50,0,0" Visibility="Collapsed" d:IsLocked="True"/>
+            <Image Margin="0,0,0,5" Source="/Orange;component/Images/bn_w.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="290" Height="38" MouseLeftButtonDown="Bn_MouseLeftButtonDown"/>
             <local:main_usercontrol x:Name="main_page" Margin="0,48,0,0" d:IsHidden="True"/>
         </Grid>
 
@@ -278,12 +279,23 @@
             <Grid Margin="10,0,0,9" Grid.Row="1">
                 <Rectangle x:Name="titleWidthSizeREc" Margin="0,2,180,0" VerticalAlignment="Top"/>
                 <Path Data="M0,51.5 L300,51.5" Fill="#FF8B8B8B" HorizontalAlignment="Left" Height="1" Margin="2,85,0,0" Stretch="Fill" Stroke="#FFCBCBCB" VerticalAlignment="Top" Width="{Binding ActualWidth, ElementName=myPlayList}"/>
-                <Slider x:Name="PlayerSlider" Margin="50,7,50,0" VerticalAlignment="Top" Thumb.DragCompleted="PlayerSlider_DragCompleted" Thumb.DragStarted="PlayerSlider_DragStarted"  ValueChanged="PlayerSlider_ValueChanged" IsMoveToPointEnabled="True"/>
+                <Slider x:Name="PlayerSlider" Margin="50,7,50,0" VerticalAlignment="Top" Thumb.DragCompleted="PlayerSlider_DragCompleted" Thumb.DragStarted="PlayerSlider_DragStarted"  ValueChanged="PlayerSlider_ValueChanged" TickFrequency="10"/>
                 <ListView     x:Name="myPlayList" Margin="0,91,10,35" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" Background="{x:Null}" MouseDoubleClick="myPlayList_MouseDoubleClick" ItemsSource="{Binding}" KeyDown="myPlayList_KeyDown"  >
-                    <ListView.ItemContainerStyle>
+                    <ListView.Resources>
+                        
+						<ContextMenu x:Key="ItemContextMenu">
+                            <MenuItem Header="Rename" Click="Rename_PlaylistItem_Click"></MenuItem>
+							 <MenuItem Header="Remove" Click="Remove_PlaylistItem_Click"></MenuItem>
+						</ContextMenu>
+                        
+					</ListView.Resources>
+                    
+					<ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
                             <Setter Property="ToolTip" Value="{Binding title}" />
+                            <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}"/>
                         </Style>
+                  
                     </ListView.ItemContainerStyle>
                     <ListView.View>
                         <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}" >
@@ -304,15 +316,15 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <GridViewColumn Width="70">
+                            <GridViewColumn Width="55">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button
-                								Content="MP3 변환"
+                						        Content="URL"
                 								Margin="1"
                 								VerticalAlignment="Center"
-                								Click="MP3_Convert_Click" />
-                                    </DataTemplate>
+                								Click="URL_Copy_Click" />
+                                        </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 

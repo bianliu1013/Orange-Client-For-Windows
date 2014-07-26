@@ -10,9 +10,9 @@
 	<UserControl.Resources>
 		<ControlTemplate x:Key="Menu1btnControlTemplate" TargetType="{x:Type Button}">
 			<Grid x:Name="grid">
-				<Image Margin="10,0,0,0" Source="../Images/menu1_new.png" Stretch="Fill" Width="202" Height="48" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-				<Path Data="M0,51.5 L300,51.5" Fill="#FFF4F4F5" HorizontalAlignment="Stretch" Height="1" Margin="10,54,10,0" Stretch="Fill" Stroke="#FFE8E8E8" VerticalAlignment="Top" Width="Auto"/>
-				<Rectangle Fill="#00F4F4F5" HorizontalAlignment="Left" Height="54" Stroke="{x:Null}" VerticalAlignment="Top" Width="310" StrokeThickness="0"/>
+				<Image Margin="0" Source="/Orange;component/Images/menu_myfavorite.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="44"/>
+				<Path Data="M0,51.5 L300,51.5" Fill="#FFF4F4F5" HorizontalAlignment="Stretch" Height="1" Margin="10,0" Stretch="Fill" Stroke="#FFE8E8E8" VerticalAlignment="Bottom" Width="Auto"/>
+				<Rectangle Fill="#00F4F4F5" HorizontalAlignment="Stretch" Height="Auto" Stroke="{x:Null}" VerticalAlignment="Stretch" Width="Auto" StrokeThickness="0" d:IsLocked="True"/>
 			</Grid>
 			<ControlTemplate.Triggers>
 				<Trigger Property="IsMouseOver" Value="True">
@@ -20,11 +20,11 @@
 				</Trigger>
 			</ControlTemplate.Triggers>
 		</ControlTemplate>
-		<ControlTemplate x:Key="Menu2btnControlTemplate" TargetType="{x:Type Button}">
+		<ControlTemplate x:Key="NewSongsButtonControlTemplate" TargetType="{x:Type Button}">
 			<Grid x:Name="grid">
-                <Image Margin="10,0,0,0" Source="../Images/menu2_myplaylist.png" Stretch="Fill" Width="202" Height="48" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-				<Path Data="M0,51.5 L300,51.5" Fill="#FFF4F4F5" HorizontalAlignment="Stretch" Height="1" Margin="10,54,10,0" Stretch="Fill" Stroke="#FFE8E8E8" VerticalAlignment="Top" Width="Auto"/>
-				<Rectangle Fill="#00F4F4F5" HorizontalAlignment="Left" Height="54" Stroke="{x:Null}" VerticalAlignment="Top" Width="310"/>
+				<Image Margin="0" Source="/Orange;component/Images/menu_whatsnew.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="44"/>
+				<Path Data="M0,51.5 L300,51.5" Fill="#FFF4F4F5" HorizontalAlignment="Stretch" Height="1" Margin="10,0" Stretch="Fill" Stroke="#FFE8E8E8" VerticalAlignment="Bottom" Width="Auto"/>
+				<Rectangle Fill="#00F4F4F5" HorizontalAlignment="Stretch" Height="Auto" Stroke="{x:Null}" VerticalAlignment="Stretch" Width="Auto" StrokeThickness="0"/>
 			</Grid>
 			<ControlTemplate.Triggers>
 				<Trigger Property="IsMouseOver" Value="True">
@@ -32,17 +32,11 @@
 				</Trigger>
 			</ControlTemplate.Triggers>
 		</ControlTemplate>
-		<ControlTemplate x:Key="Menu3BtnControlTemplate" TargetType="{x:Type Button}">
-			<Grid>
-                <Image Margin="10,0,0,0" Source="../Images/menu3_charts.png" Stretch="Fill" Width="202" Height="48" HorizontalAlignment="Left"/>
-				<Path Data="M0,51.5 L300,51.5" Fill="#FFF4F4F5" HorizontalAlignment="Stretch" Height="1" Margin="10,54,10,0" Stretch="Fill" Stroke="#FFE8E8E8" VerticalAlignment="Top" Width="Auto"/>
-				<Rectangle Fill="#00F4F4F5" HorizontalAlignment="Left" Height="54" Stroke="{x:Null}" VerticalAlignment="Top" Width="310"/>
-			</Grid>
-		</ControlTemplate>
-		<ControlTemplate x:Key="MN_SUB1_ButtonControlTemplate" TargetType="{x:Type Button}">
-			<Grid x:Name="grid" Background="#FFF7F7F7">
-                <Image Margin="25,0,0,0" Source="../Images/menu3_sub1.png" Stretch="Fill" Width="247" Height="31" HorizontalAlignment="Left"/>
-				<Rectangle Fill="#00F4F4F5" HorizontalAlignment="Left" Height="41" Stroke="{x:Null}" VerticalAlignment="Top" Width="310"/>
+		<ControlTemplate x:Key="SharemylistButtonControlTemplate" TargetType="{x:Type Button}">
+			<Grid x:Name="grid">
+				<Image Margin="0" Source="/Orange;component/Images/menu_sharemyplaylist.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="44"/>
+				<Path Data="M0,51.5 L300,51.5" Fill="#FFF4F4F5" HorizontalAlignment="Stretch" Height="1" Margin="10,0" Stretch="Fill" Stroke="#FFE8E8E8" VerticalAlignment="Bottom" Width="Auto"/>
+				<Rectangle Fill="#00F4F4F5" HorizontalAlignment="Stretch" Height="Auto" Stroke="{x:Null}" VerticalAlignment="Stretch" Width="Auto" StrokeThickness="0"/>
 			</Grid>
 			<ControlTemplate.Triggers>
 				<Trigger Property="IsMouseOver" Value="True">
@@ -50,39 +44,103 @@
 				</Trigger>
 			</ControlTemplate.Triggers>
 		</ControlTemplate>
-		<ControlTemplate x:Key="MN_SUB2_ButtonControlTemplate" TargetType="{x:Type Button}">
-			<Grid x:Name="grid" Background="#FFF7F7F7">
-                <Image Margin="25,0,0,0" Source="../Images/menu3_sub2.png" Stretch="Fill" Width="247" Height="31" HorizontalAlignment="Left"/>
-				<Rectangle Fill="#00F4F4F5" HorizontalAlignment="Left" Height="41" Stroke="{x:Null}" VerticalAlignment="Top" Width="310"/>
+		<ControlTemplate x:Key="HotplaylistButtonControlTemplate" TargetType="{x:Type Button}">
+			<Grid x:Name="grid">
+				<Image Margin="0" Source="/Orange;component/Images/menu_hotplaylist.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Height="44"/>
+				<Path Data="M0,51.5 L300,51.5" Fill="#FFF4F4F5" HorizontalAlignment="Stretch" Height="1" Margin="10,0" Stretch="Fill" Stroke="#FFE8E8E8" VerticalAlignment="Bottom" Width="Auto"/>
+				<Rectangle Fill="#00F4F4F5" HorizontalAlignment="Stretch" Height="Auto" Stroke="{x:Null}" VerticalAlignment="Stretch" Width="Auto" StrokeThickness="0" d:IsLocked="True"/>
 			</Grid>
 			<ControlTemplate.Triggers>
 				<Trigger Property="IsMouseOver" Value="True">
-					<Setter Property="Background" TargetName="grid" Value="#FFE8E8E8"/>
-				</Trigger>
+					<Setter Property="Background" TargetName="grid" Value="#FFE8E8E8"/></Trigger>
 			</ControlTemplate.Triggers>
 		</ControlTemplate>
-		<ControlTemplate x:Key="MN_SUB3_ButtonControlTemplate" TargetType="{x:Type Button}">
-			<Grid x:Name="grid" Background="#FFF7F7F7">
-                <Image Margin="25,0,0,0" Source="../Images/menu3_sub3.png" Stretch="Fill" Width="247" Height="31" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-				<Rectangle Fill="#00F4F4F5" HorizontalAlignment="Left" Height="41" Stroke="{x:Null}" VerticalAlignment="Top" Width="310"/>
-			</Grid>
-			<ControlTemplate.Triggers>
-				<Trigger Property="IsMouseOver" Value="True">
-					<Setter Property="Background" TargetName="grid" Value="#FFE8E8E8"/>
-				</Trigger>
-			</ControlTemplate.Triggers>
-		</ControlTemplate>
+		<Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+			<Setter Property="Visibility" Value="Collapsed" />
+		</Style>
+	
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot">
-		<StackPanel x:Name="main_menu" HorizontalAlignment="Left" Width="310" Background="#80FFFFFF">
-			<Button x:Name="mn_new_btn" Content="What's new?" HorizontalAlignment="Left" Height="55" Template="{DynamicResource Menu1btnControlTemplate}" Cursor="Hand" Click="mn_new_btn_Click"/>
-			<Button x:Name="mn_myplaylist_btn" Content="My play list" HorizontalAlignment="Left" Height="55" Width="310" Template="{DynamicResource Menu2btnControlTemplate}" Cursor="Hand" Click="mn_myplaylist_btn_Click" Visibility="Collapsed"/>
-			<Button x:Name="mn_music_chart_btn" Content="Music Charts" HorizontalAlignment="Left" Height="55" Width="310" Template="{DynamicResource Menu3BtnControlTemplate}"/>
-			<Button x:Name="mn_pop_btn" Content="Billboard Chart" HorizontalAlignment="Left" Height="41" Width="310" Template="{DynamicResource MN_SUB1_ButtonControlTemplate}" Cursor="Hand" Click="mn_pop_btn_Click"/>
-			<Button x:Name="mn_kpop_btn" Content="K-POP (Melon Chart)" HorizontalAlignment="Left" Height="41" Width="310" Template="{DynamicResource MN_SUB2_ButtonControlTemplate}" Cursor="Hand" Click="mn_kpop_btn_Click"/>
-			<Button x:Name="mn_jpop_btn" Content="J-POP (Oricon Chart)" HorizontalAlignment="Left" Height="41" Width="310" Template="{DynamicResource MN_SUB3_ButtonControlTemplate}" Cursor="Hand" Click="mn_jpop_btn_Click"/>
-			<Path Data="M0,51.5 L300,51.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="1" Stretch="Fill" Stroke="#FFE8E8E8" VerticalAlignment="Top" Width="289" Margin="10,0,0,0" d:IsLocked="True" Cursor="Hand"/>
+		<StackPanel x:Name="main_menu" HorizontalAlignment="Left" Width="310" Background="#99FFFFFF">
+			<Button x:Name="mn_myfavoritelist" Content="My favorite list" HorizontalAlignment="Left" Height="45" Template="{DynamicResource Menu1btnControlTemplate}" Cursor="Hand" Click="mn_pop_btn_Click"/>
+			<Button x:Name="mn_whatsnew" Content="What's new?" Height="45" Template="{DynamicResource NewSongsButtonControlTemplate}" Cursor="Hand" Click="mn_kpop_btn_Click"/>
+			<Button x:Name="mn_sharelist" Content="Share my playlist" Height="45" Template="{DynamicResource SharemylistButtonControlTemplate}" Cursor="Hand"/>
+			<Button x:Name="mn_hotlist" Content="Hot playlist" Height="45" Template="{DynamicResource HotplaylistButtonControlTemplate}" Cursor="Hand"/>
+			<Grid Height="40" VerticalAlignment="Top">
+				<TextBox Height="23" Margin="10,5,115.5,5" TextWrapping="Wrap" VerticalAlignment="Center"/>
+				<Button Content="Search Playlist" HorizontalAlignment="Left" Height="30" Margin="199.5,0,0,0" VerticalAlignment="Center" Width="100"/>
+				<Path Data="M0,51.5 L300,51.5" Fill="#FFF4F4F5" HorizontalAlignment="Stretch" Height="1" Margin="10,0" Stretch="Fill" Stroke="#FFE8E8E8" VerticalAlignment="Bottom" Width="Auto" d:IsLocked="True"/>
+			</Grid>
+			<ScrollViewer x:Name="Search_ScrollViewer" Margin="10,0,11,0"  PreviewMouseWheel="Search_ScrollViewer_PreviewMouseWheel" ScrollBar.Scroll="currentTagNotContactsList_Scroll" Height="{Binding ActualHeight, ElementName=temprec}" VerticalScrollBarVisibility="Auto" Visibility="Hidden">
+				<Grid>
+					<ListView     x:Name="result_musiclist" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" Background="{x:Null}" MouseDoubleClick="musiclist_MouseDoubleClick" Margin="0,0,0,25" >
+						<ListView.ItemContainerStyle>
+							<Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
+								<Setter Property="ToolTip" Value="{Binding title}" />
+								<Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+							</Style>
+						</ListView.ItemContainerStyle>
+						<ListView.View>
+							<GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+
+
+								<GridViewColumn  Header="Title"  Width="{Binding ActualWidth, ElementName=musiclist_title_rec_for_width}"
+									DisplayMemberBinding="{Binding title}"  >
+									<GridViewColumn.CellTemplate>
+										<DataTemplate>
+											<TextBlock Text="노래제목"/>
+										</DataTemplate>
+									</GridViewColumn.CellTemplate>
+								</GridViewColumn>
+
+								<GridViewColumn Header="Play time" Width="35"     DisplayMemberBinding="{Binding playTime}" >
+									<GridViewColumn.CellTemplate>
+										<DataTemplate>
+											<TextBlock Text="재생 시간"/>
+										</DataTemplate>
+									</GridViewColumn.CellTemplate>
+								</GridViewColumn>
+
+								<GridViewColumn Width="35">
+									<GridViewColumn.CellTemplate>
+										<DataTemplate>
+											<Button
+												Content="+"
+												Margin="0,1,0,1"
+												VerticalAlignment="Center"
+
+												/>
+										</DataTemplate>
+									</GridViewColumn.CellTemplate>
+								</GridViewColumn>
+
+
+								<GridViewColumn Width="35">
+									<GridViewColumn.CellTemplate>
+										<DataTemplate>
+											<Button
+												Content="≡"
+												Margin="0,1,0,1"
+												VerticalAlignment="Center"
+												/>
+										</DataTemplate>
+									</GridViewColumn.CellTemplate>
+								</GridViewColumn>
+
+							</GridView>
+						</ListView.View>
+
+					</ListView>
+					<Button x:Name="morebtn" Content="더 찾아보기" Height="25" Margin="0" VerticalAlignment="Bottom" Click="morebtn_Click" Visibility="Hidden"/>
+				</Grid>
+			</ScrollViewer>
 		</StackPanel>
+		<Rectangle x:Name="temprec" Fill="#FFF4F4F5" HorizontalAlignment="Left" Margin="-17,220,0,10" Width="1" Visibility="Hidden" d:IsLocked="True"/>
+		<Grid x:Name="favoritlist_Content" HorizontalAlignment="Left" Height="354" VerticalAlignment="Top" Width="273" Margin="301,0,-264,0" Visibility="Collapsed">
+			<Rectangle Fill="#4C000000" Margin="5,4,-5,-4" d:IsLocked="True"/>
+			<Rectangle Fill="#FFE8E8E8" Stroke="#FFBCBCBC" d:IsLocked="True"/>
+			<Image Margin="-22.998,0,0,0" Source="/Orange;component/Images/point_favoritelist.png" Stretch="Fill" Width="24" Height="45" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		</Grid>
 	</Grid>
 </UserControl>

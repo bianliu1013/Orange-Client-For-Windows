@@ -11,7 +11,7 @@ namespace Orange.Util
     class Security
     {
         //암호화 키.  8글자로 이루어짐.
-        public static byte[] Skey = ASCIIEncoding.ASCII.GetBytes("10048021");
+        public static byte[] Skey = ASCIIEncoding.ASCII.GetBytes(Config.SKey);
 
         public static string Encrypt(string p_data)
         {

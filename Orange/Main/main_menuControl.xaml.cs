@@ -17,6 +17,7 @@ using Orange.MsgBroker;
 using System.Windows.Threading;
 using Orange.DataManager;
 using System.Threading;
+using System.Windows.Controls.Primitives;
 
 namespace Orange
 {
@@ -55,6 +56,7 @@ namespace Orange
             musicCollection.Clear();
             MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
             arg.MsgOPCode = UI_CONTROL.PROGRESS_SHOW;
+            Orange.Util.UI_Flag.IsChart = true;
             (Application.Current as App).msgBroker.SendMessage(arg);
             Thread thread = new Thread(new ThreadStart(ParsingThread));
             thread.Start();
@@ -67,6 +69,7 @@ namespace Orange
             musicCollection.Clear();
             MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
             arg.MsgOPCode = UI_CONTROL.PROGRESS_SHOW;
+            Orange.Util.UI_Flag.IsChart = true;
             (Application.Current as App).msgBroker.SendMessage(arg);
             
             Thread thread = new Thread(new ThreadStart(ParsingThread));
@@ -116,7 +119,7 @@ namespace Orange
             }
             catch (Exception e) { MessageBox.Show(e.Message);
 
-                        Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
+               Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
                {
                      MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
                      arg.MsgOPCode = UI_CONTROL.PROGRESS_HIDE;
@@ -134,10 +137,40 @@ namespace Orange
 
             musicCollection.Clear();
             MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+            Orange.Util.UI_Flag.IsChart = true;
             arg.MsgOPCode = UI_CONTROL.PROGRESS_SHOW;
+            
             (Application.Current as App).msgBroker.SendMessage(arg);
             Thread thread = new Thread(new ThreadStart(ParsingThread));
             thread.Start();
 		}
+
+		private void Search_ScrollViewer_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+		{
+			// TODO: 여기에 구현된 이벤트 처리기를 추가하십시오.
+		}
+        private void currentTagNotContactsList_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        {
+            ScrollBar sb = e.OriginalSource as ScrollBar;
+
+            if (sb.Orientation == Orientation.Horizontal)
+                return;
+
+            if (sb.Value == sb.Maximum)
+            {
+                
+            }
+        }
+
+        private void morebtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void musiclist_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
 	}
 }

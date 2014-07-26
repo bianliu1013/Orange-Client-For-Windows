@@ -3,21 +3,14 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:updateControl="clr-namespace:SmartUpdate;assembly=SmartUpdate"
 	mc:Ignorable="d"
 	x:Class="Orange.information_usercontrol"
 	x:Name="UserControl"
 	d:DesignWidth="640" d:DesignHeight="480">
 
 	<Grid x:Name="LayoutRoot" Background="#4C000000" Margin="0" MouseDown="LayoutRoot_MouseDown">
-		<Rectangle Fill="White" Margin="0" Height="200" VerticalAlignment="Center"/>
-		<Image Margin="0,104,0,0" Source="/Orange;component/Images/gift.png" Stretch="Fill" Width="90" Height="64" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
-		<Grid Margin="0,0,0,60" HorizontalAlignment="Center" VerticalAlignment="Center" Width="231" Height="68">
-			<TextBlock HorizontalAlignment="Left" Margin="0,0,-0.001,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="21.333" Foreground="#FF787878"><Run Language="ko-kr" Text="Orange Youtube Player"/></TextBlock>
-			<TextBlock HorizontalAlignment="Left" Margin="59,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Foreground="#FF008BFF"><Run Language="ko-kr" Text="Alpha version"/></TextBlock>
-		</Grid>
-		<Grid x:Name="name" Margin="0,115,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="40" Visibility="Collapsed">
-			<TextBlock HorizontalAlignment="Right" Margin="0,0,31,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF747474"><Run Language="ko-kr" Text="Lee Jun Yeong"/><LineBreak/><Run Language="ko-kr" Text="Kim Yong Jun"/></TextBlock>
-			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF747474" TextAlignment="Right" Margin="14,0,0,0"><Run Language="ko-kr" Text="Yang Seung Won"/><LineBreak/><Run Language="ko-kr" Text="Park jin Hyung"/></TextBlock>
-		</Grid>
+		<Grid x:Name="infoGrid" Height="200" Margin="0" VerticalAlignment="Center"/>
+        <updateControl:SmartUpdaterForOrange x:Name="infoUC" Height="200" VerticalAlignment="Center"></updateControl:SmartUpdaterForOrange>
 	</Grid>
 </UserControl>

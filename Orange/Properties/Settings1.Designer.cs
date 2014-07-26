@@ -25,13 +25,121 @@ namespace Orange.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("dd")]
-        public string Setting {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsShffle {
             get {
-                return ((string)(this["Setting"]));
+                return ((bool)(this["IsShffle"]));
             }
             set {
-                this["Setting"] = value;
+                this["IsShffle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int REPEAT {
+            get {
+                return ((int)(this["REPEAT"]));
+            }
+            set {
+                this["REPEAT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsMute {
+            get {
+                return ((bool)(this["IsMute"]));
+            }
+            set {
+                this["IsMute"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Language_for_Orange {
+            get {
+                return ((int)(this["Language_for_Orange"]));
+            }
+            set {
+                this["Language_for_Orange"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsShowingTopGrid {
+            get {
+                return ((bool)(this["IsShowingTopGrid"]));
+            }
+            set {
+                this["IsShowingTopGrid"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsShowingVideo {
+            get {
+                return ((bool)(this["IsShowingVideo"]));
+            }
+            set {
+                this["IsShowingVideo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsPlaying {
+            get {
+                return ((bool)(this["IsPlaying"]));
+            }
+            set {
+                this["IsPlaying"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsEndOfPoint {
+            get {
+                return ((bool)(this["IsEndOfPoint"]));
+            }
+            set {
+                this["IsEndOfPoint"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        public string VolumeValue {
+            get {
+                return ((string)(this["VolumeValue"]));
+            }
+            set {
+                this["VolumeValue"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Playlist {
+            get {
+                return ((string)(this["Playlist"]));
+            }
+            set {
+                this["Playlist"] = value;
             }
         }
     }

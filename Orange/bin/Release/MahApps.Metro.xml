@@ -92,6 +92,11 @@
             A helper class that provides various attached properties for the GroupBox, TabItem and MetroTabItem controls.
             </summary>
         </member>
+        <member name="F:MahApps.Metro.Controls.ControlsHelper.IsUnderlinedProperty">
+            <summary>
+            Defines whether the underline below the <see cref="T:System.Windows.Controls.TabControl"/> is shown or not.
+            </summary>
+        </member>
         <member name="F:MahApps.Metro.Controls.ControlsHelper.ButtonWidthProperty">
             <summary>
             This property can be used to set the button width (PART_ClearText) of TextBox, PasswordBox, ComboBox
@@ -762,11 +767,6 @@
             Gets/sets if the close button is visible.
             </summary>
         </member>
-        <member name="P:MahApps.Metro.Controls.MetroWindow.ShowWindowButtonCommandsOnHiddenTitleBar">
-            <summary>
-            Gets/sets whether the Window Button Commands will show if the TitleBar is hidden.
-            </summary>
-        </member>
         <member name="P:MahApps.Metro.Controls.MetroWindow.ShowSystemMenuOnRightClick">
             <summary>
             Gets/sets if the the system menu should popup on right click.
@@ -1139,6 +1139,21 @@
             </summary>
         </member>
         <!-- Badly formed XML comment ignored for member "T:MahApps.Metro.Controls.SplitButton" -->
+        <member name="F:MahApps.Metro.Controls.WindowCommandsOverlayBehavior.Never">
+            <summary>
+            Doesn't overlay flyouts nor a hidden TitleBar.
+            </summary>
+        </member>
+        <member name="F:MahApps.Metro.Controls.WindowCommandsOverlayBehavior.Flyouts">
+            <summary>
+            Overlays opened <see cref="T:MahApps.Metro.Controls.Flyout"/> controls.
+            </summary>
+        </member>
+        <member name="F:MahApps.Metro.Controls.WindowCommandsOverlayBehavior.HiddenTitleBar">
+            <summary>
+            Overlays a hidden TitleBar.
+            </summary>
+        </member>
         <member name="M:MahApps.Metro.Converters.BackgroundToForegroundConverter.IdealTextColor(System.Windows.Media.Color)">
             <summary>
             Determining Ideal Text Color Based on Specified Background Color

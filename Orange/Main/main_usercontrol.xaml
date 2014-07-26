@@ -10,9 +10,12 @@
 	d:DesignWidth="310" d:DesignHeight="417.5">
 
 	<Grid x:Name="LayoutRoot">
-		<Grid Background="White">
-            <Image Margin="64.6,10,69.4,0" Source="../Images/main_top.png" Stretch="Fill" Width="176" Height="98" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-			<Image Margin="99,0" Source="../Images/main_bottom.png" Stretch="Fill" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="112" Height="170"/>
+		<Grid Background="#7FFFFFFF">
+			<Grid x:Name="whiteGrid">
+				<Rectangle Fill="White" HorizontalAlignment="Left" Height="417.5" VerticalAlignment="Top" Width="310"/>
+				<Image Margin="64.6,10,69.4,0" Source="../Images/main_top.png" Stretch="Fill" Width="176" Height="98" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+				<Image Margin="99,0" Source="../Images/main_bottom.png" Stretch="Fill" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="112" Height="170"/>
+			</Grid>
 			<controls:ProgressRing x:Name="ProgressRing" IsActive="True" Margin="0,0,0,48" VerticalAlignment="Center" />
 		</Grid>
 	</Grid>

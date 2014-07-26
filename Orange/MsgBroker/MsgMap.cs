@@ -31,5 +31,10 @@ namespace Orange.MsgBroker
 
         public const int SET_CONVERT_PROGRESS_VALUE = 1009;
         public const int FINISH_CONVERT_PROGRESS = 1010;
+
+        public const int SetTopmost = 1011;
+        public const int DisableTopmost = 1012;
+
+        public const int RefreshMyplayList = 1013;
     }
 }

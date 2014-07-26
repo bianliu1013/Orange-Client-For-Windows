@@ -22,5 +22,15 @@
         </GuideModel>
       </GuideModels>
     </ProjectItemGuide>
+    <ProjectItemGuide TargetFile="Main\main_menuControl.xaml">
+      <GuideModels>
+        <GuideModel>
+          <Guides>
+            <Guide Alignment="Top" Position="220" />
+            <Guide Alignment="Top" Position="407" />
+          </Guides>
+        </GuideModel>
+      </GuideModels>
+    </ProjectItemGuide>
   </ProjectItemGuides>
 </ProjectGuidesConfiguration>
