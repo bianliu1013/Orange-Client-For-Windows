@@ -42,5 +42,16 @@ namespace Orange
 
             return col;
         }
+
+        public static string getJsondata(string query)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(query);
+            request.Method = "GET";
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            Stream stream = response.GetResponseStream();
+            StreamReader streamReader = new StreamReader(stream, Encoding.UTF8);
+            string result = streamReader.ReadToEnd();
+            return result;
+        }
     }
 }

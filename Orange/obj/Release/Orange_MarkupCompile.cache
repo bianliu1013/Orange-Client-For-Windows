@@ -10,11 +10,11 @@ none
 false
 TRACE
 E:\GitHub\Orange-Client-For-Windows\Orange\App.xaml
-91754440948
+13-579456882
 
-271313030498
-19228909489
-Main\ConvertingProgress.xaml;Main\information_usercontrol.xaml;Main\MainWindow.xaml;Main\main_menuControl.xaml;Main\main_usercontrol.xaml;Main\Preferences.xaml;Main\rename_usercontrol.xaml;Resources\Icons.xaml;Styles\ButtonStyles.xaml;
+34-861413024
+20-1185653212
+Main\DialogUserControls\Create_FavoritePlaylistUserControl.xaml;Main\DialogUserControls\ConvertingProgress.xaml;Main\DialogUserControls\DialogMsg.xaml;Main\DialogUserControls\information_usercontrol.xaml;Main\DialogUserControls\SharePlayListUserControl.xaml;Main\MainWindow.xaml;Main\main_menuControl.xaml;Main\main_usercontrol.xaml;Main\DialogUserControls\Preferences.xaml;Main\DialogUserControls\rename_usercontrol.xaml;Resources\Icons.xaml;Styles\ButtonStyles.xaml;tutorial\tutorial.xaml;
 
 False
 

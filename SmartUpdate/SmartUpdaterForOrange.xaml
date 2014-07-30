@@ -16,13 +16,13 @@
 		</Grid>
 		<Grid x:Name="CheckNewGrid" Margin="0,70.04,0,81.455">
 			<Grid x:Name="existNewGrid" Margin="0,2,0,-9.334" Visibility="Hidden">
-				<Button Content="업데이트" HorizontalAlignment="Center" Height="25.212" Margin="0,19.962,0,0" VerticalAlignment="Top" Width="108.667" Click="updatebtn_Click"/>
+				<Button Content="UPDATE" HorizontalAlignment="Center" Height="25.212" Margin="0,19.962,0,0" VerticalAlignment="Top" Width="108.667" Click="updatebtn_Click"/>
 				<TextBlock x:Name="NewVersionTb" HorizontalAlignment="Center" Margin="0,1.3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF008BFF" FontWeight="Bold"><Run Language="ko-kr" Text="New Ver 1.0.0.1"/></TextBlock>
 			</Grid>
 			<TextBlock x:Name="updateText" HorizontalAlignment="Center" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF008BFF" FontWeight="Bold" Visibility="Hidden"><Run Language="ko-kr" Text="U"/><Run Text="pdated version"/></TextBlock>
 		</Grid>
 		<Grid Margin="0,17.446,0,18.554" HorizontalAlignment="Center" Width="300" Height="163">
-			<Image Margin="0,105,0,-5" Source="gift.png" Stretch="Fill" Width="90" Height="64" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
+			<Image Margin="0,105,0,-5" Source="pack://application:,,,/Images/gift.png" Stretch="Fill" Width="90" Height="64" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
 			<Grid Margin="34.5,0,34.5,64" HorizontalAlignment="Center" VerticalAlignment="Center" Width="231" Height="100">
 				<TextBlock HorizontalAlignment="Left" Margin="0,0,-0.001,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="21.333" Foreground="#FF787878"><Run Language="ko-kr" Text="Orange Youtube Player"/></TextBlock>
 			</Grid>

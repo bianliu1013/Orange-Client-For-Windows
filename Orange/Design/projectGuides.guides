@@ -16,8 +16,9 @@
       <GuideModels>
         <GuideModel>
           <Guides>
+            <Guide Alignment="Top" Position="421" />
+            <Guide Alignment="Top" Position="135" />
             <Guide Alignment="Left" Position="155" />
-            <Guide Alignment="Top" Position="184" />
           </Guides>
         </GuideModel>
       </GuideModels>
@@ -26,7 +27,6 @@
       <GuideModels>
         <GuideModel>
           <Guides>
-            <Guide Alignment="Top" Position="220" />
             <Guide Alignment="Top" Position="407" />
           </Guides>
         </GuideModel>

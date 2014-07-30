@@ -10,7 +10,10 @@ namespace Orange.Util
     {
         public const string UPDATE_URL = "http://115.71.236.224/~jcsla/update.xml";
         public const string GIFT_URL = "http://giftorange.com";
+        public const string YOUTUBEPLAYER_URL = "http://115.71.236.224:8081/static/YouTubePlayer.htm";
+        //public const string YOUTUBEPLAYER_URL = "http://giftorange.com/YouTubePlayer.htm";
         public const string SKey = "b0d9b872";
+
         public static bool IsShffle = false;
         public static int REPEAT = 0; // DEFAULT 0, ALL REPEAT 1, SINGLE REPEAT 2
         public static bool IsMute = false;

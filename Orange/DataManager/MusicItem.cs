@@ -8,8 +8,8 @@ namespace Orange.DataManager
 {
     public class MusicItem
     {
-        public String title { get; set; }
-        public String playTime { get; set; }
-        public String url { get; set; }
+        public string title { get; set; }
+        public string time { get; set; }
+        public string url { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace SmartUpdate
         public CheckBeforeClosing(ISmartUpdatable applicationInfo)
         {
             this.applicationInfo = applicationInfo;
-            
+            IsAvailableUpdate = false;
             this.bgWorker = new BackgroundWorker();
             this.bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork);
             this.bgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgWorker_RunWorkerCompleted);

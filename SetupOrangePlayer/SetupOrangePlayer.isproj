@@ -29,10 +29,15 @@
 	</ItemGroup>
 	<Import Project="$(MSBuildExtensionsPath32)\InstallShield\2013Limited\InstallShield.targets"/>
 	<ItemGroup/>
+	<ItemGroup/>
 	<ItemGroup>
 		<ProjectReference Include="..\Orange\Orange.csproj">
 			<Name>Orange</Name>
 			<Project>{B10CE7E0-7031-4BC2-87AA-90D8FEF9C8D3}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\SmartUpdate\SmartUpdate.csproj">
+			<Name>SmartUpdate</Name>
+			<Project>{E0284796-F79A-4A14-9119-3BF75A1B43EA}</Project>
 		</ProjectReference>
 	</ItemGroup>
 </Project>

@@ -66,6 +66,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Json">
       <HintPath>..\..\System.Net.Json.dll</HintPath>
     </Reference>
@@ -91,22 +92,37 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Main\ConvertingProgress.xaml.cs">
+    <Compile Include="DataManager\MyfavoritelistMgr.cs" />
+    <Compile Include="DataManager\PlaylistItem.cs" />
+    <Compile Include="DataManager\PlaylistCollection.cs" />
+    <Compile Include="Main\DialogUserControls\Create_FavoritePlaylistUserControl.xaml.cs">
+      <DependentUpon>Create_FavoritePlaylistUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Main\DialogUserControls\ConvertingProgress.xaml.cs">
       <DependentUpon>ConvertingProgress.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Main\information_usercontrol.xaml.cs">
+    <Compile Include="Main\DialogUserControls\DialogMsg.xaml.cs">
+      <DependentUpon>DialogMsg.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Main\DialogUserControls\information_usercontrol.xaml.cs">
       <DependentUpon>information_usercontrol.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Main\Preferences.xaml.cs">
+    <Compile Include="Main\DialogUserControls\Preferences.xaml.cs">
       <DependentUpon>Preferences.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Main\rename_usercontrol.xaml.cs">
+    <Compile Include="Main\DialogUserControls\rename_usercontrol.xaml.cs">
       <DependentUpon>rename_usercontrol.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Main\DialogUserControls\SharePlayListUserControl.xaml.cs">
+      <DependentUpon>SharePlayListUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="tutorial\tutorial.xaml.cs">
+      <DependentUpon>tutorial.xaml</DependentUpon>
     </Compile>
     <Compile Include="Util\AppInfo.cs" />
     <Compile Include="Util\Config.cs" />
@@ -116,11 +132,23 @@
     <Compile Include="Util\Shuffle.cs" />
     <Compile Include="Util\VisualTreeHelper.cs" />
     <Compile Include="Util\WebBrowserHelper.cs" />
-    <Page Include="Main\ConvertingProgress.xaml">
+    <Page Include="Main\DialogUserControls\Create_FavoritePlaylistUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Main\information_usercontrol.xaml">
+    <Page Include="Main\DialogUserControls\ConvertingProgress.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Main\DialogUserControls\DialogMsg.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Main\DialogUserControls\information_usercontrol.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Main\DialogUserControls\SharePlayListUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -152,11 +180,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Main\Preferences.xaml">
+    <Page Include="Main\DialogUserControls\Preferences.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Main\rename_usercontrol.xaml">
+    <Page Include="Main\DialogUserControls\rename_usercontrol.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -167,6 +195,10 @@
     <Page Include="Styles\ButtonStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="tutorial\tutorial.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -196,8 +228,11 @@
     </None>
     <AppDesigner Include="Properties\" />
     <Resource Include="Images\bn.png" />
+    <Resource Include="Images\closebtn.png" />
     <Resource Include="Images\config.png" />
+    <Resource Include="Images\favorite_new.png" />
     <Resource Include="Images\gift.png" />
+    <Resource Include="Images\header_bookmark.png" />
     <Resource Include="Images\icon.png" />
     <Resource Include="Images\information.png" />
     <Resource Include="Images\main_bottom.png" />
@@ -209,9 +244,13 @@
     <Resource Include="Images\menu3_sub2.png" />
     <Resource Include="Images\menu3_sub3.png" />
     <Resource Include="Images\menu_hotplaylist.png" />
+    <Resource Include="Images\menu_hotplaylist_kor.png" />
     <Resource Include="Images\menu_myfavorite.png" />
+    <Resource Include="Images\menu_myfavorite_kor.png" />
     <Resource Include="Images\menu_sharemyplaylist.png" />
+    <Resource Include="Images\menu_sharemyplaylist_kor.png" />
     <Resource Include="Images\menu_whatsnew.png" />
+    <Resource Include="Images\menu_whatsnew_kor.png" />
     <Resource Include="Images\mute.png" />
     <Resource Include="Images\player_active_repeat_btn.png" />
     <Resource Include="Images\player_back_btn.png" />
@@ -223,13 +262,19 @@
     <Resource Include="Images\player_repeat_btn.png" />
     <Resource Include="Images\player_shuffle_btn.png" />
     <Resource Include="Images\player_single_repeat_btn.png" />
+    <Resource Include="Images\player_small_playlist_bookmark.png" />
     <Resource Include="Images\player_small_playlist_del.png" />
     <Resource Include="Images\player_small_playlist_down.png" />
     <Resource Include="Images\player_small_playlist_endofdown.png" />
     <Resource Include="Images\player_small_playlist_endofup.png" />
     <Resource Include="Images\player_small_playlist_open.png" />
     <Resource Include="Images\player_small_playlist_save.png" />
+    <Resource Include="Images\player_small_playlist_share.png" />
     <Resource Include="Images\player_small_playlist_up.png" />
+    <Resource Include="Images\playlist_header.png" />
+    <Resource Include="Images\playlist_header1.png" />
+    <Resource Include="Images\playlist_header1_favorite.png" />
+    <Resource Include="Images\playlist_header2.png" />
     <Resource Include="Images\point_favoritelist.png" />
     <Resource Include="Images\temp_list.png" />
     <Resource Include="Images\temp_menu.png" />

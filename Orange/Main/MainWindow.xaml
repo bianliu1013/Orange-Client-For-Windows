@@ -135,6 +135,16 @@
                 <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Visible}"/>
             </ObjectAnimationUsingKeyFrames>
         </Storyboard>
+        <ControlTemplate x:Key="CreateFavButtonControlTemplate" TargetType="{x:Type Button}">
+        	<Grid>
+        		<Image x:Name="image" Source="/Orange;component/Images/player_small_playlist_bookmark.png" Stretch="Fill"/>
+        	</Grid>
+        	<ControlTemplate.Triggers>
+        		<Trigger Property="IsMouseOver" Value="False">
+        			<Setter Property="Opacity" TargetName="image" Value="0.5"/>
+        		</Trigger>
+        	</ControlTemplate.Triggers>
+        </ControlTemplate>
 
     </controls:MetroWindow.Resources>
     <controls:MetroWindow.Triggers>
@@ -172,9 +182,9 @@
 
         <Grid x:Name="leftPanel"   Grid.Column="0" Background="White" MinWidth="310">
             <Rectangle x:Name="musiclist_title_rec_for_width" Fill="Blue" Height="63.2" Margin="5,102,163,0" Stroke="#FFE8E8E8" VerticalAlignment="Top" Visibility="Hidden"/>
-            <ScrollViewer x:Name="Search_ScrollViewer" Margin="5,50,6,80"  PreviewMouseWheel="Search_ScrollViewer_PreviewMouseWheel" ScrollBar.Scroll="currentTagNotContactsList_Scroll">
-            	<Grid>
-            		<ListView     x:Name="result_musiclist" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" Background="{x:Null}" MouseDoubleClick="result_musiclist_MouseDoubleClick" Margin="0,0,0,25" >
+            <ScrollViewer x:Name="Search_ScrollViewer" Margin="5,50,6,80"  PreviewMouseWheel="Search_ScrollViewer_PreviewMouseWheel" ScrollBar.Scroll="currentTagNotContactsList_Scroll" VerticalScrollBarVisibility="Auto">
+            	<StackPanel>
+            		<ListView     x:Name="result_musiclist" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" Background="{x:Null}" MouseDoubleClick="result_musiclist_MouseDoubleClick" Margin="0" >
             			<ListView.ItemContainerStyle>
             				<Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource {x:Type ListViewItem}}">
             					<Setter Property="ToolTip" Value="{Binding title}" />
@@ -202,7 +212,7 @@
             						</GridViewColumn.CellTemplate>
             					</GridViewColumn>
 
-            					<GridViewColumn Header="Play time" Width="35"     DisplayMemberBinding="{Binding playTime}" >
+            					<GridViewColumn Header="Play time" Width="35"     DisplayMemberBinding="{Binding time}" >
             						<GridViewColumn.CellTemplate>
             							<DataTemplate>
             								<TextBlock Text="재생 시간"/>
@@ -240,13 +250,13 @@
             			</ListView.View>
 
             		</ListView>
-            		<Button x:Name="morebtn" Content="더 찾아보기" Height="25" Margin="0" VerticalAlignment="Bottom" Click="morebtn_Click" Visibility="Hidden"/>
-            	</Grid>
+            		<Button x:Name="morebtn" Content="더 찾아보기" Height="25" Margin="0" VerticalAlignment="Bottom" Click="morebtn_Click" Visibility="Collapsed"/>
+            	</StackPanel>
             </ScrollViewer>
 
             <Button Content="Search" HorizontalAlignment="Right" Height="30" Margin="0,10,12,0" VerticalAlignment="Top" Width="66" Cursor="Hand" Click="Search_Button_Click"/>
-            <Button Content="선택 추가" HorizontalAlignment="Center" Height="30" Margin="160,0,40,48" VerticalAlignment="Bottom" Width="110" Click="result_selected_add" FontSize="12" FontWeight="Normal"/>
-            <Button Content="전체 선택" Height="30" Margin="40,0,160,48" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="110" Click="result_all_select" FontSize="12" FontWeight="Normal"/>
+            <Button x:Name="addselecteditembtn" Content="선택 추가" HorizontalAlignment="Center" Height="30" Margin="135,0,0,48" VerticalAlignment="Bottom" Width="130" Click="result_selected_add" FontSize="12" FontWeight="Normal"/>
+            <Button x:Name="selectallitemsbtn" Content="전체 선택" Height="30" Margin="0,0,135,48" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="130" Click="result_all_select" FontSize="12" FontWeight="Normal"/>
             <TextBox x:Name="searchBox" Height="23" Margin="49,13,87,0" TextWrapping="Wrap" VerticalAlignment="Top" KeyDown="searchBox_KeyDown"/>
             <Button x:Name="MenuBtn" Content="" HorizontalAlignment="Left" Height="44.417" Margin="0,3.583,0,0" VerticalAlignment="Top" Width="42.667" Template="{DynamicResource MenuButtonTemplate1}" Cursor="Hand" Click="MenuBtn_Click"/>
             <Path x:Name="line" Data="M10,48 L298,48" Fill="#FFF4F4F5" Height="1" Margin="10,46,10,0" Stretch="Fill" Stroke="#FFE8E8E8" VerticalAlignment="Top"/>
@@ -279,7 +289,7 @@
             <Grid Margin="10,0,0,9" Grid.Row="1">
                 <Rectangle x:Name="titleWidthSizeREc" Margin="0,2,180,0" VerticalAlignment="Top"/>
                 <Path Data="M0,51.5 L300,51.5" Fill="#FF8B8B8B" HorizontalAlignment="Left" Height="1" Margin="2,85,0,0" Stretch="Fill" Stroke="#FFCBCBCB" VerticalAlignment="Top" Width="{Binding ActualWidth, ElementName=myPlayList}"/>
-                <Slider x:Name="PlayerSlider" Margin="50,7,50,0" VerticalAlignment="Top" Thumb.DragCompleted="PlayerSlider_DragCompleted" Thumb.DragStarted="PlayerSlider_DragStarted"  ValueChanged="PlayerSlider_ValueChanged" TickFrequency="10"/>
+                <Slider x:Name="PlayerSlider" Margin="50,7,50,0" VerticalAlignment="Top" Thumb.DragCompleted="PlayerSlider_DragCompleted" Thumb.DragStarted="PlayerSlider_DragStarted"  ValueChanged="PlayerSlider_ValueChanged" TickFrequency="10" IsEnabled="False"/>
                 <ListView     x:Name="myPlayList" Margin="0,91,10,35" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" Background="{x:Null}" MouseDoubleClick="myPlayList_MouseDoubleClick" ItemsSource="{Binding}" KeyDown="myPlayList_KeyDown"  >
                     <ListView.Resources>
                         
@@ -308,7 +318,7 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <GridViewColumn Header="Play time" Width="35" DisplayMemberBinding="{Binding playTime}" >
+                            <GridViewColumn Header="Play time" Width="35" DisplayMemberBinding="{Binding time}" >
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="재생 시간"/>
@@ -359,10 +369,10 @@
                         <ColumnDefinition Width="257*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="repeatBtn" Content="repeat" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Template="{DynamicResource DefaultRepeatButtonControlTemplate}" Click="set_repeat" Margin="0,23.669,0,0" Grid.ColumnSpan="2" Cursor="Hand" ToolTip="반복없음"/>
-                    <Button Content="previous" HorizontalAlignment="Left" Height="30" Margin="19.168,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PreviousButtonControlTemplate}" Click="Previous_music" Grid.Column="1" Cursor="Hand" ToolTip="이전"/>
+                    <Button x:Name="Previousbtn" Content="previous" HorizontalAlignment="Left" Height="30" Margin="19.168,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PreviousButtonControlTemplate}" Click="Previous_music" Grid.Column="1" Cursor="Hand" ToolTip="이전"/>
                     <Button x:Name="PlayBtn" Content="Play" HorizontalAlignment="Left" Height="30" Margin="69.168,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PlayButtonControlTemplate}" Click="play" Grid.Column="1" Cursor="Hand" ToolTip="재생"/>
                     <Button x:Name="pauseBtn" Content="Play" HorizontalAlignment="Left" Height="30" Margin="118.335,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PauseButtonControlTemplate}" Click="pause" Grid.Column="1" Cursor="Hand" ToolTip="일시정지"/>
-                    <Button Content="Next" HorizontalAlignment="Left" Height="30" Margin="169.835,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource NextButtonControlTemplate}" Click="Next_Music" Grid.Column="1" Cursor="Hand" ToolTip="다음"/>
+                    <Button x:Name="Nextbtn" Content="Next" HorizontalAlignment="Left" Height="30" Margin="169.835,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource NextButtonControlTemplate}" Click="Next_Music" Grid.Column="1" Cursor="Hand" ToolTip="다음"/>
                     <Button x:Name="ShuffleBtn" Content="Shuffle" HorizontalAlignment="Left" Height="30" Margin="217,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource NonShuffleButtonControlTemplate}" Click="set_shuffle" Grid.Column="1" Cursor="Hand" ToolTip="순차듣기"/>
                     <Slider x:Name="VolumeSlider" HorizontalAlignment="Left" Margin="0.001,59.332,0,0" VerticalAlignment="Top" Width="141.334" Value="80" Grid.Column="1" Thumb.DragCompleted="VolumeSlider_DragCompleted" Thumb.DragStarted="VolumeSlider_DragStarted"  ValueChanged="VolumeSlider_ValueChanged" SmallChange="10" IsMoveToPointEnabled="True"/>
                     <Button x:Name="VolumeBtn" Content="vol" HorizontalAlignment="Left" Height="20" Margin="0.001,55.332,0,-0.333" VerticalAlignment="Top" Width="20" Template="{DynamicResource VolButtonControlTemplate}" Click="Mute"/>
@@ -371,14 +381,15 @@
                 <Grid x:Name="ListControlsGrid" Margin="0,0,15,0" VerticalAlignment="Bottom" Height="30">
                     <Grid x:Name="listControl" Margin="10,0,133,0" HorizontalAlignment="Left">
                         <Button x:Name="ms_list_top" Content="top" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Template="{DynamicResource TopButtonControlTemplate}" Click="top_list" Cursor="Hand"/>
-                        <Button x:Name="ms_list_up" Content="Up" HorizontalAlignment="Left" Height="30" Margin="40,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource UpButtonControlTemplate}" Click="up_list" Cursor="Hand"/>
-                        <Button x:Name="ms_list_down" Content="Down" HorizontalAlignment="Left" Height="30" Margin="81.667,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource DownButtonControlTemplate}" Click="down_list" Cursor="Hand"/>
-                        <Button x:Name="ms_list_bottom" Content="bottom" HorizontalAlignment="Left" Height="30" Margin="122.667,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource BottomButtonControlTemplate}" Click="bottom_list" Cursor="Hand"/>
+                        <Button x:Name="ms_list_up" Content="Up" HorizontalAlignment="Left" Height="30" Margin="36.67,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource UpButtonControlTemplate}" Click="up_list" Cursor="Hand"/>
+                        <Button x:Name="ms_list_down" Content="Down" HorizontalAlignment="Left" Height="30" Margin="75.007,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource DownButtonControlTemplate}" Click="down_list" Cursor="Hand"/>
+                        <Button x:Name="ms_list_bottom" Content="bottom" HorizontalAlignment="Left" Height="30" Margin="112.677,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource BottomButtonControlTemplate}" Click="bottom_list" Cursor="Hand"/>
                     </Grid>
-                    <Grid x:Name="listMgr" Margin="0" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                        <Button Content="save" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Template="{DynamicResource SaveButtonControlTemplate}" Click="save_list" Cursor="Hand" ToolTip="저장"/>
-                        <Button Content="Load" HorizontalAlignment="Left" Height="30" Margin="35,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource LoadButtonControlTemplate}" Click="open_list" Cursor="Hand" ToolTip="열기"/>
-                        <Button Content="Del" HorizontalAlignment="Left" Height="30" Margin="70,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource DelButtonControlTemplate}" Click="delete_list" Cursor="Hand" ToolTip="목록 지우기"/>
+                    <Grid x:Name="listMgr" Margin="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="129.333">
+                        <Button x:Name="savebtn" Content="save" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Template="{DynamicResource SaveButtonControlTemplate}" Click="save_list" Cursor="Hand" ToolTip="저장" Margin="33.75,0,0,0"/>
+                        <Button x:Name="openbtn" Content="Load" HorizontalAlignment="Left" Height="30" Margin="67.25,0,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource LoadButtonControlTemplate}" Click="open_list" Cursor="Hand" ToolTip="열기"/>
+                        <Button x:Name="deletebtn" Content="Del" HorizontalAlignment="Left" Height="30" Margin="99.5,0,-0.167,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource DelButtonControlTemplate}" Click="delete_list" Cursor="Hand" ToolTip="목록 지우기"/>
+                        <Button x:Name="bookmarkbtn" Content="addfav" HorizontalAlignment="Left" Height="30" Margin="0" VerticalAlignment="Top" Width="30" Template="{DynamicResource CreateFavButtonControlTemplate}" Click="createfavoritelist_Click" Cursor="Hand"/>
                     </Grid>
                 </Grid>
                 <TextBlock x:Name="currentTimeTxb" HorizontalAlignment="Left" Margin="15,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF959595"><Run Language="ko-kr" Text="00:00"/></TextBlock>
@@ -405,6 +416,7 @@
             </Rectangle.Fill>
         </Rectangle>
         <Grid x:Name="top_content" Grid.ColumnSpan="2" Visibility="Collapsed" Opacity="0" d:IsLocked="True"/>
+        <Grid x:Name="tutorialgrid" Grid.ColumnSpan="2" d:IsLocked="True"/>
 
     </Grid>
 </controls:MetroWindow>

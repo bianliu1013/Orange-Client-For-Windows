@@ -109,9 +109,6 @@ namespace SmartUpdate
             {
                 MessageBox.Show(ex.Message);
             }
-
-
-
         }
 
 

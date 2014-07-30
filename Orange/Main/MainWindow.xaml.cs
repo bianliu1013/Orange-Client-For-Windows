@@ -52,6 +52,9 @@ namespace Orange
         private Storyboard HideTopGridStoryboard;
         private Storyboard ShowTopGridStoryboard;
         private string queryString;
+        private MyfavoritelistMgr myFavoriteMgr;
+
+        private DispatcherTimer Showvideodt;
         private DispatcherTimer dt;
         private double totalTime;
         private double currentTime;
@@ -62,23 +65,27 @@ namespace Orange
         {
             InitializeComponent();
             
+
             initStoryboard();
             initUserConfig();
 
+            myFavoriteMgr = MyfavoritelistMgr.instance();
             musicCollection = new MusicCollection();
             myPlayListCollection = new MusicCollection();
+            check = new CheckBeforeClosing(new AppInfo(this));
             LoadConfig();
-      
+            initLanguage();
             main_menu.SetMusicCollection(musicCollection);
            
             result_musiclist.DataContext = musicCollection;
             myPlayList.DataContext = myPlayListCollection;
+            main_page.InitFavoriteListview(myPlayListCollection);
 
             webBrowser.Navigated += webBrowser_Navigated;
             
             WebBrowserHelper.ClearCache();
                 
-            String url = "http://115.71.236.224:8081/static/YouTubePlayer.html";
+            String url = Config.YOUTUBEPLAYER_URL;
             webBrowser.Navigate(url);
 
             (Application.Current as App).msgBroker.MessageReceived += msgBroker_MessageReceived;
@@ -89,14 +96,75 @@ namespace Orange
             dt.Tick += dt_Tick;
 
             myPlayListCollection.CollectionChanged += myPlayListCollection_CollectionChanged;
+
+            OpenTutorial();
+
         }
 
+        private void initFavoritelist()
+        {
+
+        }
+
+        private void OpenTutorial()
+        {
+            if(Properties.Settings.Default.IsFirst)
+            {
+                tutorialgrid.Children.Add(new tutorial());
+                
+                
+            }            
+        }
+
+        private void initLanguage()
+        {
+            Previousbtn.ToolTip = LanguagePack.Previous();
+            Nextbtn.ToolTip = LanguagePack.Next();
+            PlayBtn.ToolTip = LanguagePack.l_Play();
+            pauseBtn.ToolTip = LanguagePack.l_Pause();
+            savebtn.ToolTip = LanguagePack.Save();
+            openbtn.ToolTip = LanguagePack.Open();
+            deletebtn.ToolTip = LanguagePack.Delete_item();
+            bookmarkbtn.ToolTip = LanguagePack.SetBookMark();
+            morebtn.Content = LanguagePack.MoreItems();
+
+            selectallitemsbtn.Content = LanguagePack.SelectAllItems();
+            addselecteditembtn.Content = LanguagePack.AddSelectedItems();
+
+            if (Config.IsShffle)
+            {
+                ShuffleBtn.ToolTip = LanguagePack.Shuffle();
+            }
+            else
+            {
+                ShuffleBtn.ToolTip = LanguagePack.PlayStraight();
+            }
+
+
+            // DEFAULT 0, ALL REPEAT 1, SINGLE REPEAT 2
+            switch (Config.REPEAT)
+            {
+                case 0:
+                    repeatBtn.ToolTip = LanguagePack.NormalMode();
+                    break;
+                case 1:
+                    repeatBtn.ToolTip = LanguagePack.RepeatAllSongs();
+                    break;
+                case 2:
+                    repeatBtn.ToolTip = LanguagePack.RepeatOneSong();
+                    break;
+            }
+
+            main_menu.SetMenuLanguage();
+            
+
+        }
 
 
         private void initUserConfig()
         {
             if(UI_Flag.IsShowingVideo){
-                ShowVideoBtn.Content = "HideVideo";
+                ShowVideoBtn.Content = "HideVideo";                
             }
             else { ShowVideoBtn.Content = "ShowVideo"; }
         }
@@ -210,7 +278,8 @@ namespace Orange
                     playlist.Insert(0, CurrentItem);
                 }
             }catch(Exception e)
-            { MessageBox.Show(e.Message); }
+            {
+                MessageBox_Orange("Warning", e.Message.ToString());}
             
         }
 
@@ -220,7 +289,21 @@ namespace Orange
         {
             switch(e.Message.MsgOPCode)
             {
-                case MESSAGE_MAP.KPOP_CART:
+                case MESSAGE_MAP.UPLOAD_PLAYLIST:
+
+                    uploadplaylist((string)e.Message.MsgBody);
+
+                    break;
+                case MESSAGE_MAP.CREATE_FAVORITE_PLAYLIST:
+
+                    Create_favorite_playlist((string)e.Message.MsgBody);
+
+                    break;
+
+                case MESSAGE_MAP.LOAD_ITEMS_IN_FAVORITE_PLAYLIST:
+
+                    Load_favorite_playlist((string)e.Message.MsgBody);
+
                     break;
                 case UI_CONTROL.PROGRESS_SHOW:
                       if (IsLeftPanelState)
@@ -240,7 +323,7 @@ namespace Orange
                         
                     if(UI_Flag.IsChart)
                     {
-                        morebtn.Visibility = Visibility.Hidden;
+                        morebtn.Visibility = Visibility.Collapsed;
                     }
                     
 
@@ -266,7 +349,7 @@ namespace Orange
                         HideTopGridStoryboard.Begin();
                         UI_Flag.IsShowingTopGrid = false;
 
-                        if(UI_Flag.IsShowingVideo && Player_State.IsPlaying)
+                        if(UI_Flag.IsShowingVideo && Player_State.IsPlaying && !main_menu.IsFavoritePanel)
                         {
                             webBrowser.Visibility = Visibility.Visible;   
                         }
@@ -284,7 +367,30 @@ namespace Orange
                     break;
                 case UI_CONTROL.RefreshMyplayList:
                     myPlayList.DataContext= null;
-                        myPlayList.DataContext = myPlayListCollection;
+                    myPlayList.DataContext = myPlayListCollection;
+                    break;
+                case UI_CONTROL.SET_INIT_AFTER_TUTORIAL:
+                    initLanguage();
+                    Showvideodt.Start();
+                    tutorialgrid.Children.Clear();
+                    tutorialgrid.Visibility = Visibility.Collapsed;
+                    Properties.Settings.Default.IsFirst = false;
+                    break;
+                case UI_CONTROL.SET_LANGUAGE:
+                    initLanguage();
+                    break;
+                case UI_CONTROL.ACTIVEMOREBTN:
+                    morebtn.Visibility = Visibility.Visible;
+                    break;
+                case UI_CONTROL.SHOW_VIDEO:
+                    if (UI_Flag.IsShowingVideo && Player_State.IsPlaying)
+                    {
+                        webBrowser.Visibility = Visibility.Visible;
+                    }
+                    
+                    break;
+                case UI_CONTROL.HIDE_VIDEO:
+                    webBrowser.Visibility = Visibility.Hidden;
                     break;
             }
         }
@@ -313,8 +419,10 @@ namespace Orange
             // TODO: 여기에 구현된 이벤트 처리기를 추가하십시오.
             if (IsLeftPanelState)
             {
+                main_menu.HideFavoriteList();
                 HideLeftPanelStoryboard.Begin();
                 IsLeftPanelState = false;
+                
             }
             else
             {
@@ -332,7 +440,7 @@ namespace Orange
         private void Search_Button_Click(object sender, RoutedEventArgs e)
         {
             SearchOperation();
-            morebtn.Visibility = Visibility.Hidden;
+            morebtn.Visibility = Visibility.Collapsed;
            // MessageBox.Show(resultURL + " " + resultTitle);
         }
 
@@ -385,11 +493,16 @@ namespace Orange
                             string resultTitle = item["title"].GetValue().ToString();
                             MusicItem mitem = new MusicItem();
                             mitem.title = resultTitle;
-                            mitem.playTime = resultPlayTime;
+                            mitem.time = resultPlayTime;
                             mitem.url = resultURL;
                             musicCollection.Add(mitem);
-                        }                      
 
+                           
+                        }
+                        if (items.Count >= 17)
+                        {
+                            morebtn.Visibility = Visibility.Visible;
+                        }
                         main_page.SetProgressRing(false, 0);
                         main_page.Visibility = Visibility.Collapsed;
 
@@ -400,7 +513,8 @@ namespace Orange
                 {
                     Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
                     {
-                        MessageBox.Show("검색 결과가 없습니다");
+                        MessageBox_Orange("Warning", "There is no result");
+                        
                         main_page.SetProgressRing(false, 0);
                         main_page.Visibility = Visibility.Visible;
 
@@ -430,26 +544,27 @@ namespace Orange
 
             Thread thread = new Thread(new ThreadStart(SearchingThread));
             thread.Start();
-// 
-//             MusicItem mitem = new MusicItem();
-//             mitem.title = "test";
-//             mitem.playTime = "33:33";
-//             mitem.url = "test";
-//             musicCollection.Add(mitem);
-//             musicCollection.Add(mitem);
-//             musicCollection.Add(mitem);
-//             musicCollection.Add(mitem);
-//             musicCollection.Add(mitem);
-//             musicCollection.Add(mitem);
-//             musicCollection.Add(mitem);
-// 
-//             sbMax++;
+
         }
 
 
         private void webBrowser_Loaded(object sender, RoutedEventArgs e)
         {
-            
+             Showvideodt = new DispatcherTimer();
+             Showvideodt.Interval = new TimeSpan(0, 0, 1);
+             Showvideodt.Tick += Showvideodt_Tick;
+             if(!Properties.Settings.Default.IsFirst)
+             {
+                Showvideodt.Start();
+             }
+             
+        }
+
+        void Showvideodt_Tick(object sender, EventArgs e)
+        {
+            webBrowser.Visibility = Visibility.Visible;
+            Showvideodt.Stop();
+            Showvideodt.IsEnabled = false;
         }
 
         public void HideScriptErrors(WebBrowser wb, bool Hide)
@@ -465,7 +580,7 @@ namespace Orange
         {
             HideScriptErrors(webBrowser, true);
 
-            check = new CheckBeforeClosing(new AppInfo(this));
+            
             check.CheckUpdate();
          
         }
@@ -734,13 +849,13 @@ namespace Orange
             {
                 Config.IsShffle = false;
                 ShuffleBtn.Template = (ControlTemplate)FindResource("NonShuffleButtonControlTemplate");
-                ShuffleBtn.ToolTip = "순차듣기";
+                ShuffleBtn.ToolTip = LanguagePack.PlayStraight();
             }
             else
             {
                 Config.IsShffle = true;                
                 ShuffleBtn.Template = (ControlTemplate)FindResource("ShuffleButtonControlTemplate");
-                ShuffleBtn.ToolTip = "섞어듣기";
+                ShuffleBtn.ToolTip = LanguagePack.Shuffle();
             }
             CopyPlayList();
         }
@@ -753,17 +868,17 @@ namespace Orange
             {
                 case 0:
                     repeatBtn.Template = (ControlTemplate)FindResource("DefaultRepeatButtonControlTemplate");
-                    repeatBtn.ToolTip = "반복없음";
+                    repeatBtn.ToolTip = LanguagePack.NormalMode();
                     Config.REPEAT = 0;
                     break;
                 case 1:
                     repeatBtn.Template = (ControlTemplate)FindResource("RepeatButtonControlTemplate");
-                    repeatBtn.ToolTip = "전체반복";
+                    repeatBtn.ToolTip = LanguagePack.RepeatAllSongs();
                     Config.REPEAT = 1;
                     break;
                 case 2:
                     repeatBtn.Template = (ControlTemplate)FindResource("SingleRepeatButtonControlTemplate");
-                    repeatBtn.ToolTip = "한곡만 반복";
+                    repeatBtn.ToolTip = LanguagePack.RepeatOneSong();
                     Config.REPEAT = 2;
                     break;
             }
@@ -884,8 +999,10 @@ namespace Orange
 
         private void save_list(object sender, RoutedEventArgs e)
         {
+            
+            string fn = DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss");    //2013-07-16 14:10:26
             SaveFileDialog sfDialog = new SaveFileDialog();
-            sfDialog.FileName = "Untitled";
+            sfDialog.FileName = fn;
             sfDialog.Title = "Save";
             sfDialog.Filter = "orm files (*.orm)|*.orm";
             sfDialog.OverwritePrompt = true;
@@ -922,7 +1039,8 @@ namespace Orange
                     }
                 }catch(Exception)
                 {
-                    MessageBox.Show("파일 형식이 맞지 않습니다");
+
+                    MessageBox.Show("File type is not correct");
                 }           
                                 
             }
@@ -1041,11 +1159,15 @@ namespace Orange
         private void PlayMusic(MusicItem item)
         {
             try {
-                if (UI_Flag.IsShowingVideo)
+                if (PlayerSlider.IsEnabled == false)
+                    PlayerSlider.IsEnabled = true;
+
+                if (UI_Flag.IsShowingVideo && !main_menu.IsFavoritePanel)
                 {
                     webBrowser.Visibility = Visibility.Visible;
                 }
-                else { webBrowser.Visibility = Visibility.Hidden; }
+                else if (!UI_Flag.IsShowingVideo || main_menu.IsFavoritePanel) 
+                { webBrowser.Visibility = Visibility.Hidden; }
                
                 WebBrowserHelper.ClearCache();
                 
@@ -1059,8 +1181,9 @@ namespace Orange
                 Music_title.Text = item.title;
                 SelectCurrentMusicItemInPlayList(item);
             }
-            catch (Exception e) { 
-                MessageBox.Show("다시 시도 해보세요.\n\n" + e.Message.ToString());    
+            catch (Exception e) {
+                MessageBox_Orange("Warning", "Try again.\n\n" + e.Message.ToString());
+                
                 
             }
             
@@ -1072,11 +1195,14 @@ namespace Orange
         {
             //information_uc.Visibility = Visibility.Visible;
             
-
-            MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
-            arg.MsgOPCode = UI_CONTROL.SHOW_TOP_GRID;
-            arg.MsgBody = new information_usercontrol(this);
-            (Application.Current as App).msgBroker.SendMessage(arg);
+            if(!Properties.Settings.Default.IsFirst)
+            {
+                MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+                arg.MsgOPCode = UI_CONTROL.SHOW_TOP_GRID;
+                arg.MsgBody = new information_usercontrol(this);
+                (Application.Current as App).msgBroker.SendMessage(arg);
+            }
+            
         }
 
         private void myPlayList_KeyDown(object sender, KeyEventArgs e)
@@ -1136,6 +1262,7 @@ namespace Orange
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+
             if (check.IsAvailableUpdate)
             {
                 UpdateWindow updatewin = new UpdateWindow();
@@ -1163,18 +1290,20 @@ namespace Orange
         }
         private void LoadConfig()
         {
+            Config.Language_for_Orange = Properties.Settings.Default.Language_for_Orange;
+            LanguagePack.TYPE = Config.Language_for_Orange;
             Config.IsShffle = Properties.Settings.Default.IsShffle;
             if (!Config.IsShffle)
             {
                 ShuffleBtn.Template = (ControlTemplate)FindResource("NonShuffleButtonControlTemplate");
-                ShuffleBtn.ToolTip = "순차듣기";
+                ShuffleBtn.ToolTip = LanguagePack.PlayStraight();
 
                 
             }
             else
             {
                 ShuffleBtn.Template = (ControlTemplate)FindResource("ShuffleButtonControlTemplate");
-                ShuffleBtn.ToolTip = "섞어듣기";
+                ShuffleBtn.ToolTip = LanguagePack.Shuffle();
             }
 
             Config.REPEAT = Properties.Settings.Default.REPEAT;
@@ -1182,55 +1311,37 @@ namespace Orange
             {
                 case 0:
                     repeatBtn.Template = (ControlTemplate)FindResource("DefaultRepeatButtonControlTemplate");
-                    repeatBtn.ToolTip = "반복없음";
+                    repeatBtn.ToolTip = LanguagePack.NormalMode();
                     break;
                 case 1:
                     repeatBtn.Template = (ControlTemplate)FindResource("RepeatButtonControlTemplate");
-                    repeatBtn.ToolTip = "전체반복";
+                    repeatBtn.ToolTip = LanguagePack.RepeatAllSongs();
                     break;
                 case 2:
                     repeatBtn.Template = (ControlTemplate)FindResource("SingleRepeatButtonControlTemplate");
-                    repeatBtn.ToolTip = "한곡만 반복";
+                    repeatBtn.ToolTip = LanguagePack.RepeatOneSong();
                     break;
             }
             Config.IsMute = Properties.Settings.Default.IsMute;
             Config.Language_for_Orange = Properties.Settings.Default.Language_for_Orange;
             
-//             UI_Flag.IsShowingTopGrid = Properties.Settings.Default.IsShowingTopGrid;
-//             UI_Flag.IsShowingVideo = Properties.Settings.Default.IsShowingVideo;
-//             
-//             Player_State.IsPlaying = Properties.Settings.Default.IsPlaying;
-//             Player_State.IsEndOfPoint = Properties.Settings.Default.IsEndOfPoint;
-//             Player_State.VolumeValue = Properties.Settings.Default.VolumeValue;
 
-//             string fileName = System.AppDomain.CurrentDomain.BaseDirectory + "templist.tmp";
-//             if(File.Exists(fileName))
-//             {
-//                 try
-//                 {
-//                     string json = Security.Decrypt(File.ReadAllText(fileName));
-//                     var playerList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MusicItem>>(json);
-//                     myPlayListCollection.Clear();
-//                     foreach (var it in playerList)
-//                     {
-//                         myPlayListCollection.Add(it);
-//                     }
-//                 }
-//                 catch (Exception e)
-//                 {
-//                     MessageBox.Show(e.Message);
-//                 }       
-//             }
             if (!Properties.Settings.Default.Playlist.Equals(""))
             {
                 try
                 {
                     string json = Security.Decrypt(Properties.Settings.Default.Playlist);
-                    var playerList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MusicItem>>(json);
-                    myPlayListCollection.Clear();
+                    var playerList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PlaylistItem>>(json);
+                    myFavoriteMgr.MyfavoriteCollection.Clear();
+                    
+                    
+                    string filedirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\OrangePlayer\favoritePlaylist";
+                    
                     foreach (var it in playerList)
                     {
-                        myPlayListCollection.Add(it);
+                        string filepath = string.Format("{0}/{1}.orm", filedirectory, it.name);
+                        if(File.Exists(filepath))
+                            myFavoriteMgr.MyfavoriteCollection.Add(it);
                     }
                 }
                 catch (Exception e)
@@ -1244,26 +1355,27 @@ namespace Orange
 
         private void SaveConfig()
         {
-       
+            //myFavoriteMgr.MyfavoriteCollection.Clear();
             Properties.Settings.Default.IsShffle = Config.IsShffle;
             Properties.Settings.Default.REPEAT =  Config.REPEAT;
             Properties.Settings.Default.IsMute =  Config.IsMute;
             Properties.Settings.Default.Language_for_Orange = Config.Language_for_Orange;
-            Properties.Settings.Default.Playlist =Security.Encrypt(Newtonsoft.Json.JsonConvert.SerializeObject(myPlayListCollection));
+            Properties.Settings.Default.Playlist = Security.Encrypt(Newtonsoft.Json.JsonConvert.SerializeObject(myFavoriteMgr.MyfavoriteCollection));
+           // Properties.Settings.Default.Playlist = "";
             Properties.Settings.Default.Save();
         }
 
-        private void SaveTempList()
-        {
-            File.WriteAllText(System.AppDomain.CurrentDomain.BaseDirectory + "templist.tmp", Security.Encrypt(Newtonsoft.Json.JsonConvert.SerializeObject(myPlayListCollection)));
-        }
 
         private void Config_Click(object sender, RoutedEventArgs e)
         {
-            MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
-            arg.MsgOPCode = UI_CONTROL.SHOW_TOP_GRID;
-            arg.MsgBody = new Preferences();
-            (Application.Current as App).msgBroker.SendMessage(arg);
+            if(!Properties.Settings.Default.IsFirst)
+            {
+                MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+                arg.MsgOPCode = UI_CONTROL.SHOW_TOP_GRID;
+                arg.MsgBody = new Preferences();
+                (Application.Current as App).msgBroker.SendMessage(arg);
+            }
+
         }
 
 
@@ -1300,7 +1412,7 @@ namespace Orange
                 item.Focus();
 
 
-            MessageBox.Show("test");
+            //MessageBox.Show("test");
         }
 
 
@@ -1332,5 +1444,141 @@ namespace Orange
                 (Application.Current as App).msgBroker.SendMessage(arg);
             }
         }
+
+
+        private void Create_favorite_playlist(string filename)
+        {
+            try
+            {
+                
+                String path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string filedirectory = path + @"\OrangePlayer\favoritePlaylist";
+                if (!Directory.Exists(filedirectory))
+                    Directory.CreateDirectory(filedirectory);
+
+
+                string filepath = string.Format("{0}/{1}.orm", filedirectory, filename);
+                //System.AppDomain.CurrentDomain.BaseDirectory 
+                //System.IO.Directory.GetCurrentDirectory();
+                File.WriteAllText(filepath, Security.Encrypt(Newtonsoft.Json.JsonConvert.SerializeObject(myPlayListCollection)));
+
+                if (File.Exists(filepath))
+                {
+                    PlaylistItem item = new PlaylistItem();
+                    item.name = filename;
+                    item.filePath = filepath;
+
+                    myFavoriteMgr.MyfavoriteCollection.Add(item);
+
+                }
+                else { MessageBox_Orange("Warning", "failed to create the file"); }
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+        }
+
+        private void Load_favorite_playlist(string filename)
+        {
+            String path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string filedirectory = path + @"\OrangePlayer\favoritePlaylist";
+                        
+            string filepath = string.Format("{0}/{1}.orm", filedirectory, filename);
+
+
+            if (File.Exists(filepath))
+            {
+                try
+                {
+                    string json = Security.Decrypt(File.ReadAllText(filepath));
+                    var playerList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MusicItem>>(json);
+                    myPlayListCollection.Clear();
+                    foreach (var it in playerList)
+                    {
+                        myPlayListCollection.Add(it);
+                    }
+                    MessageBox_Orange("SUCCESS", "Playlist was successfully loaded");
+                    
+                }
+                catch (Exception)
+                {
+                    MessageBox_Orange("Warning", "File type is not correct");
+                    
+                }
+
+            }
+            else
+            {
+                MessageBox_Orange("Warning", "failed to create the file");
+            }
+                
+
+        }
+
+        private void createfavoritelist_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (myPlayListCollection.Count == 0)
+            {
+                MessageBox_Orange("Warning","Playlist is empty.");
+                
+                return;
+            }
+                
+            MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+            arg.MsgOPCode = UI_CONTROL.SHOW_TOP_GRID;
+            arg.MsgBody = new Create_FavoritePlaylistUserControl();
+            (Application.Current as App).msgBroker.SendMessage(arg);
+            main_menu.ShowFavoriteList();
+            DrawerMenu();
+            
+        	
+        }
+
+        private void uploadplaylist(string title)
+        {
+
+            Playlist myChart = new Playlist();
+            myChart.chart_name = title;
+            myChart.chart_list = myPlayListCollection.ToList();
+            if(myChart.chart_list.Count==0)
+            {
+                MessageBox_Orange("Warning", "Upload ERROR");
+                
+                return;
+            }
+
+            string uri = @"http://115.71.236.224:8081/uploadPlayList";
+            string request_data = Security.Encrypt(Newtonsoft.Json.JsonConvert.SerializeObject(myChart));
+
+            WebClient webClient = new WebClient();
+            webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+            webClient.Encoding = UTF8Encoding.UTF8;
+
+            try
+            {
+                string responseJson = webClient.UploadString(uri, request_data);
+                if (responseJson.Equals("True"))
+                {
+                    MessageBox_Orange("Notice", "Your list has successfully uploaded");
+                    main_menu.RecentPlaylist();
+                }
+
+                    
+            }
+            catch (Exception ex)
+            {
+                MessageBox_Orange("Warning", ex.Message.ToString());
+            }
+        }
+
+        private void MessageBox_Orange(string title, string content)
+        {
+            MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+            arg.MsgOPCode = UI_CONTROL.SHOW_TOP_GRID;
+            arg.MsgBody = new DialogMsg(title, content);
+            (Application.Current as App).msgBroker.SendMessage(arg);
+        }
     }
+
 }
