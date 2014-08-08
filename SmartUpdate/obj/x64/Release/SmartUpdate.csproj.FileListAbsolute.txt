@@ -1,0 +1,17 @@
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\bin\x64\Release\SmartUpdate.dll.config
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\bin\x64\Release\SmartUpdate.dll
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\obj\x64\Release\SmartUpdateAcceptWindow.baml
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\obj\x64\Release\SmartUpdateDownloadWindow.baml
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\obj\x64\Release\SmartUpdateInfoWindow.baml
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\obj\x64\Release\SmartUpdaterForOrange.baml
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\obj\x64\Release\UpdateWindow.baml
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\obj\x64\Release\SmartUpdateAcceptWindow.g.cs
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\obj\x64\Release\SmartUpdateDownloadWindow.g.cs
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\obj\x64\Release\SmartUpdateInfoWindow.g.cs
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\obj\x64\Release\SmartUpdaterForOrange.g.cs
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\obj\x64\Release\UpdateWindow.g.cs
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\obj\x64\Release\SmartUpdate_MarkupCompile.cache
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\obj\x64\Release\SmartUpdate.g.resources
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\obj\x64\Release\SmartUpdate.Properties.Resources.resources
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\obj\x64\Release\SmartUpdate.csproj.GenerateResource.Cache
+E:\GitHub\Orange-Client-For-Windows\SmartUpdate\obj\x64\Release\SmartUpdate.dll
