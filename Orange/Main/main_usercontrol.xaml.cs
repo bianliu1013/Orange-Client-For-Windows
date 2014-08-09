@@ -86,7 +86,6 @@ namespace Orange
 
         private void favoritelist_Loadfile(string nameoflist)
         {
-
             MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
             arg.MsgOPCode = MESSAGE_MAP.LOAD_ITEMS_IN_FAVORITE_PLAYLIST;
             arg.MsgBody = nameoflist;

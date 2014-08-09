@@ -1218,6 +1218,32 @@ namespace Orange
             }
 
         }
+        private void PlayerSlider_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.dragStarted = true;
+        }
+
+        private void PlayerSlider_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.dragStarted = true;
+            }
+        }
+
+
+        private void PlayerSlider_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (dragStarted)
+            {
+                webBrowser.InvokeScript("seekTo", new String[] { PlayerSlider.Value.ToString() });
+                Player_State.IsPlaying = true;
+
+            }
+            this.dragStarted = false;
+        }
+
+
 
         private void PlayerSlider_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
@@ -1231,17 +1257,22 @@ namespace Orange
         private void PlayMusic(MusicItem item)
         {
             try {
+
+
                 if (item == null)
                     return;
 
                 if (UI_Flag.IsShowingVideo && !main_menu.IsFavoritePanel)
                 {
-                    webBrowser.Visibility = Visibility.Visible;
+                    if (top_content.Children.Count == 0)
+                    {
+                        webBrowser.Visibility = Visibility.Visible;
+                    }
+                    
                 }
                 else if (!UI_Flag.IsShowingVideo || main_menu.IsFavoritePanel)
                 { webBrowser.Visibility = Visibility.Hidden; }
-               
-               
+                              
 
                 webBrowser.InvokeScript("loadVideoById", new String[] { item.url });
              
@@ -1716,6 +1747,12 @@ namespace Orange
                 UI_Flag.IsVideoOption = false;
             }
         }
+
+
+
+ 
+
+
 
 
 
