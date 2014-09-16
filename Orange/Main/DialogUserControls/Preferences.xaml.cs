@@ -28,6 +28,9 @@ namespace Orange
 
         private void initPrefer()
         {
+            TrayToggleSwitch.IsChecked = Properties.Settings.Default.IsTray;
+            TrayToggleSwitch.IsCheckedChanged += TrayToggleSwitch_IsCheckedChanged;
+
             TopmostToggleSwitch.IsChecked = Config.IsTopMost;
             TopmostToggleSwitch.IsCheckedChanged+=TopmostToggleSwitch_IsCheckedChanged;
             TopmostToggleSwitch.Header = LanguagePack.TopMost();
@@ -41,6 +44,23 @@ namespace Orange
             else if (Properties.Settings.Default.Language_for_Orange == 3)
                 LanguageCombobox.SelectedIndex = 3;
 
+        }
+
+        void TrayToggleSwitch_IsCheckedChanged(object sender, EventArgs e)
+        {
+            MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
+            if(Properties.Settings.Default.IsTray)
+            {
+                Properties.Settings.Default.IsTray = false;
+                arg.MsgOPCode = UI_CONTROL.DEACTIVETRAY;
+                (Application.Current as App).msgBroker.SendMessage(arg);
+            }
+            else
+            {
+                Properties.Settings.Default.IsTray = true;
+                arg.MsgOPCode = UI_CONTROL.ACTIVETRAY;
+                (Application.Current as App).msgBroker.SendMessage(arg);
+            }
         }
 
 

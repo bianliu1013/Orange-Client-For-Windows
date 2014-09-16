@@ -215,7 +215,7 @@
 
 
         <Grid x:Name="leftPanel"   Grid.Column="0" Background="White" MinWidth="310">
-            <Rectangle x:Name="musiclist_title_rec_for_width" Fill="Blue" Height="63.2" Margin="5,102,163,0" Stroke="#FFE8E8E8" VerticalAlignment="Top" Visibility="Hidden"/>
+            <Rectangle x:Name="musiclist_title_rec_for_width" Fill="Blue" Height="63" Margin="5,102,134,0" Stroke="#FFE8E8E8" VerticalAlignment="Top" Visibility="Hidden"/>
             <ScrollViewer x:Name="Search_ScrollViewer" Margin="5,50,6,80"  PreviewMouseWheel="Search_ScrollViewer_PreviewMouseWheel" ScrollBar.Scroll="currentTagNotContactsList_Scroll" VerticalScrollBarVisibility="Auto">
                 <StackPanel>
                     <ListView     x:Name="result_musiclist" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" Background="{x:Null}" MouseDoubleClick="result_musiclist_MouseDoubleClick" Margin="0" >
@@ -246,26 +246,6 @@
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
 
-                                <GridViewColumn Header="Play time" Width="35"     DisplayMemberBinding="{Binding time}" >
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="재생 시간"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-
-                                <GridViewColumn Width="60">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button
-            									Content="PLAY"
-            									Margin="0,1,0,1"
-            									VerticalAlignment="Center"
-
-            									Click="Load_Music_Click" />
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
 
 
                                 <GridViewColumn Width="35">
@@ -279,6 +259,32 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
+                                
+                                
+                                
+                                <GridViewColumn Header="Play time" Width="70"     DisplayMemberBinding="{Binding time}" >
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="재생 시간"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <!--       <GridViewColumn Width="60">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button
+            									Content="PLAY"
+            									Margin="0,1,0,1"
+            									VerticalAlignment="Center"
+
+            									Click="Load_Music_Click" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+-->
+
+                            
 
                             </GridView>
                         </ListView.View>
@@ -291,7 +297,7 @@
             <Button Content="Search" HorizontalAlignment="Right" Height="30" Margin="0,10,12,0" VerticalAlignment="Top" Width="66" Cursor="Hand" Click="Search_Button_Click"/>
             <Button x:Name="addselecteditembtn" Content="선택 추가" HorizontalAlignment="Center" Height="30" Margin="135,0,0,48" VerticalAlignment="Bottom" Width="130" Click="result_selected_add" FontSize="12" FontWeight="Normal"/>
             <Button x:Name="selectallitemsbtn" Content="전체 선택" Height="30" Margin="0,0,135,48" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="130" Click="result_all_select" FontSize="12" FontWeight="Normal"/>
-            <TextBox x:Name="searchBox" Height="23" Margin="49,13,87,0" TextWrapping="Wrap" VerticalAlignment="Top" KeyDown="searchBox_KeyDown"/>
+            <TextBox x:Name="searchBox" Height="23" Margin="49,13,87,0" TextWrapping="Wrap" VerticalAlignment="Top" KeyDown="searchBox_KeyDown" UseLayoutRounding="False"/>
             <Button x:Name="MenuBtn" Content="" HorizontalAlignment="Left" Height="44.417" Margin="0,3.583,0,0" VerticalAlignment="Top" Width="42.667" Template="{DynamicResource MenuButtonTemplate1}" Cursor="Hand" Click="MenuBtn_Click"/>
             <Path x:Name="line" Data="M10,48 L298,48" Fill="#FFF4F4F5" Height="1" Margin="10,46,10,0" Stretch="Fill" Stroke="#FFE8E8E8" VerticalAlignment="Top"/>
             <Grid x:Name="LeftContent" Margin="0,50,0,0" Visibility="Collapsed" d:IsLocked="True"/>
@@ -323,9 +329,9 @@
                 <TextBlock x:Name="Music_title" HorizontalAlignment="Right" Margin="15,0,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF565656"/>
             </Grid>
             <Grid Margin="10,0,0,9" Grid.Row="1">
-                <Rectangle x:Name="titleWidthSizeREc" Margin="0,2,180,0" VerticalAlignment="Top"/>
+                <Rectangle x:Name="titleWidthSizeREc" Margin="0,2,137,0" VerticalAlignment="Top"/>
                 <Path Data="M0,51.5 L300,51.5" Fill="#FF8B8B8B" HorizontalAlignment="Left" Height="1" Margin="2,85,0,0" Stretch="Fill" Stroke="#FFCBCBCB" VerticalAlignment="Top" Width="{Binding ActualWidth, ElementName=myPlayList}"/>
-                <Slider x:Name="PlayerSlider" Margin="50,7,50,0" VerticalAlignment="Top" Thumb.DragCompleted="PlayerSlider_DragCompleted" Thumb.DragStarted="PlayerSlider_DragStarted"  ValueChanged="PlayerSlider_ValueChanged" TickFrequency="10" IsMoveToPointEnabled="True" MouseDown="PlayerSlider_MouseDown" MouseUp="PlayerSlider_MouseUp" PreviewMouseMove="PlayerSlider_PreviewMouseMove"/>
+                <Slider x:Name="PlayerSlider" Margin="10,7,10,0" VerticalAlignment="Top" Thumb.DragCompleted="PlayerSlider_DragCompleted" Thumb.DragStarted="PlayerSlider_DragStarted"  ValueChanged="PlayerSlider_ValueChanged" TickFrequency="10" IsMoveToPointEnabled="True" MouseDown="PlayerSlider_MouseDown" MouseUp="PlayerSlider_MouseUp" PreviewMouseMove="PlayerSlider_PreviewMouseMove"/>
                 <ListView     x:Name="myPlayList" Margin="0,91,10,35" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" Background="{x:Null}" MouseDoubleClick="myPlayList_MouseDoubleClick" ItemsSource="{Binding}" KeyDown="myPlayList_KeyDown"  >
                     <ListView.Resources>
 
@@ -353,15 +359,6 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-
-                            <GridViewColumn Header="Play time" Width="35" DisplayMemberBinding="{Binding time}" >
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="재생 시간"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-
                             <GridViewColumn Width="55">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -373,9 +370,19 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
+                            
+                            <GridViewColumn Header="Play time" Width="70" DisplayMemberBinding="{Binding time}" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="재생 시간"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+              
 
 
-                            <GridViewColumn Width="55">
+                            <!--                        <GridViewColumn Width="55">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button
@@ -386,7 +393,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-
+							-->
                             <!--  <GridViewColumn>
               <GridViewColumn.CellTemplate>
                  <DataTemplate>
@@ -405,12 +412,12 @@
                         <ColumnDefinition Width="257*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="repeatBtn" Content="repeat" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="30" Template="{DynamicResource DefaultRepeatButtonControlTemplate}" Click="set_repeat" Margin="0,23.669,0,0" Grid.ColumnSpan="2" Cursor="Hand" ToolTip="반복없음"/>
-                    <Button x:Name="Previousbtn" Content="previous" HorizontalAlignment="Left" Height="30" Margin="19.168,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PreviousButtonControlTemplate}" Click="Previous_music" Grid.Column="1" Cursor="Hand" ToolTip="이전"/>
-                    <Button x:Name="PlayBtn" Content="Play" HorizontalAlignment="Left" Height="30" Margin="69.168,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PlayButtonControlTemplate}" Click="play" Grid.Column="1" Cursor="Hand" ToolTip="재생"/>
-                    <Button x:Name="pauseBtn" Content="Play" HorizontalAlignment="Left" Height="30" Margin="118.335,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PauseButtonControlTemplate}" Click="pause" Grid.Column="1" Cursor="Hand" ToolTip="일시정지"/>
-                    <Button x:Name="Nextbtn" Content="Next" HorizontalAlignment="Left" Height="30" Margin="169.835,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource NextButtonControlTemplate}" Click="Next_Music" Grid.Column="1" Cursor="Hand" ToolTip="다음"/>
-                    <Button x:Name="ShuffleBtn" Content="Shuffle" HorizontalAlignment="Left" Height="30" Margin="217,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource NonShuffleButtonControlTemplate}" Click="set_shuffle" Grid.Column="1" Cursor="Hand" ToolTip="순차듣기"/>
-                    <Slider x:Name="VolumeSlider" HorizontalAlignment="Left" Margin="0.001,59.332,0,0" VerticalAlignment="Top" Width="141.334" Value="80" Grid.Column="1" Thumb.DragCompleted="VolumeSlider_DragCompleted" Thumb.DragStarted="VolumeSlider_DragStarted"  ValueChanged="VolumeSlider_ValueChanged" SmallChange="10" IsMoveToPointEnabled="True"/>
+                    <Button x:Name="Previousbtn" Content="previous" HorizontalAlignment="Left" Height="30" Margin="11.334,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PreviousButtonControlTemplate}" Click="Previous_music" Grid.Column="1" Cursor="Hand" ToolTip="이전"/>
+                    <Button x:Name="PlayBtn" Content="Play" HorizontalAlignment="Left" Height="30" Margin="51.002,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PlayButtonControlTemplate}" Click="play" Grid.Column="1" Cursor="Hand" ToolTip="재생"/>
+                    <Button x:Name="pauseBtn" Content="Play" HorizontalAlignment="Left" Height="30" Margin="92.336,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource PauseButtonControlTemplate}" Click="pause" Grid.Column="1" Cursor="Hand" ToolTip="일시정지"/>
+                    <Button x:Name="Nextbtn" Content="Next" HorizontalAlignment="Left" Height="30" Margin="132.336,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource NextButtonControlTemplate}" Click="Next_Music" Grid.Column="1" Cursor="Hand" ToolTip="다음"/>
+                    <Button x:Name="ShuffleBtn" Content="Shuffle" HorizontalAlignment="Left" Height="30" Margin="166.669,23.669,0,0" VerticalAlignment="Top" Width="30" Template="{DynamicResource NonShuffleButtonControlTemplate}" Click="set_shuffle" Grid.Column="1" Cursor="Hand" ToolTip="순차듣기"/>
+                    <Slider x:Name="VolumeSlider" HorizontalAlignment="Left" Margin="0.001,59.332,0,0" VerticalAlignment="Top" Width="142.999" Value="80" Grid.Column="1" Thumb.DragCompleted="VolumeSlider_DragCompleted" Thumb.DragStarted="VolumeSlider_DragStarted"  ValueChanged="VolumeSlider_ValueChanged" SmallChange="10" IsMoveToPointEnabled="True"/>
                     <Button x:Name="VolumeBtn" Content="vol" HorizontalAlignment="Left" Height="20" Margin="0.001,55.332,0,-0.333" VerticalAlignment="Top" Width="20" Template="{DynamicResource VolButtonControlTemplate}" Click="Mute"/>
                     <Button x:Name="videooptionbtn" Content="video option" HorizontalAlignment="Right" Height="14" Margin="0,0,0,1" VerticalAlignment="Bottom" Width="104" Template="{DynamicResource VideoOptionButtonControlTemplate}" Grid.Column="1" Click="videooption_Click" Cursor="Hand"/>
                     <Grid x:Name="videooptionGrid" HorizontalAlignment="Right" Height="43" Margin="0,78.333,-0.999,-41.333" VerticalAlignment="Top" Width="280" Grid.ColumnSpan="2" Visibility="Hidden">
@@ -444,8 +451,8 @@
                         <Button x:Name="bookmarkbtn" Content="addfav" HorizontalAlignment="Left" Height="30" Margin="0" VerticalAlignment="Top" Width="30" Template="{DynamicResource CreateFavButtonControlTemplate}" Click="createfavoritelist_Click" Cursor="Hand"/>
                     </Grid>
                 </Grid>
-                <TextBlock x:Name="currentTimeTxb" HorizontalAlignment="Left" Margin="15,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF959595"><Run Language="ko-kr" Text="00:00"/></TextBlock>
-                <TextBlock x:Name="endTimeTxb" HorizontalAlignment="Right" Margin="0,8,15,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF959595"><Run Language="ko-kr" Text="00:00"/></TextBlock>
+                <TextBlock x:Name="currentTimeTxb" HorizontalAlignment="Right" Margin="0,25,18.082,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF959595" TextAlignment="Right" FontSize="10.667"><Run Language="ko-kr" Text="00:00:00"/></TextBlock>
+                <TextBlock x:Name="endTimeTxb" HorizontalAlignment="Right" Margin="0,36.71,18.082,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF959595" FontSize="10.667"><Run Language="ko-kr" Text="/00:00:00"/></TextBlock>
             </Grid>
             <GridSplitter  Grid.Row="1" ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="5" Margin="10,0" Template="{DynamicResource RowGridSplitterControlTemplate}">
                 <GridSplitter.Background>
@@ -470,8 +477,11 @@
         <Grid x:Name="top_content" Grid.ColumnSpan="2" Visibility="Collapsed" Opacity="0" d:IsLocked="True"/>
         <Grid x:Name="tutorialgrid" Grid.ColumnSpan="2" d:IsLocked="True"/>
         <Grid x:Name="init_progress" Grid.ColumnSpan="2" Background="#CCFFFFFF" Visibility="Collapsed">
-            <TextBlock HorizontalAlignment="Center" Margin="0,15,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="Black" FontSize="16"><Run Language="ko-kr" Text="Initialization.."/></TextBlock>
-            <controls:ProgressRing HorizontalAlignment="Left" Margin="283.48,159.36,0,0" VerticalAlignment="Top" IsActive="True"/>
+            <Grid x:Name="initprogressGrid" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock x:Name="InitTextBlock" HorizontalAlignment="Center" Margin="0,72.5,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="Black" FontSize="16"><Run Language="ko-kr" Text="Initialization.."/></TextBlock>
+                <TextBlock x:Name="loadingTextBlock" HorizontalAlignment="Center" Margin="0,72.5,-0.001,0" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="Black" FontSize="16" Visibility="Collapsed"><Run Language="ko-kr" Text="Loading.."/></TextBlock>
+                <controls:ProgressRing HorizontalAlignment="Left" Margin="14.557,0,0,0" VerticalAlignment="Top" IsActive="True"/>
+            </Grid>
         </Grid>
 
     </Grid>

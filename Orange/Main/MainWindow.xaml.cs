@@ -60,7 +60,8 @@ namespace Orange
         private DispatcherTimer Showvideodt;
         private DispatcherTimer dt;
 
-
+        private System.Windows.Forms.NotifyIcon notify;
+        private System.Windows.Forms.MenuItem NotifyCurrentItem;
         private int cur_page;
 
         public MainWindow()
@@ -84,12 +85,11 @@ namespace Orange
             main_page.InitFavoriteListview(myPlayListCollection);
 
             webBrowser.Navigated += webBrowser_Navigated;
-            
-            
+                        
             WebBrowserHelper.ClearCache();
 
-            String url = URL.YOUTUBEPLAYER_URL;
-            webBrowser.Navigate(url);
+            
+            webBrowser.Navigate(URL.YOUTUBEPLAYER_URL);
 
 
             (Application.Current as App).msgBroker.MessageReceived += msgBroker_MessageReceived;
@@ -101,6 +101,7 @@ namespace Orange
             dt.Start();
             myPlayListCollection.CollectionChanged += myPlayListCollection_CollectionChanged;
 
+            
 
         }
 
@@ -124,8 +125,10 @@ namespace Orange
                     MessageBoxOrange.ShowDialog("Exception", ex.Message);
                 }
             }
-            
+            InitTextBlock.Visibility = Visibility.Collapsed;
+            loadingTextBlock.Visibility = Visibility.Visible;
             init_progress.Visibility = Visibility.Collapsed;
+
             Configbtn.IsEnabled = true;
             Informationbtn.IsEnabled = true;
 
@@ -141,9 +144,33 @@ namespace Orange
             initSuccess = true;
             dt.Stop();
             dt.IsEnabled = false;
+
+            initNotify();
         }
 
+        public void onReadyWebBrowser_reload()
+        {           
+            init_progress.Visibility = Visibility.Collapsed;
+            Configbtn.IsEnabled = true;
+            Informationbtn.IsEnabled = true;
 
+            webBrowser.InvokeScript("loadVideoById", new String[] { CurrentItem.url });
+
+            if (NotifyCurrentItem.Checked)
+                setBalloonTip(CurrentItem.title);
+            Player_State.playCount++;
+
+            Player_State.IsPlaying = true;
+            webBrowser.InvokeScript("setVolume", new String[] { Player_State.VolumeValue });
+
+            if (Config.IsMute)
+                webBrowser.InvokeScript("Mute");
+
+            Music_title.Text = CurrentItem.title;
+            SelectCurrentMusicItemInPlayList(CurrentItem);
+            myPlayList.ScrollIntoView(CurrentItem);
+            webBrowser.Visibility = Visibility.Visible;
+        }
     
 
 
@@ -163,6 +190,9 @@ namespace Orange
             ms_list_up.ToolTip = LanguagePack.PlaylistControl_Previous();
             ms_list_down.ToolTip = LanguagePack.PlaylistControl_Next();
             ms_list_bottom.ToolTip = LanguagePack.PlaylistControl_SkipToLast();
+            
+            if(NotifyCurrentItem!=null)
+                NotifyCurrentItem.Text = LanguagePack.NotifyText();
 
             selectallitemsbtn.Content = LanguagePack.SelectAllItems();
             addselecteditembtn.Content = LanguagePack.AddSelectedItems();
@@ -178,10 +208,13 @@ namespace Orange
 
 
             // DEFAULT 0, ALL REPEAT 1, SINGLE REPEAT 2
-            switch (Config.REPEAT)
+            switch (Properties.Settings.Default.REPEAT)
             {
                 case 0:
-                    repeatBtn.ToolTip = LanguagePack.NormalMode();
+                    //repeatBtn.ToolTip = LanguagePack.NormalMode();
+                    //break;
+                    Properties.Settings.Default.REPEAT = 1;
+                    repeatBtn.ToolTip = LanguagePack.RepeatAllSongs();
                     break;
                 case 1:
                     repeatBtn.ToolTip = LanguagePack.RepeatAllSongs();
@@ -274,24 +307,28 @@ namespace Orange
                     TimeSpan ctime = TimeSpan.FromSeconds(currentTime);
                     TimeSpan endtime = TimeSpan.FromSeconds(totalTime);
 
-                    currentTimeTxb.Text = ctime.ToString(@"mm\:ss");
-                    endTimeTxb.Text = endtime.ToString(@"mm\:ss");
+                    //currentTimeTxb.Text = ctime.ToString(@"mm\:ss");
+                    //endTimeTxb.Text = endtime.ToString(@"mm\:ss");
+                    currentTimeTxb.Text = ConvertTimespanToString.ToReadableString(ctime);
+                    endTimeTxb.Text = "/" + ConvertTimespanToString.ToReadableString(endtime);
 // 
                     if (totalTime == currentTime)
                     {
-                        EndMusic();
+                        NextMusic();
                     }
                 }
 
             }
         }
 
-        public void EndMusic()
+        public void NextMusic()
         {
+            if (CurrentItem == null)
+                return;
            // MessageBoxOrange.ShowDialog("끗");
             dt.Stop();
 
-            if(Config.REPEAT==1)
+            if (Properties.Settings.Default.REPEAT <= 1)
             {
                 for(int i=0 ; i<playlist.Count; i++)
                 {
@@ -313,29 +350,29 @@ namespace Orange
                     }
                 }
             }
-            else if (Config.REPEAT == 0)
-            {
-                for (int i = 0; i < playlist.Count; i++)
-                {
-                    if (playlist[i].Equals(CurrentItem))
-                    {
-
-                        if (i != playlist.Count - 1)
-                        {
-                            CurrentItem = playlist[i + 1];
-                        }
-                        else
-                        {
-                            Player_State.IsPlaying = false;
-                            return;
-                        }
-
-                        PlayMusic(CurrentItem);
-                        return;
-                    }
-                }
-            }
-            else if(Config.REPEAT == 2)
+//             else if (Config.REPEAT == 0)
+//             {
+//                 for (int i = 0; i < playlist.Count; i++)
+//                 {
+//                     if (playlist[i].Equals(CurrentItem))
+//                     {
+// 
+//                         if (i != playlist.Count - 1)
+//                         {
+//                             CurrentItem = playlist[i + 1];
+//                         }
+//                         else
+//                         {
+//                             Player_State.IsPlaying = false;
+//                             return;
+//                         }
+// 
+//                         PlayMusic(CurrentItem);
+//                         return;
+//                     }
+//                 }
+//             }
+            else if (Properties.Settings.Default.REPEAT == 2)
             {
                 PlayMusic(CurrentItem);
                 return;
@@ -367,7 +404,138 @@ namespace Orange
             
         }
 
-      
+        private void initNotify ()
+        {
+            try
+            {
+                System.Windows.Forms.ContextMenu menu = new System.Windows.Forms.ContextMenu();
+
+                System.Windows.Forms.MenuItem item_Open = new System.Windows.Forms.MenuItem();
+                item_Open.Index = 0;
+                item_Open.Text = "Activate Orange";
+                item_Open.Click += item1_Open_Click;
+
+                NotifyCurrentItem = new System.Windows.Forms.MenuItem();
+                NotifyCurrentItem.Index = 1;
+                NotifyCurrentItem.Checked = Properties.Settings.Default.IsNotifyInfo;
+                NotifyCurrentItem.Text = LanguagePack.NotifyText();
+                NotifyCurrentItem.Click += delegate(object sender, EventArgs args)
+                {
+                    if (NotifyCurrentItem.Checked) { NotifyCurrentItem.Checked = false; }
+                    else { NotifyCurrentItem.Checked = true; }
+                };
+
+                System.Windows.Forms.MenuItem item_Previous = new System.Windows.Forms.MenuItem();
+                item_Previous.Index = 2;
+                item_Previous.Text = "Previous";
+                item_Previous.Click += delegate(object sender, EventArgs args)
+                {
+                    Previous_item();
+                };
+                
+                System.Windows.Forms.MenuItem item_Next = new System.Windows.Forms.MenuItem();
+                item_Next.Index = 3;
+                item_Next.Text = "Next";
+                item_Next.Click += delegate(object sender, EventArgs args)
+                {
+                    NextMusic();
+                };
+
+                System.Windows.Forms.MenuItem item_Play = new System.Windows.Forms.MenuItem();
+                item_Play.Index = 4;
+                item_Play.Text = "Play";
+                item_Play.Click += delegate(object sender, EventArgs args) {
+                    if (Player_State.IsPlaying)
+                    {
+                        webBrowser.InvokeScript("playVideo");
+
+                    }
+                    else
+                    {
+                        if (myPlayList.SelectedIndex != -1)
+                        {
+
+                            MusicItem item = (MusicItem)myPlayList.SelectedItem;
+                            PlayMusic(item);
+                            //MessageBoxOrange.ShowDialog(item.title);
+                            webBrowser.InvokeScript("playVideo");
+
+                            Player_State.IsPlaying = true;
+                        }
+                    }
+            
+
+                };
+
+                System.Windows.Forms.MenuItem item_Pause = new System.Windows.Forms.MenuItem();
+                item_Pause.Index = 5;
+                item_Pause.Text = "Pause";
+                item_Pause.Click += delegate(object sender, EventArgs args) { webBrowser.InvokeScript("pauseVideo"); };
+
+                System.Windows.Forms.MenuItem item_Close = new System.Windows.Forms.MenuItem();
+                item_Close.Index = 6;
+                item_Close.Text = "Exit";
+                item_Close.Click += item_Close_Click;
+
+                //menu.MenuItems.Add(item_Open);
+                menu.MenuItems.Add(NotifyCurrentItem);
+                menu.MenuItems.Add("-");
+                menu.MenuItems.Add(item_Previous);
+                menu.MenuItems.Add(item_Next);
+                menu.MenuItems.Add(item_Play);
+                menu.MenuItems.Add(item_Pause);
+                menu.MenuItems.Add("-");
+                menu.MenuItems.Add(item_Close);
+
+                notify = new System.Windows.Forms.NotifyIcon();
+                Stream iconStream = Application.GetResourceStream(new Uri("pack://application:,,,/Orange;component/icon.ico")).Stream;
+                notify.Icon = new System.Drawing.Icon(iconStream); ;
+                notify.ContextMenu = menu;
+                notify.Visible = true;
+
+                if (Properties.Settings.Default.IsTray)
+                {
+                    notify.Visible = true;
+                }
+                else
+                {
+                    notify.Visible = false;
+                }
+                notify.DoubleClick += notify_DoubleClick;
+                setBalloonTip("Welcome to Orange player");
+            }
+            catch (Exception ex){
+                MessageBoxOrange.ShowDialog("Exception", ex.ToString());
+            }
+        }
+
+        void setBalloonTip(String msg)
+        {
+            notify.BalloonTipTitle = "Orange YOUTUBE player";
+            notify.BalloonTipText = msg;
+            notify.ShowBalloonTip(2000);
+        }
+
+        void notify_DoubleClick(object sender, EventArgs e)
+        {
+            this.Show();
+            Activate();
+            this.WindowState = WindowState.Normal;
+            
+        }
+
+        void item_Close_Click(object sender, EventArgs e)
+        {
+            this.Hide();      
+            Close();
+        }
+
+        void item1_Open_Click(object sender, EventArgs e)
+        {
+            this.Show();
+            Activate();
+            this.WindowState = WindowState.Normal;
+        }
 
         void msgBroker_MessageReceived(object sender, MsgBroker.MsgBrokerEventArgs e)
         {
@@ -477,6 +645,18 @@ namespace Orange
                 case UI_CONTROL.HIDE_VIDEO:
                     webBrowser.Visibility = Visibility.Hidden;
                     break;
+
+                case UI_CONTROL.OPEN_DRAWERMENU:
+                    DrawerMenu();
+                    break;
+
+                case UI_CONTROL.ACTIVETRAY:
+                    notify.Visible = true;
+                    setBalloonTip(LanguagePack.TrayActivateText());
+                    break;
+                case UI_CONTROL.DEACTIVETRAY:
+                    notify.Visible = false;
+                    break;
             }
         }
 
@@ -582,6 +762,7 @@ namespace Orange
                         {
                             
                             string resultURL = item["url"].GetValue().ToString().Replace("http://www.youtube.com/watch?v=", "");
+                            //string resultPlayTime = ConvertTimespanToString.ToReadableString(item["time"].GetValue().ToString());
                             string resultPlayTime = item["time"].GetValue().ToString();
                             string resultTitle = item["title"].GetValue().ToString();
                             MusicItem mitem = new MusicItem();
@@ -633,8 +814,6 @@ namespace Orange
             main_page.SetProgressRing(true, 1);
             cur_page++;
 
-
-           
 
             Thread thread = new Thread(new ThreadStart(SearchingThread));
             thread.Start();
@@ -709,7 +888,8 @@ namespace Orange
             {
                 MusicItem item = (MusicItem)result_musiclist.SelectedItem;
                 myPlayListCollection.Add(item);
-
+                myPlayList.SelectedItem = item;
+                myPlayList.ScrollIntoView(item);
             }
         }
 
@@ -900,14 +1080,22 @@ namespace Orange
 
         private void Next_Music(object sender, RoutedEventArgs e)
         {
-            EndMusic();
+            NextMusic();
         }
 
         private void Previous_music(object sender, RoutedEventArgs e)
         {
 
 
-            if(Config.REPEAT==2)
+            Previous_item();
+            
+        }
+
+        private void Previous_item()
+        {
+            if (CurrentItem == null)
+                return;
+            if (Properties.Settings.Default.REPEAT == 2)
             {
                 PlayMusic(CurrentItem);
                 return;
@@ -915,24 +1103,24 @@ namespace Orange
 
             for (int i = 0; i < playlist.Count; i++)
             {
-                 
-                
+
+
                 if (playlist[i].Equals(CurrentItem))
-                 {
+                {
 
-                        if (i != 0)
-                        {
-                           CurrentItem = playlist[i - 1];
-                        }else if(i==0)
-                        {
-                            CurrentItem = playlist[playlist.Count-1];
-                        }
-
-                        PlayMusic(CurrentItem);
-                        return;
+                    if (i != 0)
+                    {
+                        CurrentItem = playlist[i - 1];
                     }
+                    else if (i == 0)
+                    {
+                        CurrentItem = playlist[playlist.Count - 1];
+                    }
+
+                    PlayMusic(CurrentItem);
+                    return;
+                }
             }
-            
         }
 
         private void set_shuffle(object sender, RoutedEventArgs e)
@@ -956,23 +1144,40 @@ namespace Orange
         {
             
             // DEFAULT 0, ALL REPEAT 1, SINGLE REPEAT 2
-            switch ((++Config.REPEAT)%3)
+//             switch ((++Config.REPEAT)%3)
+//             {
+//                 case 0:
+//                     repeatBtn.Template = (ControlTemplate)FindResource("DefaultRepeatButtonControlTemplate");
+//                     repeatBtn.ToolTip = LanguagePack.NormalMode();
+//                     Config.REPEAT = 0;
+//                     break;
+//                 case 1:
+//                     repeatBtn.Template = (ControlTemplate)FindResource("RepeatButtonControlTemplate");
+//                     repeatBtn.ToolTip = LanguagePack.RepeatAllSongs();
+//                     Config.REPEAT = 1;
+//                     break;
+//                 case 2:
+//                     repeatBtn.Template = (ControlTemplate)FindResource("SingleRepeatButtonControlTemplate");
+//                     repeatBtn.ToolTip = LanguagePack.RepeatOneSong();
+//                     Config.REPEAT = 2;
+//                     break;
+//             }
+
+            if (Properties.Settings.Default.REPEAT == 1)
             {
-                case 0:
-                    repeatBtn.Template = (ControlTemplate)FindResource("DefaultRepeatButtonControlTemplate");
-                    repeatBtn.ToolTip = LanguagePack.NormalMode();
-                    Config.REPEAT = 0;
-                    break;
-                case 1:
-                    repeatBtn.Template = (ControlTemplate)FindResource("RepeatButtonControlTemplate");
-                    repeatBtn.ToolTip = LanguagePack.RepeatAllSongs();
-                    Config.REPEAT = 1;
-                    break;
-                case 2:
-                    repeatBtn.Template = (ControlTemplate)FindResource("SingleRepeatButtonControlTemplate");
-                    repeatBtn.ToolTip = LanguagePack.RepeatOneSong();
-                    Config.REPEAT = 2;
-                    break;
+                repeatBtn.Template = (ControlTemplate)FindResource("SingleRepeatButtonControlTemplate");
+                repeatBtn.ToolTip = LanguagePack.RepeatOneSong();
+
+                Properties.Settings.Default.REPEAT = 2;
+            }
+            else if (Properties.Settings.Default.REPEAT == 2)
+            {
+                repeatBtn.Template = (ControlTemplate)FindResource("DefaultRepeatButtonControlTemplate");
+                repeatBtn.ToolTip = LanguagePack.RepeatAllSongs();
+
+
+                Properties.Settings.Default.REPEAT = 1;
+            
             }
              
 
@@ -1254,6 +1459,8 @@ namespace Orange
 
         #endregion
 
+
+        
         private void PlayMusic(MusicItem item)
         {
             try {
@@ -1272,18 +1479,51 @@ namespace Orange
                 }
                 else if (!UI_Flag.IsShowingVideo || main_menu.IsFavoritePanel)
                 { webBrowser.Visibility = Visibility.Hidden; }
-                              
 
-                webBrowser.InvokeScript("loadVideoById", new String[] { item.url });
-             
 
-                Player_State.IsPlaying = true;
-                webBrowser.InvokeScript("setVolume", new String[] { Player_State.VolumeValue });
+                if (Player_State.playCount == 30)
+                {
+                   
+                    webBrowser.Visibility = Visibility.Hidden;
+                    WebBrowserHelper.ClearCache();
+                    //webBrowser.Refresh();
+                    webBrowser.Navigate(URL.YOUTUBEPLAYER_URL_RELOAD);
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
+                    Player_State.playCount = 0;
 
-                CurrentItem = item;
-                Music_title.Text = item.title;
-                SelectCurrentMusicItemInPlayList(item);
-                myPlayList.ScrollIntoView(item);
+                    Console.WriteLine("Refresh");
+
+                    init_progress.Visibility = Visibility.Visible; 
+                    Configbtn.IsEnabled = false;
+                    Informationbtn.IsEnabled = false;
+                    CurrentItem = item;
+                }
+                else
+                {
+                    webBrowser.InvokeScript("loadVideoById", new String[] { item.url });
+                    if (NotifyCurrentItem.Checked)
+                        setBalloonTip(item.title);
+
+
+                    Player_State.playCount++;
+
+                    Player_State.IsPlaying = true;
+                    webBrowser.InvokeScript("setVolume", new String[] { Player_State.VolumeValue });
+
+                    if (Config.IsMute)
+                        webBrowser.InvokeScript("Mute");
+
+                    CurrentItem = item;
+                    Music_title.Text = item.title;
+                    SelectCurrentMusicItemInPlayList(item);
+                    myPlayList.ScrollIntoView(item);
+                }
+
+
+
+
             }
             catch (Exception e) {
                 MessageBoxOrange.ShowDialog("Warning", "Try again.\n\n" + e.Message.ToString());
@@ -1341,9 +1581,17 @@ namespace Orange
                         myPlayList.SelectedIndex = myPlayList.SelectedIndex +1;
                     }
                     break;
+                case Key.Enter:
+                    if (myPlayList.SelectedIndex != -1)
+                    {
+                        PlayMusic((MusicItem)myPlayList.SelectedItem);
+                        CopyPlayList();
+                    }
+                    break;
             }
 
         }
+
 
 
         private void Search_ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -1363,18 +1611,39 @@ namespace Orange
 
             MessageBoxOrange.ShowDialog("Warning",msg);
         }
+            
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
+            
+            
+            if (Properties.Settings.Default.IsTray && this.Visibility == Visibility.Visible) {
+
+                this.Hide();
+
+                setBalloonTip(LanguagePack.TrayActivateText());
+                e.Cancel = true;    
+    
+            }
+            else
+            {
+                ExitProcessing();
+            }
+
+            
+        }
+
+        private void ExitProcessing()
+        {
             if (check.IsAvailableUpdate)
             {
-              
+
                 UpdateWindow updatewin = new UpdateWindow();
                 updatewin.initSmartUpdate(new AppInfo(this));
                 bool result = (bool)updatewin.ShowDialog();
 
-                if(result==true)
+                if (result == true)
                 {
 
                 }
@@ -1383,15 +1652,15 @@ namespace Orange
                     //MessageBoxOrange.ShowDialog("the update download was cancelled.");
                 }
             }
-
-           // SaveTempList();
+            notify.Visible = false;
+            notify.Dispose();
+            // SaveTempList();
             SaveConfig();
             musicCollection.Clear();
             myPlayListCollection.Clear();
             WebBrowserHelper.ClearCache();
             webBrowser.Dispose();
             (Application.Current as App).msgBroker.MessageReceived -= msgBroker_MessageReceived;
-
         }
         private void LoadConfig()
         {
@@ -1409,15 +1678,16 @@ namespace Orange
                 ShuffleBtn.ToolTip = LanguagePack.Shuffle();
             }
 
-            Config.REPEAT = Properties.Settings.Default.REPEAT;
-            switch (Config.REPEAT)
+            switch (Properties.Settings.Default.REPEAT)
             {
                 case 0:
+                    Properties.Settings.Default.REPEAT = 1;
                     repeatBtn.Template = (ControlTemplate)FindResource("DefaultRepeatButtonControlTemplate");
-                    repeatBtn.ToolTip = LanguagePack.NormalMode();
+                    repeatBtn.ToolTip = LanguagePack.RepeatAllSongs();
                     break;
+                
                 case 1:
-                    repeatBtn.Template = (ControlTemplate)FindResource("RepeatButtonControlTemplate");
+                    repeatBtn.Template = (ControlTemplate)FindResource("DefaultRepeatButtonControlTemplate");
                     repeatBtn.ToolTip = LanguagePack.RepeatAllSongs();
                     break;
                 case 2:
@@ -1497,7 +1767,7 @@ namespace Orange
         {
             //myFavoriteMgr.MyfavoriteCollection.Clear();
             Properties.Settings.Default.IsShffle = Config.IsShffle;
-            Properties.Settings.Default.REPEAT =  Config.REPEAT;
+            
             Properties.Settings.Default.IsMute =  Config.IsMute;
             Properties.Settings.Default.Language_for_Orange = Orange.Util.LanguagePack.TYPE;
 
@@ -1784,7 +2054,7 @@ namespace Orange
         public void PlayerENDED()
         {
           
-            ((MainWindow)Application.Current.MainWindow).EndMusic();
+            ((MainWindow)Application.Current.MainWindow).NextMusic();
         }
 
         public void Notification_msg(string text)
@@ -1796,6 +2066,12 @@ namespace Orange
         {
            
             ((MainWindow)Application.Current.MainWindow).onReadyWebBrowser();
+        }
+
+        public void OnReady_reload()
+        {
+
+            ((MainWindow)Application.Current.MainWindow).onReadyWebBrowser_reload();
         }
 
     }

@@ -4426,7 +4426,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGRAMFILETOLAUNCHATEND</td><td>[INSTALLDIR]Orange.기본 출력</td><td/></row>
 		<row><td>ProductCode</td><td>{47319696-9DD9-476B-B91E-67AA58F1FF4F}</td><td/></row>
 		<row><td>ProductName</td><td>OrangeYoutubePlayer</td><td/></row>
-		<row><td>ProductVersion</td><td>0.00.0003</td><td/></row>
+		<row><td>ProductVersion</td><td>0.00.0004</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>

@@ -47,6 +47,10 @@ namespace Orange.MsgBroker
         public const int HIDE_VIDEO = 1017;
         public const int SHOW_VIDEO = 1018;
 
-       
+        public const int OPEN_DRAWERMENU = 1022;
+
+        public const int ACTIVETRAY = 1023;
+
+        public const int DEACTIVETRAY = 1024;    
     }
 }

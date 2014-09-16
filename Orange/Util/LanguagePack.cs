@@ -370,5 +370,37 @@ namespace Orange.Util
             return "Orange Player saves the playlists which are uploaded by users on server temporarily. \n If you want to save the playlists permanently, you need to add [My favorite list]";
 
         }
+
+        public static string TrayActivateText()
+        {
+            switch (TYPE)
+            {
+                case 0:
+                    return "트레이 기능이 활성화 되어 있습니다.";
+                case 1:
+                case 2:
+                case 3:
+                    return "Tray was activated";
+
+            }
+            return "Tray was activated";
+
+        }
+
+        public static string NotifyText()
+        {
+            switch (TYPE)
+            {
+                case 0:
+                    return "재생 알람";
+                case 1:
+                case 2:
+                case 3:
+                    return "Notify information";
+
+            }
+            return "Notify information";
+
+        }
     }
 }

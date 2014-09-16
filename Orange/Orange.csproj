@@ -154,6 +154,7 @@
     <Compile Include="Util\AppInfo.cs" />
     <Compile Include="Util\Config.cs" />
     <Compile Include="Util\ConvertMp3.cs" />
+    <Compile Include="Util\ConvertTimespanToString.cs" />
     <Compile Include="Util\LanguagePack.cs" />
     <Compile Include="Util\Security.cs" />
     <Compile Include="Util\Shuffle.cs" />

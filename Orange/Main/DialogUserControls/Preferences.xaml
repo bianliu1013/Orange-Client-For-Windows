@@ -14,9 +14,9 @@
 	<Grid x:Name="LayoutRoot" Background="#4C000000" MouseDown="LayoutRoot_MouseDown" >
 		<Grid Margin="0" Height="200">
 			<Rectangle Fill="White" Margin="0" Height="200" VerticalAlignment="Center"/>
-			<StackPanel Margin="0,75.22,0,73.5" HorizontalAlignment="Center" Orientation="Horizontal" Width="228">
+			<StackPanel Margin="0,75.22,0,73.5" HorizontalAlignment="Center" Orientation="Horizontal">
 				<Controls:ToggleSwitch x:Name="TopmostToggleSwitch" Header="항상 위" Margin="0,0,20,0" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<Controls:ToggleSwitch Header="Tray" Margin="0,0,20,0" HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="False" Visibility="Collapsed" />
+                <Controls:ToggleSwitch x:Name="TrayToggleSwitch" Header="Tray" Margin="0,0,20,0" HorizontalAlignment="Center" VerticalAlignment="Center" />
 				<StackPanel Width="120" Margin="0,0,0,-12">
 					<TextBlock HorizontalAlignment="Left" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16"><Run Language="ko-kr" Text="Language"/></TextBlock>
 					<ComboBox x:Name="LanguageCombobox" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="LanguageCombobox_SelectionChanged">

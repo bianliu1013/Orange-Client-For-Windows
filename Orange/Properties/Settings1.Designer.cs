@@ -37,7 +37,7 @@ namespace Orange.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int REPEAT {
             get {
                 return ((int)(this["REPEAT"]));
@@ -152,6 +152,30 @@ namespace Orange.Properties {
             }
             set {
                 this["IsFirst"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsTray {
+            get {
+                return ((bool)(this["IsTray"]));
+            }
+            set {
+                this["IsTray"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsNotifyInfo {
+            get {
+                return ((bool)(this["IsNotifyInfo"]));
+            }
+            set {
+                this["IsNotifyInfo"] = value;
             }
         }
     }

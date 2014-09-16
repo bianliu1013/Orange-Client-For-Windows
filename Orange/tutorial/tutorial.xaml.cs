@@ -56,7 +56,10 @@ namespace Orange
                 (Application.Current as App).msgBroker.SendMessage(arg);
                 arg.MsgOPCode = Orange.MsgBroker.UI_CONTROL.HIDE_TOP_GRID;
                 (Application.Current as App).msgBroker.SendMessage(arg);
+                arg.MsgOPCode = Orange.MsgBroker.UI_CONTROL.OPEN_DRAWERMENU;
+                (Application.Current as App).msgBroker.SendMessage(arg);
             }
+
 		}
 	}
 }
