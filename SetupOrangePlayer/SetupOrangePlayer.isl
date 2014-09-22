@@ -4424,9 +4424,9 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGMSG_IIS_ROLLBACKVROOTS</td><td>##IDS_PROGMSG_IIS_ROLLBACKVROOTS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
 		<row><td>PROGRAMFILETOLAUNCHATEND</td><td>[INSTALLDIR]Orange.기본 출력</td><td/></row>
-		<row><td>ProductCode</td><td>{47319696-9DD9-476B-B91E-67AA58F1FF4F}</td><td/></row>
+		<row><td>ProductCode</td><td>{716A9789-AE80-4AF7-8E6C-4B4B1F4B636E}</td><td/></row>
 		<row><td>ProductName</td><td>OrangeYoutubePlayer</td><td/></row>
-		<row><td>ProductVersion</td><td>0.00.0004</td><td/></row>
+		<row><td>ProductVersion</td><td>0.00.0008</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>

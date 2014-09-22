@@ -36,7 +36,7 @@ namespace Orange
                 else
                 {
                     MessageBox.Show("Application already started.", "Error", MessageBoxButton.OK, MessageBoxImage.Information);
-                    Application.Current.Shutdown();
+                    Application.Current.Shutdown(0);
                 }
 
 
@@ -44,7 +44,7 @@ namespace Orange
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + "\n\n" + ex.StackTrace + "\n\n" + "Application Existing...", "Exception thrown");
-                Application.Current.Shutdown();
+                Application.Current.Shutdown(0);
             }
         }
     }

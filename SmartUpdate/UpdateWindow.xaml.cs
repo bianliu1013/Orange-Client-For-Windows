@@ -280,6 +280,7 @@ namespace SmartUpdate
             info.WindowStyle = ProcessWindowStyle.Hidden;
             info.CreateNoWindow = true;
             info.FileName = "cmd.exe";
+            info.Verb = "runas";
             Process.Start(info);
         }
 
