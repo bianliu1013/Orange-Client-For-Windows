@@ -511,9 +511,13 @@ namespace Orange
 
         void setBalloonTip(String msg)
         {
-            notify.BalloonTipTitle = "Orange YOUTUBE player";
-            notify.BalloonTipText = msg;
-            notify.ShowBalloonTip(2000);
+            if(notify!=null)
+            {
+                notify.BalloonTipTitle = "Orange YOUTUBE player";
+                notify.BalloonTipText = msg;
+                notify.ShowBalloonTip(2000);
+            }
+            
         }
 
         void notify_DoubleClick(object sender, EventArgs e)
@@ -800,8 +804,8 @@ namespace Orange
                   Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
                     {
                         MessageBoxOrange.ShowDialog("Exception", e.Message);
-            main_page.SetProgressRing(false, 0);
-            main_page.Visibility = Visibility.Visible;
+                       main_page.SetProgressRing(false, 0);
+                       main_page.Visibility = Visibility.Visible;
                     }));
 
             }          

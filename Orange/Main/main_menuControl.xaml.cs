@@ -29,10 +29,10 @@ namespace Orange
 	public partial class main_menuControl : UserControl
 	{
         private int cur_page;
-
         private string query;
         private string queryString;
         private string url;
+        private string url_yotube;
         private MusicCollection musicCollection;
         private PlaylistCollection playCollection;
         private MyfavoritelistMgr myFavoriteMgr;
@@ -91,7 +91,7 @@ namespace Orange
             Thread.Sleep(1000);
             try
             {
-                JsonArrayCollection items = JSONHelper.getJSONArray(url);
+                JsonArrayCollection items = JSONHelper.getJSONArray(url_yotube);
 
                 Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
                 {
@@ -316,7 +316,7 @@ namespace Orange
 
             Search_ScrollViewer.ScrollToHome();
 
-            string url = "http://115.71.236.224:8081/getRecentPlayList?page=";
+            url = "http://115.71.236.224:8081/getRecentPlayList?page=";
             query = url + cur_page;
 
             playCollection.Clear();
@@ -338,6 +338,7 @@ namespace Orange
             string url = "http://115.71.236.224:8081/getHighHitCountPlayList";
             query = url;
 
+            morebtn.Visibility = Visibility.Collapsed;
 
             playCollection.Clear();
 
@@ -420,7 +421,7 @@ namespace Orange
             ProgressRing.IsActive = true;
             progressGrid.Visibility = Visibility.Visible;
             cur_page++;
-
+            query = url + cur_page;
             Thread thread = new Thread(new ThreadStart(SearchingThread));
             thread.Start();
         }
@@ -495,7 +496,7 @@ namespace Orange
             */
 
 
-            url = "http://115.71.236.224:8081/getPlayList?title=" + list_name;
+            url_yotube = "http://115.71.236.224:8081/getPlayList?title=" + list_name;
 
             musicCollection.Clear();
             MsgBroker.MsgBrokerMsg arg = new MsgBroker.MsgBrokerMsg();
